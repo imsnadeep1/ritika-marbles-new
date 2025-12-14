@@ -42,9 +42,9 @@ const HeroSection = () => {
               
               {/* Main Image */}
               <img
-                src="https://images.unsplash.com/photo-1567591414240-e9c1e6e2d8a3?w=600&h=700&fit=crop"
+                src="https://img.freepik.com/free-photo/ganesh-statue_1203-3795.jpg?w=600"
                 alt="Marble Ganesh Statue"
-                className="relative z-10 max-h-[600px] object-contain drop-shadow-2xl"
+                className="relative z-10 max-h-[600px] object-contain drop-shadow-2xl rounded-2xl"
               />
               
               {/* Decorative Lotus Flowers */}

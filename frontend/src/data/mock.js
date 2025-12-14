@@ -108,7 +108,7 @@ export const products = [
     categoryId: "5",
     price: 45000,
     images: [
-      "https://images.unsplash.com/photo-1567591414240-e9c1e6e2d8a3?w=600&h=600&fit=crop"
+      "https://img.freepik.com/free-photo/ganesh-statue_1203-3795.jpg?w=600"
     ],
     description: "Beautifully crafted white marble Ganesh statue, perfect for home temples.",
     features: ["Pure Makrana Marble", "Hand Carved", "24 inches height", "Customizable"],
@@ -121,7 +121,7 @@ export const products = [
     categoryId: "2",
     price: 35000,
     images: [
-      "https://images.unsplash.com/photo-1609167830220-7164aa360951?w=600&h=600&fit=crop"
+      "https://img.freepik.com/free-photo/radha-krishna-statue-temple_1268-30963.jpg?w=600"
     ],
     description: "Divine Radha Krishna marble idol with intricate detailing.",
     features: ["Premium Quality", "Detailed Carving", "18 inches height", "Gold Paint Accents"],
@@ -134,7 +134,7 @@ export const products = [
     categoryId: "3",
     price: 125000,
     images: [
-      "https://images.unsplash.com/photo-1604608672516-f1b9a5d79c86?w=600&h=600&fit=crop"
+      "https://img.freepik.com/free-photo/lord-rama-religious-indian-god_23-2151065315.jpg?w=600"
     ],
     description: "Complete Ram Darbar set with Lord Ram, Sita, Lakshman, and Hanuman.",
     features: ["Complete Set", "Temple Grade", "30 inches height", "Premium Finish"],
@@ -147,7 +147,7 @@ export const products = [
     categoryId: "4",
     price: 55000,
     images: [
-      "https://images.unsplash.com/photo-1618330834871-a40317591c50?w=600&h=600&fit=crop"
+      "https://img.freepik.com/free-photo/lord-shiva-statue_23-2151065302.jpg?w=600"
     ],
     description: "Elegant Shiv Parvati marble murti with fine craftsmanship.",
     features: ["Makrana Marble", "Artistic Design", "21 inches height", "Temple Ready"],
@@ -160,7 +160,7 @@ export const products = [
     categoryId: "6",
     price: 85000,
     images: [
-      "https://images.unsplash.com/photo-1604608672516-f1b9a5d79c86?w=600&h=600&fit=crop"
+      "https://img.freepik.com/free-photo/statue-hindu-monkey-god-hanuman_23-2151065326.jpg?w=600"
     ],
     description: "Powerful Hanuman Ji marble statue in blessing pose.",
     features: ["Large Size", "Detailed Work", "36 inches height", "Temple Grade"],
@@ -173,7 +173,7 @@ export const products = [
     categoryId: "1",
     price: 28000,
     images: [
-      "https://images.unsplash.com/photo-1567591414240-e9c1e6e2d8a3?w=600&h=600&fit=crop"
+      "https://img.freepik.com/free-photo/beautiful-hindu-god-ganesh-illustration_23-2151065221.jpg?w=600"
     ],
     description: "Lakshmi Ganesh marble set perfect for Diwali and home worship.",
     features: ["Pair Set", "Compact Size", "15 inches height", "Gift Ready"],

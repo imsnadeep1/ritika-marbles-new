@@ -248,9 +248,9 @@ export const galleryImages = [
 ];
 
 export const stats = [
-  { label: "GLORIOUS YEARS", value: 25 },
-  { label: "INDIAN ARTEFACTS", value: 5000 },
-  { label: "PASSIONATE ARTISANS", value: 100 }
+  { label: "YEARS OF HERITAGE", value: 3 },
+  { label: "CRAFTED STATUES", value: 150 },
+  { label: "SKILLED ARTISANS", value: 15 }
 ];
 
 export const whyChooseUs = [

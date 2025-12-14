@@ -111,19 +111,19 @@ const ContactPage = () => {
                       <Mail className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Email</h3>
-                      <a href={`mailto:${siteConfig.email}`} className="text-gray-600 hover:text-[#1a5d4c]">
+                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Email</h3>
+                      <a href={`mailto:${siteConfig.email}`} className="text-gray-600 hover:text-[#7B2D3A]">
                         {siteConfig.email}
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#1a5d4c] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-6 h-6 text-white" />
+                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Business Hours</h3>
+                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Business Hours</h3>
                       <p className="text-gray-600">Monday - Saturday: 9:00 AM - 7:00 PM</p>
                       <p className="text-gray-600">Sunday: 10:00 AM - 4:00 PM</p>
                     </div>
@@ -131,10 +131,10 @@ const ContactPage = () => {
                 </div>
 
                 {/* Map Placeholder */}
-                <div className="mt-10 h-64 bg-gray-200 rounded-xl overflow-hidden">
+                <div className="mt-10 h-64 bg-gray-200 rounded-xl overflow-hidden border border-[#D4A853]/20">
                   <iframe
                     title="Location Map"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d227748.3825624477!2d75.65046970649679!3d26.88544791796718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4adf4c57e281%3A0xce1c63a0cf22e09!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1702000000000!5m2!1sen!2sin"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.5!2d75.8!3d26.92!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db40!2sChandpole%20Bazaar%2C%20Jaipur!5e0!3m2!1sen!2sin"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -147,8 +147,8 @@ const ContactPage = () => {
 
               {/* Contact Form */}
               <div>
-                <div className="bg-white rounded-2xl shadow-xl p-8">
-                  <h2 className="text-3xl font-bold text-gray-800 mb-2">Get a Quote</h2>
+                <div className="bg-white rounded-2xl shadow-xl p-8 border border-[#D4A853]/20">
+                  <h2 className="text-3xl font-bold text-[#7B2D3A] mb-2">Get a Quote</h2>
                   <p className="text-gray-600 mb-8">Fill out the form below and we'll get back to you shortly.</p>
                   
                   <form onSubmit={handleSubmit} className="space-y-6">

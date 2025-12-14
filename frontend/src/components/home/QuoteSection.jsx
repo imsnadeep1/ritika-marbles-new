@@ -22,10 +22,10 @@ const QuoteSection = () => {
           
           {/* Main Quote */}
           <blockquote className="space-y-6">
-            <p className="text-3xl md:text-4xl lg:text-5xl text-white font-light italic leading-relaxed">
-              "Every masterpiece begins with a single chisel stroke. 
-              <span className="text-[#D4A853]"> We're just getting started</span>, 
-              crafting divine beauty one statue at a time."
+            <p className="text-3xl md:text-4xl lg:text-5xl text-white font-normal leading-relaxed tracking-wide">
+              "In every block of marble, we see a story waiting to be told — 
+              <span className="text-[#D4A853] italic"> where devotion meets artistry</span>, 
+              timeless beauty is born."
             </p>
           </blockquote>
           
@@ -37,16 +37,15 @@ const QuoteSection = () => {
           </div>
           
           {/* Sub Quote */}
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
-            At Ritika Marbles, we believe in the power of new beginnings. 
-            With passion in our hearts and precision in our hands, 
-            we're here to bring your divine visions to life.
+          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-light">
+            We pour our heart into every creation, transforming raw marble 
+            into divine masterpieces that bring blessings to your home.
           </p>
           
           {/* Signature */}
           <div className="pt-4">
-            <p className="text-[#D4A853] font-semibold text-lg">— Ritika Marbles & Handicrafts</p>
-            <p className="text-white/60 text-sm mt-1">A Fresh Journey in Divine Craftsmanship</p>
+            <p className="text-[#D4A853] font-semibold text-lg tracking-wide">— Ritika Marbles & Handicrafts</p>
+            <p className="text-white/60 text-sm mt-1 font-light">Where Divine Art Comes to Life</p>
           </div>
         </div>
       </div>

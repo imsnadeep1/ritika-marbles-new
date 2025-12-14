@@ -48,56 +48,56 @@ export const categories = [
     id: "1",
     name: "Lakshmi Ganesh & Saraswati Ji Statue",
     slug: "lakshmi-ganesh-saraswati",
-    image: "https://www.pandeymarblearts.com/images/ganesh-new-top.jpg",
+    image: null,
     description: "Beautiful marble statues of Lakshmi, Ganesh and Saraswati Ji"
   },
   {
     id: "2",
     name: "Radha Krishna Marble Statue",
     slug: "radha-krishna",
-    image: "https://www.pandeymarblearts.com/images/radha-krishna-1.jpg",
+    image: null,
     description: "Divine Radha Krishna marble statues"
   },
   {
     id: "3",
     name: "Ram Darbar Marble Statue",
     slug: "ram-darbar",
-    image: "https://www.pandeymarblearts.com/images/ram-darbar-top.jpg",
+    image: null,
     description: "Exquisite Ram Darbar marble statues"
   },
   {
     id: "4",
     name: "Shiv Parvati Marble Statue",
     slug: "shiv-parvati",
-    image: "https://www.pandeymarblearts.com/images/gallery3.jpg",
+    image: null,
     description: "Majestic Shiv Parvati marble statues"
   },
   {
     id: "5",
     name: "Ganesh Marble Statue",
     slug: "ganesh",
-    image: "https://www.pandeymarblearts.com/images/gallery1.jpg",
+    image: null,
     description: "Lord Ganesh marble statues in various poses"
   },
   {
     id: "6",
     name: "Hanuman Marble Statue",
     slug: "hanuman",
-    image: "https://www.pandeymarblearts.com/images/hanuman_new.jpg",
+    image: null,
     description: "Powerful Hanuman marble statues"
   },
   {
     id: "7",
     name: "Marble Temples",
     slug: "temples",
-    image: "https://www.pandeymarblearts.com/images/mander-marble1.jpg",
+    image: null,
     description: "Beautiful marble temples for home and commercial spaces"
   },
   {
     id: "8",
     name: "Laddu Gopal",
     slug: "laddu-gopal",
-    image: "https://www.pandeymarblearts.com/images/laddu-gopal-3.jpg",
+    image: null,
     description: "Adorable Laddu Gopal marble statues"
   }
 ];

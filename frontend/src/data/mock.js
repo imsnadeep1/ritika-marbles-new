@@ -108,7 +108,7 @@ export const products = [
     categoryId: "5",
     price: 45000,
     images: [
-      "https://images.pexels.com/photos/5370665/pexels-photo-5370665.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "https://www.pandeymarblemoorti.com/assets/front/images/uploads/6.jpg"
     ],
     description: "Beautifully crafted white marble Ganesh statue, perfect for home temples.",
     features: ["Pure Makrana Marble", "Hand Carved", "24 inches height", "Customizable"],
@@ -121,7 +121,7 @@ export const products = [
     categoryId: "2",
     price: 35000,
     images: [
-      "https://images.pexels.com/photos/6044266/pexels-photo-6044266.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "https://www.pandeymarblemoorti.com/assets/front/images/uploads/Artboard_1_copy_7.jpg"
     ],
     description: "Divine Radha Krishna marble idol with intricate detailing.",
     features: ["Premium Quality", "Detailed Carving", "18 inches height", "Gold Paint Accents"],
@@ -134,7 +134,7 @@ export const products = [
     categoryId: "3",
     price: 125000,
     images: [
-      "https://images.pexels.com/photos/5370706/pexels-photo-5370706.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "https://www.pandeymarblemoorti.com/assets/front/images/uploads/Artboard_1_copy_31.jpg"
     ],
     description: "Complete Ram Darbar set with Lord Ram, Sita, Lakshman, and Hanuman.",
     features: ["Complete Set", "Temple Grade", "30 inches height", "Premium Finish"],
@@ -147,7 +147,7 @@ export const products = [
     categoryId: "4",
     price: 55000,
     images: [
-      "https://images.pexels.com/photos/5370643/pexels-photo-5370643.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "https://www.pandeymarblemoorti.com/assets/front/images/uploads/Artboard_1_copy_26.jpg"
     ],
     description: "Elegant Shiv Parvati marble murti with fine craftsmanship.",
     features: ["Makrana Marble", "Artistic Design", "21 inches height", "Temple Ready"],
@@ -160,7 +160,7 @@ export const products = [
     categoryId: "6",
     price: 85000,
     images: [
-      "https://images.pexels.com/photos/5370706/pexels-photo-5370706.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "https://www.pandeymarblemoorti.com/assets/front/images/uploads/Artboard_1_copy_21.jpg"
     ],
     description: "Powerful Hanuman Ji marble statue in blessing pose.",
     features: ["Large Size", "Detailed Work", "36 inches height", "Temple Grade"],
@@ -173,7 +173,7 @@ export const products = [
     categoryId: "1",
     price: 28000,
     images: [
-      "https://images.pexels.com/photos/5370665/pexels-photo-5370665.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "https://www.pandeymarblemoorti.com/assets/front/images/uploads/Artboard_1_copy_22.jpg"
     ],
     description: "Lakshmi Ganesh marble set perfect for Diwali and home worship.",
     features: ["Pair Set", "Compact Size", "15 inches height", "Gift Ready"],

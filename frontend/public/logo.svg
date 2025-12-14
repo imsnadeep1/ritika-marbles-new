@@ -29,12 +29,12 @@
   <circle cx="100" cy="100" r="85" fill="none" stroke="url(#burgundyGradient)" stroke-width="1.5"/>
   
   <!-- Lotus petals at bottom -->
-  <g transform="translate(100, 160)">
-    <ellipse cx="0" cy="0" rx="8" ry="20" fill="url(#goldGradient)" transform="rotate(-30)"/>
-    <ellipse cx="0" cy="0" rx="8" ry="20" fill="url(#goldGradient)" transform="rotate(-15)"/>
-    <ellipse cx="0" cy="0" rx="8" ry="22" fill="url(#goldGradient)" transform="rotate(0)"/>
-    <ellipse cx="0" cy="0" rx="8" ry="20" fill="url(#goldGradient)" transform="rotate(15)"/>
-    <ellipse cx="0" cy="0" rx="8" ry="20" fill="url(#goldGradient)" transform="rotate(30)"/>
+  <g transform="translate(100, 165)">
+    <ellipse cx="0" cy="0" rx="12" ry="32" fill="url(#goldGradient)" transform="rotate(-40)"/>
+    <ellipse cx="0" cy="0" rx="12" ry="32" fill="url(#goldGradient)" transform="rotate(-20)"/>
+    <ellipse cx="0" cy="0" rx="12" ry="35" fill="url(#goldGradient)" transform="rotate(0)"/>
+    <ellipse cx="0" cy="0" rx="12" ry="32" fill="url(#goldGradient)" transform="rotate(20)"/>
+    <ellipse cx="0" cy="0" rx="12" ry="32" fill="url(#goldGradient)" transform="rotate(40)"/>
   </g>
   
   <!-- Stylized R letter -->

@@ -54,7 +54,7 @@ const ContactPage = () => {
       <Toaster />
       <main>
         {/* Hero Section */}
-        <section className="bg-[#1a5d4c] py-20">
+        <section className="bg-[#7B2D3A] py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Reach Us</h1>
             <p className="text-white/80 text-lg max-w-2xl mx-auto">
@@ -64,38 +64,51 @@ const ContactPage = () => {
         </section>
 
         {/* Contact Info & Form */}
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-[#FDF8F3]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-16">
               {/* Contact Information */}
               <div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-8">Contact Information</h2>
+                <h2 className="text-3xl font-bold text-[#7B2D3A] mb-8">Contact Information</h2>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#1a5d4c] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-white" />
+                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Address</h3>
+                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Showroom Address</h3>
                       <p className="text-gray-600">{siteConfig.address}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6 text-[#D4A853]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Workshop Address</h3>
+                      <p className="text-gray-600">{siteConfig.address2}</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#1a5d4c] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-6 h-6 text-white" />
+                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Phone</h3>
-                      <a href={`tel:${siteConfig.phone}`} className="text-gray-600 hover:text-[#1a5d4c]">
+                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Phone</h3>
+                      <a href={`tel:${siteConfig.phone}`} className="text-gray-600 hover:text-[#7B2D3A] block">
                         {siteConfig.phone}
+                      </a>
+                      <a href={`tel:${siteConfig.phone2}`} className="text-gray-600 hover:text-[#7B2D3A] block">
+                        {siteConfig.phone2}
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#1a5d4c] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-6 h-6 text-white" />
+                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">Email</h3>

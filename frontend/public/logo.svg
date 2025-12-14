@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <!-- Marble texture pattern -->
+    <pattern id="marble" patternUnits="userSpaceOnUse" width="100" height="100">
+      <rect width="100" height="100" fill="#FFFBF5"/>
+      <path d="M0,50 Q25,30 50,50 T100,50" stroke="#D4A853" stroke-width="0.5" fill="none" opacity="0.3"/>
+      <path d="M0,70 Q35,50 70,70 T100,70" stroke="#7B2D3A" stroke-width="0.3" fill="none" opacity="0.2"/>
+    </pattern>
+    
+    <!-- Gold gradient -->
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8C878"/>
+      <stop offset="50%" style="stop-color:#D4A853"/>
+      <stop offset="100%" style="stop-color:#B8923F"/>
+    </linearGradient>
+    
+    <!-- Burgundy gradient -->
+    <linearGradient id="burgundyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9E4A58"/>
+      <stop offset="50%" style="stop-color:#7B2D3A"/>
+      <stop offset="100%" style="stop-color:#5A1F2A"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle with marble texture -->
+  <circle cx="100" cy="100" r="95" fill="url(#marble)" stroke="url(#goldGradient)" stroke-width="3"/>
+  
+  <!-- Inner decorative circle -->
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#burgundyGradient)" stroke-width="1.5"/>
+  
+  <!-- Lotus petals at bottom -->
+  <g transform="translate(100, 160)">
+    <ellipse cx="0" cy="0" rx="8" ry="20" fill="url(#goldGradient)" transform="rotate(-30)"/>
+    <ellipse cx="0" cy="0" rx="8" ry="20" fill="url(#goldGradient)" transform="rotate(-15)"/>
+    <ellipse cx="0" cy="0" rx="8" ry="22" fill="url(#goldGradient)" transform="rotate(0)"/>
+    <ellipse cx="0" cy="0" rx="8" ry="20" fill="url(#goldGradient)" transform="rotate(15)"/>
+    <ellipse cx="0" cy="0" rx="8" ry="20" fill="url(#goldGradient)" transform="rotate(30)"/>
+  </g>
+  
+  <!-- Stylized R letter -->
+  <text x="100" y="115" font-family="Cormorant Garamond, Georgia, serif" font-size="90" font-weight="600" fill="url(#burgundyGradient)" text-anchor="middle" dominant-baseline="middle">R</text>
+  
+  <!-- Small decorative dot -->
+  <circle cx="135" cy="75" r="5" fill="url(#goldGradient)"/>
+  
+  <!-- Top decorative element -->
+  <path d="M70,35 Q100,25 130,35" stroke="url(#goldGradient)" stroke-width="2" fill="none"/>
+  <circle cx="100" cy="28" r="4" fill="url(#goldGradient)"/>
+</svg>

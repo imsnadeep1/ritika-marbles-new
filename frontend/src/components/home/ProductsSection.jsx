@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { categories } from '@/data/mock';
 import { Button } from '@/components/ui/button';
-import PlaceholderImage from '@/components/ui/PlaceholderImage';
+import WatermarkedImage from '@/components/ui/WatermarkedImage';
 
 const ProductsSection = () => {
   const scrollRef = useRef(null);
@@ -61,15 +61,13 @@ const ProductsSection = () => {
               >
                 <div className="bg-white rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 duration-300">
                   <div className="aspect-square overflow-hidden">
-                    {category.image ? (
-                      <img
-                        src={category.image}
-                        alt={category.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    ) : (
-                      <PlaceholderImage name={category.name} />
-                    )}
+                    <WatermarkedImage
+                      src={category.image}
+                      alt={category.name}
+                      watermarkPosition="bottom-right"
+                      watermarkSize="md"
+                      className="group-hover:scale-110 transition-transform duration-500"
+                    />
                   </div>
                   <div className="p-4 text-center bg-[#5A1F2A]">
                     <h3 className="text-white font-medium text-sm">{category.name}</h3>

@@ -53,9 +53,7 @@ const AdminLayout = () => {
           {/* Logo */}
           <div className="p-6 border-b border-[#D4A853]/20">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#D4A853] rounded-lg flex items-center justify-center">
-                <span className="text-[#7B2D3A] font-bold text-lg">R</span>
-              </div>
+              <img src="/logo.svg" alt="Ritika Marbles Logo" className="w-10 h-10" />
               <div>
                 <h1 className="text-white font-semibold">Ritika Marbles</h1>
                 <p className="text-[#D4A853] text-xs">Admin Panel</p>

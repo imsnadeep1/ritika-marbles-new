@@ -22,7 +22,7 @@ const FeaturedSections = () => {
           <div className="relative group overflow-hidden rounded-2xl">
             <div className="aspect-[4/3] overflow-hidden">
               <WatermarkedImage
-                src="https://www.pandeymarblemoorti.com/assets/front/images/uploads/decor.jpg"
+                src="/images/products/decor.png"
                 alt="Marble Handicrafts"
                 watermarkPosition="bottom-right"
                 watermarkSize="lg"
@@ -45,7 +45,7 @@ const FeaturedSections = () => {
           <div className="relative group overflow-hidden rounded-2xl">
             <div className="aspect-[4/3] overflow-hidden">
               <WatermarkedImage
-                src="https://www.pandeymarblemoorti.com/assets/front/images/uploads/decor2.jpg"
+                src="/images/products/decor2.png"
                 alt="Wall Panels"
                 watermarkPosition="bottom-right"
                 watermarkSize="lg"

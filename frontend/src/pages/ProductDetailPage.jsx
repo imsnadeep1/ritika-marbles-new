@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { products, categories } from '@/data/mock';
 import { ChevronRight, Check, MessageCircle, Phone } from 'lucide-react';
 import { siteConfig } from '@/data/mock';
+import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -18,8 +19,8 @@ const ProductDetailPage = () => {
       <div className="min-h-screen">
         <Header />
         <main className="py-20 text-center">
-          <h1 className="text-3xl font-bold text-gray-800">Product Not Found</h1>
-          <Link to="/" className="text-[#1a5d4c] hover:underline mt-4 inline-block">
+          <h1 className="text-3xl font-bold text-[#7B2D3A]">Product Not Found</h1>
+          <Link to="/" className="text-[#D4A853] hover:underline mt-4 inline-block">
             Return to Home
           </Link>
         </main>
@@ -29,22 +30,23 @@ const ProductDetailPage = () => {
   }
 
   const category = categories.find(c => c.id === product.categoryId);
+  const hasImages = product.images && product.images.length > 0;
 
   return (
     <div className="min-h-screen">
       <Header />
       <main>
         {/* Breadcrumb */}
-        <div className="bg-gray-50 py-4">
+        <div className="bg-[#FDF8F3] py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-2 text-sm flex-wrap">
-              <Link to="/" className="text-gray-500 hover:text-[#1a5d4c]">Home</Link>
+              <Link to="/" className="text-gray-500 hover:text-[#7B2D3A]">Home</Link>
               <ChevronRight className="w-4 h-4 text-gray-400" />
-              <Link to={`/category/${category?.slug}`} className="text-gray-500 hover:text-[#1a5d4c]">
+              <Link to={`/category/${category?.slug}`} className="text-gray-500 hover:text-[#7B2D3A]">
                 {category?.name}
               </Link>
               <ChevronRight className="w-4 h-4 text-gray-400" />
-              <span className="text-[#1a5d4c] font-medium">{product.name}</span>
+              <span className="text-[#7B2D3A] font-medium">{product.name}</span>
             </div>
           </div>
         </div>
@@ -56,20 +58,24 @@ const ProductDetailPage = () => {
               {/* Image Gallery */}
               <div className="space-y-4">
                 <div className="aspect-square overflow-hidden rounded-xl bg-gray-100">
-                  <img
-                    src={product.images[selectedImage]}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
+                  {hasImages ? (
+                    <img
+                      src={product.images[selectedImage]}
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <ProductPlaceholder name={product.name} price={product.price} />
+                  )}
                 </div>
-                {product.images.length > 1 && (
+                {hasImages && product.images.length > 1 && (
                   <div className="flex gap-4">
                     {product.images.map((image, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImage(index)}
                         className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                          selectedImage === index ? 'border-[#1a5d4c]' : 'border-transparent'
+                          selectedImage === index ? 'border-[#7B2D3A]' : 'border-transparent'
                         }`}
                       >
                         <img
@@ -86,19 +92,19 @@ const ProductDetailPage = () => {
               {/* Product Info */}
               <div className="space-y-6">
                 <div>
-                  <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">{product.name}</h1>
-                  <p className="text-[#1a5d4c] text-3xl font-bold">₹{product.price.toLocaleString()}</p>
+                  <h1 className="text-3xl md:text-4xl font-bold text-[#7B2D3A] mb-2">{product.name}</h1>
+                  <p className="text-[#D4A853] text-3xl font-bold">₹{product.price.toLocaleString()}</p>
                 </div>
 
                 <p className="text-gray-600 leading-relaxed">{product.description}</p>
 
                 {/* Features */}
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-800">Features:</h3>
+                  <h3 className="font-semibold text-[#7B2D3A]">Features:</h3>
                   <ul className="space-y-2">
                     {product.features.map((feature, index) => (
                       <li key={index} className="flex items-center gap-2 text-gray-600">
-                        <Check className="w-5 h-5 text-[#1a5d4c]" />
+                        <Check className="w-5 h-5 text-[#D4A853]" />
                         {feature}
                       </li>
                     ))}
@@ -127,7 +133,7 @@ const ProductDetailPage = () => {
                     </Button>
                   </a>
                   <a href={`tel:${siteConfig.phone}`} className="flex-1">
-                    <Button className="w-full bg-[#c9a962] hover:bg-[#b89952] text-white py-3 rounded-full flex items-center justify-center gap-2">
+                    <Button className="w-full bg-[#D4A853] hover:bg-[#B8923F] text-white py-3 rounded-full flex items-center justify-center gap-2">
                       <Phone className="w-5 h-5" />
                       Call Now
                     </Button>
@@ -135,8 +141,8 @@ const ProductDetailPage = () => {
                 </div>
 
                 {/* Custom Note */}
-                <div className="bg-gray-50 rounded-xl p-6">
-                  <h3 className="font-semibold text-gray-800 mb-2">Custom Orders Welcome</h3>
+                <div className="bg-[#FDF8F3] rounded-xl p-6 border border-[#D4A853]/20">
+                  <h3 className="font-semibold text-[#7B2D3A] mb-2">Custom Orders Welcome</h3>
                   <p className="text-gray-600 text-sm">
                     We can create custom sizes and designs based on your requirements. 
                     Contact us to discuss your specifications and get a personalized quote.
@@ -148,9 +154,9 @@ const ProductDetailPage = () => {
         </section>
 
         {/* Related Products */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-[#FDF8F3]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-8">You May Also Like</h2>
+            <h2 className="text-2xl font-bold text-[#7B2D3A] mb-8">You May Also Like</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {products.filter(p => p.id !== product.id).slice(0, 4).map((item) => (
                 <Link
@@ -159,15 +165,19 @@ const ProductDetailPage = () => {
                   className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow group"
                 >
                   <div className="aspect-square overflow-hidden">
-                    <img
-                      src={item.images[0]}
-                      alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
+                    {item.images && item.images.length > 0 ? (
+                      <img
+                        src={item.images[0]}
+                        alt={item.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    ) : (
+                      <ProductPlaceholder name={item.name} price={item.price} />
+                    )}
                   </div>
                   <div className="p-4">
-                    <h3 className="font-medium text-gray-800 text-sm line-clamp-2 mb-1">{item.name}</h3>
-                    <p className="text-[#1a5d4c] font-bold">₹{item.price.toLocaleString()}</p>
+                    <h3 className="font-medium text-[#7B2D3A] text-sm line-clamp-2 mb-1">{item.name}</h3>
+                    <p className="text-[#D4A853] font-bold">₹{item.price.toLocaleString()}</p>
                   </div>
                 </Link>
               ))}

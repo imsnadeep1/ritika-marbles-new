@@ -26,7 +26,7 @@ const AboutPage = () => {
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
                 <img
-                  src="https://img.freepik.com/free-photo/marble-workshop-craftsmanship_23-2151065412.jpg?w=600"
+                  src="https://images.pexels.com/photos/4210860/pexels-photo-4210860.jpeg?auto=compress&cs=tinysrgb&w=600"
                   alt="Our Workshop"
                   className="rounded-2xl shadow-xl"
                 />

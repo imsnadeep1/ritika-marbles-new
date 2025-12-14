@@ -46,56 +46,56 @@ export const categories = [
     id: "1",
     name: "Lakshmi Ganesh & Saraswati Ji Statue",
     slug: "lakshmi-ganesh-saraswati",
-    image: "https://img.freepik.com/free-photo/beautiful-hindu-god-ganesh-illustration_23-2151065221.jpg?w=400",
+    image: "https://images.pexels.com/photos/5370665/pexels-photo-5370665.jpeg?auto=compress&cs=tinysrgb&w=400",
     description: "Beautiful marble statues of Lakshmi, Ganesh and Saraswati Ji"
   },
   {
     id: "2",
     name: "Radha Krishna Marble Statue",
     slug: "radha-krishna",
-    image: "https://img.freepik.com/free-photo/radha-krishna-statue-temple_1268-30963.jpg?w=400",
+    image: "https://images.pexels.com/photos/6044266/pexels-photo-6044266.jpeg?auto=compress&cs=tinysrgb&w=400",
     description: "Divine Radha Krishna marble statues"
   },
   {
     id: "3",
     name: "Ram Darbar Marble Statue",
     slug: "ram-darbar",
-    image: "https://img.freepik.com/free-photo/lord-rama-religious-indian-god_23-2151065315.jpg?w=400",
+    image: "https://images.pexels.com/photos/5370706/pexels-photo-5370706.jpeg?auto=compress&cs=tinysrgb&w=400",
     description: "Exquisite Ram Darbar marble statues"
   },
   {
     id: "4",
     name: "Shiv Parvati Marble Statue",
     slug: "shiv-parvati",
-    image: "https://img.freepik.com/free-photo/lord-shiva-statue_23-2151065302.jpg?w=400",
+    image: "https://images.pexels.com/photos/5370643/pexels-photo-5370643.jpeg?auto=compress&cs=tinysrgb&w=400",
     description: "Majestic Shiv Parvati marble statues"
   },
   {
     id: "5",
     name: "Ganesh Marble Statue",
     slug: "ganesh",
-    image: "https://img.freepik.com/free-photo/ganesh-statue_1203-3795.jpg?w=400",
+    image: "https://images.pexels.com/photos/5370665/pexels-photo-5370665.jpeg?auto=compress&cs=tinysrgb&w=400",
     description: "Lord Ganesh marble statues in various poses"
   },
   {
     id: "6",
     name: "Hanuman Marble Statue",
     slug: "hanuman",
-    image: "https://img.freepik.com/free-photo/statue-hindu-monkey-god-hanuman_23-2151065326.jpg?w=400",
+    image: "https://images.pexels.com/photos/5370706/pexels-photo-5370706.jpeg?auto=compress&cs=tinysrgb&w=400",
     description: "Powerful Hanuman marble statues"
   },
   {
     id: "7",
     name: "Marble Handicrafts",
     slug: "handicrafts",
-    image: "https://img.freepik.com/free-photo/beautiful-decorative-colorful-marble-vase_181624-51426.jpg?w=400",
+    image: "https://images.pexels.com/photos/4210860/pexels-photo-4210860.jpeg?auto=compress&cs=tinysrgb&w=400",
     description: "Beautiful marble handicrafts for home decor"
   },
   {
     id: "8",
     name: "Wall Panels",
     slug: "wall-panels",
-    image: "https://img.freepik.com/free-photo/white-marble-texture-background_53876-63441.jpg?w=400",
+    image: "https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=400",
     description: "Elegant marble wall panels"
   }
 ];

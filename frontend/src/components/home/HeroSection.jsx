@@ -17,15 +17,14 @@ const HeroSection = () => {
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#7B2D3A] leading-tight">
-                CRAFTING BEAUTY
+                YOUR VISION
               </h1>
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#D4A853] leading-tight">
-                FROM STONE
+                OUR CRAFT
               </h2>
             </div>
             <p className="text-lg text-gray-600 max-w-lg">
-              Discover our exquisite collection of handcrafted marble statues and handicrafts, 
-              created by master artisans with decades of experience.
+              Custom marble creations that transform your spiritual spaces into divine sanctuaries.
             </p>
             <Link to="/god-statue">
               <Button className="bg-[#7B2D3A] hover:bg-[#5A1F2A] text-white px-8 py-6 text-lg rounded-full flex items-center gap-2 transition-all hover:gap-4 shadow-lg">

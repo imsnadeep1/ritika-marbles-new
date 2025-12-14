@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { products, categories } from '@/data/mock';
 import { ChevronRight, Check, MessageCircle, Phone } from 'lucide-react';
 import { siteConfig } from '@/data/mock';
-import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+import WatermarkedImage from '@/components/ui/WatermarkedImage';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -30,7 +30,6 @@ const ProductDetailPage = () => {
   }
 
   const category = categories.find(c => c.id === product.categoryId);
-  const hasImages = product.images && product.images.length > 0;
 
   return (
     <div className="min-h-screen">
@@ -58,17 +57,14 @@ const ProductDetailPage = () => {
               {/* Image Gallery */}
               <div className="space-y-4">
                 <div className="aspect-square overflow-hidden rounded-xl bg-gray-100">
-                  {hasImages ? (
-                    <img
-                      src={product.images[selectedImage]}
-                      alt={product.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <ProductPlaceholder name={product.name} price={product.price} />
-                  )}
+                  <WatermarkedImage
+                    src={product.images[selectedImage]}
+                    alt={product.name}
+                    watermarkPosition="bottom-right"
+                    watermarkSize="lg"
+                  />
                 </div>
-                {hasImages && product.images.length > 1 && (
+                {product.images.length > 1 && (
                   <div className="flex gap-4">
                     {product.images.map((image, index) => (
                       <button
@@ -165,15 +161,13 @@ const ProductDetailPage = () => {
                   className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow group"
                 >
                   <div className="aspect-square overflow-hidden">
-                    {item.images && item.images.length > 0 ? (
-                      <img
-                        src={item.images[0]}
-                        alt={item.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    ) : (
-                      <ProductPlaceholder name={item.name} price={item.price} />
-                    )}
+                    <WatermarkedImage
+                      src={item.images[0]}
+                      alt={item.name}
+                      watermarkPosition="bottom-right"
+                      watermarkSize="sm"
+                      className="group-hover:scale-110 transition-transform duration-500"
+                    />
                   </div>
                   <div className="p-4">
                     <h3 className="font-medium text-[#7B2D3A] text-sm line-clamp-2 mb-1">{item.name}</h3>

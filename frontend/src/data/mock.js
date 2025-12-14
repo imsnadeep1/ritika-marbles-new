@@ -3,10 +3,12 @@
 export const siteConfig = {
   name: "Ritika Marbles",
   tagline: "& Handicrafts",
-  phone: "+91-9876543210",
-  whatsapp: "+919876543210",
+  phone: "+91-8003324471",
+  phone2: "+91-8769263869",
+  whatsapp: "918003324471",
   email: "contact@ritikamarbles.com",
-  address: "123 Marble Lane, Jaipur, Rajasthan, India - 302001",
+  address: "1360, Maliyon ka Chowk, 2nd Cross, Khejdo ka Rasta, Chandpole Bajar, Jaipur, Rajasthan, India - 302001",
+  address2: "Ritika Moorti Arts, Village-Chhitoli, Tehsil-Viratnagar, Jaipur, Rajasthan, India - 303102",
   socialLinks: {
     facebook: "https://facebook.com/ritikamarbles",
     instagram: "https://instagram.com/ritikamarbles",

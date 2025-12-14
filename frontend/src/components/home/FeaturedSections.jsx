@@ -21,7 +21,7 @@ const FeaturedSections = () => {
           <div className="relative group overflow-hidden rounded-2xl">
             <div className="aspect-[4/3] overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=800&h=600&fit=crop"
+                src="https://img.freepik.com/free-photo/beautiful-decorative-colorful-marble-vase_181624-51426.jpg?w=800"
                 alt="Marble Handicrafts"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
@@ -42,7 +42,7 @@ const FeaturedSections = () => {
           <div className="relative group overflow-hidden rounded-2xl">
             <div className="aspect-[4/3] overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop"
+                src="https://img.freepik.com/free-photo/white-marble-texture-background_53876-63441.jpg?w=800"
                 alt="Wall Panels"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />

@@ -109,7 +109,9 @@ export const products = [
     slug: "white-marble-ganesh-24",
     categoryId: "5",
     price: 45000,
-    images: [],
+    images: [
+      "https://www.pandeymarblearts.com/images/ganesh-new-top.jpg"
+    ],
     description: "Beautifully crafted white marble Ganesh statue, perfect for home temples.",
     features: ["Pure Makrana Marble", "Hand Carved", "24 inches height", "Customizable"],
     inStock: true
@@ -120,7 +122,9 @@ export const products = [
     slug: "radha-krishna-18",
     categoryId: "2",
     price: 35000,
-    images: [],
+    images: [
+      "https://www.pandeymarblearts.com/images/radha-krishna-1.jpg"
+    ],
     description: "Divine Radha Krishna marble idol with intricate detailing.",
     features: ["Premium Quality", "Detailed Carving", "18 inches height", "Gold Paint Accents"],
     inStock: true
@@ -131,7 +135,9 @@ export const products = [
     slug: "ram-darbar-30",
     categoryId: "3",
     price: 125000,
-    images: [],
+    images: [
+      "https://www.pandeymarblearts.com/images/ram-darbar-top.jpg"
+    ],
     description: "Complete Ram Darbar set with Lord Ram, Sita, Lakshman, and Hanuman.",
     features: ["Complete Set", "Temple Grade", "30 inches height", "Premium Finish"],
     inStock: true
@@ -142,7 +148,9 @@ export const products = [
     slug: "shiv-parvati-21",
     categoryId: "4",
     price: 55000,
-    images: [],
+    images: [
+      "https://www.pandeymarblearts.com/images/gallery3.jpg"
+    ],
     description: "Elegant Shiv Parvati marble murti with fine craftsmanship.",
     features: ["Makrana Marble", "Artistic Design", "21 inches height", "Temple Ready"],
     inStock: true
@@ -153,7 +161,9 @@ export const products = [
     slug: "hanuman-36",
     categoryId: "6",
     price: 85000,
-    images: [],
+    images: [
+      "https://www.pandeymarblearts.com/images/hanuman_new.jpg"
+    ],
     description: "Powerful Hanuman Ji marble statue in blessing pose.",
     features: ["Large Size", "Detailed Work", "36 inches height", "Temple Grade"],
     inStock: true
@@ -164,7 +174,9 @@ export const products = [
     slug: "lakshmi-ganesh-15",
     categoryId: "1",
     price: 28000,
-    images: [],
+    images: [
+      "https://www.pandeymarblearts.com/images/laxmi_new.jpg"
+    ],
     description: "Lakshmi Ganesh marble set perfect for Diwali and home worship.",
     features: ["Pair Set", "Compact Size", "15 inches height", "Gift Ready"],
     inStock: true

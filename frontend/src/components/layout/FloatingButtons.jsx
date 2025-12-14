@@ -19,7 +19,7 @@ const FloatingButtons = () => {
       {/* Call Button */}
       <a
         href={`tel:${siteConfig.phone}`}
-        className="w-14 h-14 bg-[#c9a962] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+        className="w-14 h-14 bg-[#D4A853] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
         title="Call Us"
       >
         <Phone className="w-6 h-6 text-white" />

@@ -42,7 +42,7 @@ const HeroSection = () => {
               
               {/* Main Image */}
               <img
-                src="https://www.pandeymarblemoorti.com/assets/front/images/uploads/6.jpg"
+                src="https://www.pandeymarblearts.com/images/ganesh-new-top.jpg"
                 alt="Marble Ganesh Statue"
                 className="relative z-10 max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
               />

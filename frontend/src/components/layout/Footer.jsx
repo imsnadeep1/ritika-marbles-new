@@ -11,9 +11,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-[#D4A853] rounded-lg flex items-center justify-center">
-                <span className="text-[#7B2D3A] font-bold text-lg">R</span>
-              </div>
+              <img src="/logo.svg" alt="Ritika Marbles Logo" className="w-12 h-12" />
               <div>
                 <h3 className="font-semibold text-lg">{siteConfig.name}</h3>
                 <p className="text-sm text-[#D4A853]">{siteConfig.tagline}</p>

@@ -34,18 +34,28 @@ const HeroSection = () => {
             </Link>
           </div>
 
-          {/* Right Content - Ganesh Image */}
+          {/* Right Content - Ganesh Image with Watermark */}
           <div className="relative flex justify-center">
             <div className="relative">
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-b from-[#D4A853]/30 to-[#7B2D3A]/10 rounded-full blur-3xl scale-150" />
               
-              {/* Main Image */}
-              <img
-                src="https://www.pandeymarblearts.com/images/ganesh-new-top.jpg"
-                alt="Marble Ganesh Statue"
-                className="relative z-10 max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
-              />
+              {/* Main Image Container */}
+              <div className="relative">
+                <img
+                  src="https://www.pandeymarblearts.com/images/ganesh-new-top.jpg"
+                  alt="Marble Ganesh Statue"
+                  className="relative z-10 max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
+                />
+                {/* Watermark Logo */}
+                <div className="absolute bottom-4 right-4 z-20 w-16 h-16 bg-white/80 rounded-full p-2 shadow-lg backdrop-blur-sm">
+                  <img 
+                    src="/logo.svg" 
+                    alt="Ritika Marbles" 
+                    className="w-full h-full"
+                  />
+                </div>
+              </div>
               
               {/* Decorative Lotus Flowers */}
               <div className="absolute -left-4 top-1/3 w-16 h-16 opacity-70">

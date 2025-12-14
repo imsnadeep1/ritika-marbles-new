@@ -12,11 +12,11 @@ const iconMap = {
 
 const WhyChooseUs = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-[#f8f5f0] to-white">
+    <section className="py-20 bg-gradient-to-br from-[#FFFBF5] to-[#FDF8F3]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800">Why Choose Us</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#7B2D3A]">Why Choose Us</h2>
         </div>
 
         {/* Features Grid */}
@@ -28,10 +28,10 @@ const WhyChooseUs = () => {
                 key={item.id}
                 className="text-center group"
               >
-                <div className="w-20 h-20 mx-auto mb-4 bg-[#1a5d4c] rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-[#154a3d] transition-all duration-300 shadow-lg">
-                  <IconComponent className="w-9 h-9 text-white" />
+                <div className="w-20 h-20 mx-auto mb-4 bg-[#7B2D3A] rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-[#5A1F2A] transition-all duration-300 shadow-lg">
+                  <IconComponent className="w-9 h-9 text-[#D4A853]" />
                 </div>
-                <h3 className="text-gray-800 font-semibold text-lg mb-2">{item.title}</h3>
+                <h3 className="text-[#7B2D3A] font-semibold text-lg mb-2">{item.title}</h3>
                 <p className="text-gray-500 text-sm">{item.description}</p>
               </div>
             );

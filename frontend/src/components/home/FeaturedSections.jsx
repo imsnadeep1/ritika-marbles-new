@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import WatermarkedImage from '@/components/ui/WatermarkedImage';
 
 const FeaturedSections = () => {
   return (
@@ -21,12 +20,10 @@ const FeaturedSections = () => {
           {/* Left - Bring Home */}
           <div className="relative group overflow-hidden rounded-2xl">
             <div className="aspect-[4/3] overflow-hidden">
-              <WatermarkedImage
+              <img
                 src="/images/products/decor.png"
                 alt="Marble Handicrafts"
-                watermarkPosition="bottom-right"
-                watermarkSize="lg"
-                className="group-hover:scale-110 transition-transform duration-700"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-[#7B2D3A]/90 via-[#7B2D3A]/40 to-transparent flex flex-col justify-end p-8">
@@ -44,12 +41,10 @@ const FeaturedSections = () => {
           {/* Right - Space Enhancement */}
           <div className="relative group overflow-hidden rounded-2xl">
             <div className="aspect-[4/3] overflow-hidden">
-              <WatermarkedImage
+              <img
                 src="/images/products/decor2.png"
                 alt="Wall Panels"
-                watermarkPosition="bottom-right"
-                watermarkSize="lg"
-                className="group-hover:scale-110 transition-transform duration-700"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-[#7B2D3A]/90 via-[#7B2D3A]/40 to-transparent flex flex-col justify-end p-8">

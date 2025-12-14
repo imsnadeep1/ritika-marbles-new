@@ -20,9 +20,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-14 h-14 bg-[#7B2D3A] rounded-lg flex items-center justify-center shadow-md">
-              <span className="text-[#D4A853] font-bold text-xl">R</span>
-            </div>
+            <img src="/logo.svg" alt="Ritika Marbles Logo" className="w-14 h-14" />
             <div className="flex flex-col">
               <span className="text-xl font-semibold text-[#7B2D3A]">{siteConfig.name}</span>
               <span className="text-sm text-[#D4A853]">{siteConfig.tagline}</span>

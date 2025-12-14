@@ -7,8 +7,7 @@ import ProductsSection from '@/components/home/ProductsSection';
 import VideoSection from '@/components/home/VideoSection';
 import FeaturedSections from '@/components/home/FeaturedSections';
 import StatsSection from '@/components/home/StatsSection';
-import GallerySection from '@/components/home/GallerySection';
-import ClientsSection from '@/components/home/ClientsSection';
+import QuoteSection from '@/components/home/QuoteSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 
 const HomePage = () => {
@@ -21,8 +20,7 @@ const HomePage = () => {
         <VideoSection />
         <FeaturedSections />
         <StatsSection />
-        <GallerySection />
-        <ClientsSection />
+        <QuoteSection />
         <WhyChooseUs />
       </main>
       <Footer />

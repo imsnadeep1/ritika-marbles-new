@@ -75,11 +75,20 @@ const Footer = () => {
                 <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#D4A853]" />
                 <span className="text-white/80 text-sm">{siteConfig.address}</span>
               </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#D4A853]" />
+                <span className="text-white/80 text-sm">{siteConfig.address2}</span>
+              </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 flex-shrink-0 text-[#D4A853]" />
-                <a href={`tel:${siteConfig.phone}`} className="text-white/80 hover:text-[#D4A853] text-sm transition-colors">
-                  {siteConfig.phone}
-                </a>
+                <div className="flex flex-col">
+                  <a href={`tel:${siteConfig.phone}`} className="text-white/80 hover:text-[#D4A853] text-sm transition-colors">
+                    {siteConfig.phone}
+                  </a>
+                  <a href={`tel:${siteConfig.phone2}`} className="text-white/80 hover:text-[#D4A853] text-sm transition-colors">
+                    {siteConfig.phone2}
+                  </a>
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 flex-shrink-0 text-[#D4A853]" />

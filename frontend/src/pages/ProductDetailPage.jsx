@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { products, categories } from '@/data/mock';
 import { ChevronRight, Check, MessageCircle, Phone } from 'lucide-react';
 import { siteConfig } from '@/data/mock';
-import WatermarkedImage from '@/components/ui/WatermarkedImage';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -57,11 +56,10 @@ const ProductDetailPage = () => {
               {/* Image Gallery */}
               <div className="space-y-4">
                 <div className="aspect-square overflow-hidden rounded-xl bg-gray-100">
-                  <WatermarkedImage
+                  <img
                     src={product.images[selectedImage]}
                     alt={product.name}
-                    watermarkPosition="bottom-right"
-                    watermarkSize="lg"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 {product.images.length > 1 && (
@@ -161,12 +159,10 @@ const ProductDetailPage = () => {
                   className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow group"
                 >
                   <div className="aspect-square overflow-hidden">
-                    <WatermarkedImage
+                    <img
                       src={item.images[0]}
                       alt={item.name}
-                      watermarkPosition="bottom-right"
-                      watermarkSize="sm"
-                      className="group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
                   <div className="p-4">

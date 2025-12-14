@@ -28,51 +28,51 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#FDF8F3] to-[#FFFBF5] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-[#D4A853]/20">
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-[#1a5d4c] rounded-xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-white font-bold text-2xl">R</span>
+            <div className="w-16 h-16 bg-[#7B2D3A] rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <span className="text-[#D4A853] font-bold text-2xl">R</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-800">Admin Panel</h1>
-            <p className="text-gray-500 mt-1">Ritika Marbles & Handicrafts</p>
+            <h1 className="text-2xl font-bold text-[#7B2D3A]">Admin Panel</h1>
+            <p className="text-[#D4A853] mt-1">Ritika Marbles & Handicrafts</p>
           </div>
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm">
+              <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm border border-red-200">
                 {error}
               </div>
             )}
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+              <label className="block text-sm font-medium text-[#7B2D3A] mb-2">Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#D4A853]" />
                 <Input
                   type="email"
                   value={credentials.email}
                   onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                   placeholder="admin@ritikamarbles.com"
-                  className="pl-10"
+                  className="pl-10 border-[#D4A853]/30 focus:border-[#7B2D3A]"
                   required
                 />
               </div>
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <label className="block text-sm font-medium text-[#7B2D3A] mb-2">Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#D4A853]" />
                 <Input
                   type="password"
                   value={credentials.password}
                   onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                   placeholder="Enter your password"
-                  className="pl-10"
+                  className="pl-10 border-[#D4A853]/30 focus:border-[#7B2D3A]"
                   required
                 />
               </div>
@@ -81,15 +81,15 @@ const AdminLogin = () => {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#1a5d4c] hover:bg-[#154a3d] text-white py-3"
+              className="w-full bg-[#7B2D3A] hover:bg-[#5A1F2A] text-white py-3"
             >
               {isLoading ? 'Signing in...' : 'Sign In'}
             </Button>
           </form>
 
           {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 text-center">
+          <div className="mt-6 p-4 bg-[#FDF8F3] rounded-lg border border-[#D4A853]/20">
+            <p className="text-sm text-[#7B2D3A] text-center">
               <strong>Demo Credentials:</strong><br />
               Email: admin@ritikamarbles.com<br />
               Password: admin123

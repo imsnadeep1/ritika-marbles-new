@@ -38,25 +38,25 @@ const HeroSection = () => {
           <div className="relative flex justify-center">
             <div className="relative">
               {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#D4A853]/20 to-transparent rounded-full blur-3xl scale-150" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#D4A853]/30 to-[#7B2D3A]/10 rounded-full blur-3xl scale-150" />
               
               {/* Main Image */}
               <img
-                src="https://www.pandeymarblemoorti.com/assets/front/images/ganesh.png"
+                src="https://www.pandeymarblemoorti.com/assets/front/images/uploads/6.jpg"
                 alt="Marble Ganesh Statue"
-                className="relative z-10 max-h-[600px] object-contain drop-shadow-2xl"
+                className="relative z-10 max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
               />
               
               {/* Decorative Lotus Flowers */}
-              <div className="absolute -left-4 top-1/3 w-16 h-16 opacity-60">
+              <div className="absolute -left-4 top-1/3 w-16 h-16 opacity-70">
                 <svg viewBox="0 0 100 100" className="w-full h-full fill-[#D4A853]">
                   <ellipse cx="50" cy="50" rx="20" ry="40" />
                   <ellipse cx="50" cy="50" rx="20" ry="40" transform="rotate(60 50 50)" />
                   <ellipse cx="50" cy="50" rx="20" ry="40" transform="rotate(120 50 50)" />
                 </svg>
               </div>
-              <div className="absolute -right-8 bottom-1/4 w-20 h-20 opacity-60">
-                <svg viewBox="0 0 100 100" className="w-full h-full fill-[#7B2D3A]/30">
+              <div className="absolute -right-8 bottom-1/4 w-20 h-20 opacity-50">
+                <svg viewBox="0 0 100 100" className="w-full h-full fill-[#7B2D3A]">
                   <ellipse cx="50" cy="50" rx="20" ry="40" />
                   <ellipse cx="50" cy="50" rx="20" ry="40" transform="rotate(60 50 50)" />
                   <ellipse cx="50" cy="50" rx="20" ry="40" transform="rotate(120 50 50)" />

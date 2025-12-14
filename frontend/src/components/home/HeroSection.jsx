@@ -42,7 +42,7 @@ const HeroSection = () => {
               
               {/* Main Image */}
               <img
-                src="https://img.freepik.com/free-photo/ganesh-statue_1203-3795.jpg?w=600"
+                src="https://images.pexels.com/photos/5370665/pexels-photo-5370665.jpeg?auto=compress&cs=tinysrgb&w=600"
                 alt="Marble Ganesh Statue"
                 className="relative z-10 max-h-[600px] object-contain drop-shadow-2xl rounded-2xl"
               />

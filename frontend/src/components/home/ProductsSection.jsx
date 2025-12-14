@@ -18,12 +18,12 @@ const ProductsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-[#1a5d4c]">
+    <section className="py-20 bg-[#7B2D3A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <p className="text-[#c9a962] text-lg italic mb-2">This is what we do</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#c9a962]">Our Products</h2>
+          <p className="text-[#D4A853] text-lg italic mb-2">This is what we do</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#D4A853]">Our Products</h2>
         </div>
 
         {/* Products Carousel */}
@@ -33,17 +33,17 @@ const ProductsSection = () => {
             onClick={() => scroll('left')}
             variant="outline"
             size="icon"
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full shadow-lg -ml-4 hidden md:flex"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full shadow-lg -ml-4 hidden md:flex border-[#D4A853]"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6 text-[#7B2D3A]" />
           </Button>
           <Button
             onClick={() => scroll('right')}
             variant="outline"
             size="icon"
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full shadow-lg -mr-4 hidden md:flex"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full shadow-lg -mr-4 hidden md:flex border-[#D4A853]"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-6 h-6 text-[#7B2D3A]" />
           </Button>
 
           {/* Scrollable Container */}
@@ -66,7 +66,7 @@ const ProductsSection = () => {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
-                  <div className="p-4 text-center bg-[#1a5d4c]">
+                  <div className="p-4 text-center bg-[#5A1F2A]">
                     <h3 className="text-white font-medium text-sm">{category.name}</h3>
                   </div>
                 </div>

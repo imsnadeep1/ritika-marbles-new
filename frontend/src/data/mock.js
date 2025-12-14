@@ -185,64 +185,64 @@ export const clients = [
   {
     id: "1",
     name: "Royal Architects, Delhi",
-    logo: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=150"
+    logo: "https://www.pandeymarblemoorti.com/assets/front/images/incubis.png"
   },
   {
     id: "2",
     name: "Heritage Hotels, Jaipur",
-    logo: "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=150"
+    logo: "https://www.pandeymarblemoorti.com/assets/front/images/hyatt.png"
   },
   {
     id: "3",
     name: "Temple Trust, Gujarat",
-    logo: "https://images.pexels.com/photos/5370665/pexels-photo-5370665.jpeg?auto=compress&cs=tinysrgb&w=150"
+    logo: "https://www.pandeymarblemoorti.com/assets/front/images/orchid.png"
   },
   {
     id: "4",
     name: "Divine Interiors, Mumbai",
-    logo: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=150"
+    logo: "https://www.pandeymarblemoorti.com/assets/front/images/kanidi-biotech.png"
   },
   {
     id: "5",
     name: "Marble Palace, Bangalore",
-    logo: "https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=150"
+    logo: "https://www.pandeymarblemoorti.com/assets/front/images/thikana.png"
   },
   {
     id: "6",
     name: "Sacred Spaces, Kolkata",
-    logo: "https://images.pexels.com/photos/6044266/pexels-photo-6044266.jpeg?auto=compress&cs=tinysrgb&w=150"
+    logo: "https://www.pandeymarblemoorti.com/assets/front/images/Kripal.png"
   }
 ];
 
 export const galleryImages = [
   {
     id: "1",
-    image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400",
+    image: "https://www.pandeymarblemoorti.com/assets/front/images/1667644088.jpeg",
     title: "Award Ceremony 2023"
   },
   {
     id: "2",
-    image: "https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg?auto=compress&cs=tinysrgb&w=400",
+    image: "https://www.pandeymarblemoorti.com/assets/front/images/1667643996.jpeg",
     title: "Best Craftsman Award"
   },
   {
     id: "3",
-    image: "https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=400",
+    image: "https://www.pandeymarblemoorti.com/assets/front/images/1667644042.jpg",
     title: "Export Excellence"
   },
   {
     id: "4",
-    image: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=400",
+    image: "https://www.pandeymarblemoorti.com/assets/front/images/1667641846.jpeg",
     title: "Quality Achievement"
   },
   {
     id: "5",
-    image: "https://images.pexels.com/photos/5370665/pexels-photo-5370665.jpeg?auto=compress&cs=tinysrgb&w=400",
+    image: "https://www.pandeymarblemoorti.com/assets/front/images/1667644147.jpeg",
     title: "Industry Recognition"
   },
   {
     id: "6",
-    image: "https://images.pexels.com/photos/6044266/pexels-photo-6044266.jpeg?auto=compress&cs=tinysrgb&w=400",
+    image: "https://www.pandeymarblemoorti.com/assets/front/images/1667644088.jpeg",
     title: "National Award 2022"
   }
 ];

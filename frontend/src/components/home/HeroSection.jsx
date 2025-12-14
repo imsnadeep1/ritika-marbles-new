@@ -43,7 +43,7 @@ const HeroSection = () => {
               {/* Main Image Container */}
               <div className="relative">
                 <img
-                  src="https://www.pandeymarblearts.com/images/ganesh-new-top.jpg"
+                  src="/images/products/ganesh-new-top.png"
                   alt="Marble Ganesh Statue"
                   className="relative z-10 max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
                 />

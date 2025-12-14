@@ -5,8 +5,7 @@ import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/layout/FloatingButtons';
 import { categories, products } from '@/data/mock';
 import { ChevronRight } from 'lucide-react';
-import PlaceholderImage from '@/components/ui/PlaceholderImage';
-import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+import WatermarkedImage from '@/components/ui/WatermarkedImage';
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -66,15 +65,13 @@ const CategoryPage = () => {
                     className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow group"
                   >
                     <div className="aspect-square overflow-hidden">
-                      {product.images && product.images.length > 0 ? (
-                        <img
-                          src={product.images[0]}
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      ) : (
-                        <ProductPlaceholder name={product.name} price={product.price} />
-                      )}
+                      <WatermarkedImage
+                        src={product.images[0]}
+                        alt={product.name}
+                        watermarkPosition="bottom-right"
+                        watermarkSize="sm"
+                        className="group-hover:scale-110 transition-transform duration-500"
+                      />
                     </div>
                     <div className="p-4">
                       <h3 className="font-semibold text-[#7B2D3A] mb-2 line-clamp-2">{product.name}</h3>
@@ -106,15 +103,13 @@ const CategoryPage = () => {
                   className="group"
                 >
                   <div className="aspect-square overflow-hidden rounded-xl mb-3 shadow-md">
-                    {cat.image ? (
-                      <img
-                        src={cat.image}
-                        alt={cat.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    ) : (
-                      <PlaceholderImage name={cat.name} variant="light" />
-                    )}
+                    <WatermarkedImage
+                      src={cat.image}
+                      alt={cat.name}
+                      watermarkPosition="bottom-right"
+                      watermarkSize="sm"
+                      className="group-hover:scale-110 transition-transform duration-500"
+                    />
                   </div>
                   <h3 className="text-[#7B2D3A] font-medium text-center group-hover:text-[#D4A853] transition-colors">
                     {cat.name}

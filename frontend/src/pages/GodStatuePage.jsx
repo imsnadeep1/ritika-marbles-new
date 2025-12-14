@@ -4,7 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/layout/FloatingButtons';
 import { categories } from '@/data/mock';
-import PlaceholderImage from '@/components/ui/PlaceholderImage';
+import WatermarkedImage from '@/components/ui/WatermarkedImage';
 
 const GodStatuePage = () => {
   return (
@@ -34,15 +34,13 @@ const GodStatuePage = () => {
                 >
                   <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
                     <div className="aspect-square overflow-hidden">
-                      {category.image ? (
-                        <img
-                          src={category.image}
-                          alt={category.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      ) : (
-                        <PlaceholderImage name={category.name} />
-                      )}
+                      <WatermarkedImage
+                        src={category.image}
+                        alt={category.name}
+                        watermarkPosition="bottom-right"
+                        watermarkSize="md"
+                        className="group-hover:scale-110 transition-transform duration-500"
+                      />
                     </div>
                     <div className="p-4 bg-[#7B2D3A]">
                       <h3 className="text-white font-medium text-center">{category.name}</h3>

@@ -47,14 +47,6 @@ const HeroSection = () => {
                   alt="Marble Ganesh Statue"
                   className="relative z-10 max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
                 />
-                {/* Watermark Logo */}
-                <div className="absolute bottom-4 right-4 z-20 w-16 h-16 bg-white/80 rounded-full p-2 shadow-lg backdrop-blur-sm">
-                  <img 
-                    src="/logo.svg" 
-                    alt="Ritika Marbles" 
-                    className="w-full h-full"
-                  />
-                </div>
               </div>
               
               {/* Decorative Lotus Flowers */}

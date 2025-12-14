@@ -33,9 +33,7 @@ const AdminLogin = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8 border border-[#D4A853]/20">
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-[#7B2D3A] rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <span className="text-[#D4A853] font-bold text-2xl">R</span>
-            </div>
+            <img src="/logo.svg" alt="Ritika Marbles Logo" className="w-20 h-20 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-[#7B2D3A]">Admin Panel</h1>
             <p className="text-[#D4A853] mt-1">Ritika Marbles & Handicrafts</p>
           </div>

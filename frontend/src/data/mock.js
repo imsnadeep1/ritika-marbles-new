@@ -185,64 +185,64 @@ export const clients = [
   {
     id: "1",
     name: "Royal Architects, Delhi",
-    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150&h=80&fit=crop"
+    logo: "https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg?w=150"
   },
   {
     id: "2",
     name: "Heritage Hotels, Jaipur",
-    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150&h=80&fit=crop"
+    logo: "https://img.freepik.com/free-vector/gradient-hotel-logo-template_23-2149222951.jpg?w=150"
   },
   {
     id: "3",
     name: "Temple Trust, Gujarat",
-    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150&h=80&fit=crop"
+    logo: "https://img.freepik.com/free-vector/gradient-om-logo-template_23-2149169740.jpg?w=150"
   },
   {
     id: "4",
     name: "Divine Interiors, Mumbai",
-    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150&h=80&fit=crop"
+    logo: "https://img.freepik.com/free-vector/interior-design-logo-template_23-2149427067.jpg?w=150"
   },
   {
     id: "5",
     name: "Marble Palace, Bangalore",
-    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150&h=80&fit=crop"
+    logo: "https://img.freepik.com/free-vector/elegant-letter-m-luxury-logo_23-2149166971.jpg?w=150"
   },
   {
     id: "6",
     name: "Sacred Spaces, Kolkata",
-    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150&h=80&fit=crop"
+    logo: "https://img.freepik.com/free-vector/gradient-lotus-logo-template_23-2149173128.jpg?w=150"
   }
 ];
 
 export const galleryImages = [
   {
     id: "1",
-    image: "https://images.unsplash.com/photo-1567591414240-e9c1e6e2d8a3?w=400&h=300&fit=crop",
+    image: "https://img.freepik.com/free-photo/award-trophy-golden-color_23-2151736918.jpg?w=400",
     title: "Award Ceremony 2023"
   },
   {
     id: "2",
-    image: "https://images.unsplash.com/photo-1609167830220-7164aa360951?w=400&h=300&fit=crop",
+    image: "https://img.freepik.com/free-photo/golden-trophy-award_23-2151736911.jpg?w=400",
     title: "Best Craftsman Award"
   },
   {
     id: "3",
-    image: "https://images.unsplash.com/photo-1604608672516-f1b9a5d79c86?w=400&h=300&fit=crop",
+    image: "https://img.freepik.com/free-photo/business-achievement-award_23-2151736901.jpg?w=400",
     title: "Export Excellence"
   },
   {
     id: "4",
-    image: "https://images.unsplash.com/photo-1618330834871-a40317591c50?w=400&h=300&fit=crop",
+    image: "https://img.freepik.com/free-photo/golden-prize-cup_23-2151736895.jpg?w=400",
     title: "Quality Achievement"
   },
   {
     id: "5",
-    image: "https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=400&h=300&fit=crop",
+    image: "https://img.freepik.com/free-photo/certificate-template-design_23-2151506543.jpg?w=400",
     title: "Industry Recognition"
   },
   {
     id: "6",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+    image: "https://img.freepik.com/free-photo/golden-medal-achievement_23-2151736888.jpg?w=400",
     title: "National Award 2022"
   }
 ];

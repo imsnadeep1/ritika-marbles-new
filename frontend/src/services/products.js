@@ -12,18 +12,24 @@ export async function getProducts() {
 // -------- Create / Upload Product Image ----------
 export async function uploadProductImage(file) {
   const fileName = `${Date.now()}-${file.name}`;
-  
+
   const { data, error } = await supabase.storage
     .from("products")
-    .upload(fileName, file);
+    .upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
 
-  if (error) throw error;
+  if (error) {
+    console.error("Upload error:", error);
+    throw error;
+  }
 
-  const { data: urlData } = supabase.storage
-    .from("products")
-    .getPublicUrl(fileName);
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("products").getPublicUrl(fileName);
 
-  return urlData.publicUrl;
+  return publicUrl;
 }
 
 // -------- Create Product ----------

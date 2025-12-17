@@ -43,32 +43,37 @@ const ProductsAdmin = () => {
 
   // ---------------- SUBMIT ----------------
   async function handleSubmit(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    let image_url = null;
+  let image_url = null;
 
-    if (form.imageFile) {
-      image_url = await uploadProductImage(form.imageFile);
-    }
-
-    const payload = {
-      name: form.name,
-      price: Number(form.price),
-      description: form.description,
-      category_id: form.category_id,
-      image_url,
-    };
-
-    if (editingId) {
-      await updateProduct(editingId, payload);
-      alert("Product updated");
-    } else {
-      await addProduct(payload);
-      alert("Product added");
-    }
-
-    window.location.reload();
+  if (form.imageFile) {
+    image_url = await uploadProductImage(form.imageFile);
   }
+
+  // Generate slug from product name
+  const slug = form.name.toLowerCase().replace(/\s+/g, "-");
+
+  const payload = {
+    name: form.name,
+    price: Number(form.price),
+    description: form.description,
+    category_id: form.category_id,
+    image_url,
+    slug
+  };
+
+  if (editingId) {
+    await updateProduct(editingId, payload);
+    alert("Product updated");
+  } else {
+    await addProduct(payload);
+    alert("Product added");
+  }
+
+  window.location.reload();
+}
+
 
   // ---------------- EDIT ----------------
   function handleEdit(product) {

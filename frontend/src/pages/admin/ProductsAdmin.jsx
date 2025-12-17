@@ -51,28 +51,32 @@ const ProductsAdmin = () => {
 
   let image_url = null;
 
-  if (form.imageFile) {
-    image_url = await uploadProductImage(form.imageFile);
-  }
+  try {
+    if (form.imageFile) {
+      image_url = await uploadProductImage(form.imageFile);
+    }
 
-  // Generate slug from product name
-  const slug = form.name.toLowerCase().replace(/\s+/g, "-");
+    const slug = form.name.toLowerCase().replace(/\s+/g, "-");
 
-  const payload = {
-    name: form.name,
-    price: Number(form.price),
-    description: form.description,
-    category_id: form.category_id,
-    image_url,
-    slug
-  };
+    const payload = {
+      name: form.name,
+      price: Number(form.price),
+      description: form.description,
+      category_id: form.category_id,
+      image_url,
+      slug,
+    };
 
-  if (editingId) {
-    await updateProduct(editingId, payload);
-    alert("Product updated");
-  } else {
-    await addProduct(payload);
-    alert("Product added");
+    if (editingId) {
+      await updateProduct(editingId, payload);
+      alert("Product updated");
+    } else {
+      await addProduct(payload);
+      alert("Product added");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Upload failed. Check console for details.");
   }
 
   window.location.reload();

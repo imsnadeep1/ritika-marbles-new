@@ -13,16 +13,16 @@ export async function getProducts() {
 export async function uploadProductImage(file) {
   const fileName = `${Date.now()}-${file.name}`;
 
-  const { data, error } = await supabase.storage
+  const { error: uploadError } = await supabase.storage
     .from("products")
     .upload(fileName, file, {
       cacheControl: "3600",
       upsert: false,
     });
 
-  if (error) {
-    console.error("Upload error:", error);
-    throw error;
+  if (uploadError) {
+    console.error("Image Upload Error:", uploadError);
+    throw uploadError;
   }
 
   const {
@@ -31,6 +31,7 @@ export async function uploadProductImage(file) {
 
   return publicUrl;
 }
+
 
 // -------- Create Product ----------
 export async function addProduct(product) {

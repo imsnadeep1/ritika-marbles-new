@@ -39,9 +39,10 @@ const ProductsAdmin = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleFileChange = (e) => {
-  if (e.target.files && e.target.files.length > 0) {
-    setForm({ ...form, imageFile: e.target.files[0] });
-  }
+    const file = e.target.files?.[0] || null;
+    setForm({ ...form, imageFile: file });
+  };
+
 };
 
 

@@ -12,7 +12,6 @@ const ProductsAdmin = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  // Form state
   const [form, setForm] = useState({
     name: "",
     price: "",
@@ -43,50 +42,42 @@ const ProductsAdmin = () => {
     setForm({ ...form, imageFile: file });
   };
 
-};
-
-
   // ---------------- SUBMIT ----------------
   async function handleSubmit(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    let image_url = null;
+    try {
+      let image_url = null;
 
-    // 1. upload image if selected
-    if (form.imageFile) {
-      image_url = await uploadProductImage(form.imageFile);
+      if (form.imageFile) {
+        image_url = await uploadProductImage(form.imageFile);
+      }
+
+      const slug = form.name.toLowerCase().replace(/\s+/g, "-");
+
+      const payload = {
+        name: form.name,
+        price: Number(form.price),
+        description: form.description,
+        category_id: form.category_id,
+        image_url,
+        slug,
+      };
+
+      if (editingId) {
+        await updateProduct(editingId, payload);
+        alert("Product updated");
+      } else {
+        await addProduct(payload);
+        alert("Product added");
+      }
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting product:", error);
+      alert("Upload failed. Open console for details.");
     }
-
-    // 2. generate slug
-    const slug = form.name.toLowerCase().replace(/\s+/g, "-");
-
-    // 3. prepare product object
-    const payload = {
-      name: form.name,
-      price: Number(form.price),
-      description: form.description,
-      category_id: form.category_id,
-      image_url,
-      slug,
-    };
-
-    // 4. create or update product
-    if (editingId) {
-      await updateProduct(editingId, payload);
-      alert("Product updated");
-    } else {
-      await addProduct(payload);
-      alert("Product added");
-    }
-
-    window.location.reload();
-  } catch (error) {
-    console.error("Error submitting product:", error);
-    alert("Upload failed. Open console for details.");
   }
-}
-
 
   // ---------------- EDIT ----------------
   function handleEdit(product) {
@@ -108,6 +99,7 @@ const ProductsAdmin = () => {
     }
   }
 
+  // ---------------- UI ----------------
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Products Admin</h1>
@@ -140,7 +132,6 @@ const ProductsAdmin = () => {
           onChange={handleChange}
         />
 
-        {/* Category Dropdown */}
         <select
           name="category_id"
           className="border p-2 w-full"

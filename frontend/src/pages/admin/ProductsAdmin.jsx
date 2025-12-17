@@ -49,15 +49,18 @@ const ProductsAdmin = () => {
   async function handleSubmit(e) {
   e.preventDefault();
 
-  let image_url = null;
-
   try {
+    let image_url = null;
+
+    // 1. upload image if selected
     if (form.imageFile) {
       image_url = await uploadProductImage(form.imageFile);
     }
 
+    // 2. generate slug
     const slug = form.name.toLowerCase().replace(/\s+/g, "-");
 
+    // 3. prepare product object
     const payload = {
       name: form.name,
       price: Number(form.price),
@@ -67,6 +70,7 @@ const ProductsAdmin = () => {
       slug,
     };
 
+    // 4. create or update product
     if (editingId) {
       await updateProduct(editingId, payload);
       alert("Product updated");
@@ -74,12 +78,12 @@ const ProductsAdmin = () => {
       await addProduct(payload);
       alert("Product added");
     }
-  } catch (err) {
-    console.error(err);
-    alert("Upload failed. Check console for details.");
-  }
 
-  window.location.reload();
+    window.location.reload();
+  } catch (error) {
+    console.error("Error submitting product:", error);
+    alert("Upload failed. Open console for details.");
+  }
 }
 
 

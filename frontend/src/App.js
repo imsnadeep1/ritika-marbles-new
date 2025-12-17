@@ -32,18 +32,19 @@ function App() {
           <Route path="/product/:slug" element={<ProductDetailPage />} />
           <Route path="/testimonials" element={<TestimonialsPage />} />
           <Route path="/collections/:type" element={<CategoryPage />} />
-          
+        
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
+        
+          {/* All admin pages wrapped inside AdminLayout */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="categories" element={<AdminCategories />} />
-            <Route path="products" element={<AdminProducts />} />
-            <Route path="/admin/products" element={<ProductsAdmin />} />
-            <Route path="/admin/categories" element={<CategoriesAdmin />} />
-            <Route path="/admin/feedback" element={<FeedbackAdmin />} />
-
+        
+            {/* REPLACE OLD MOCK ADMIN PAGES WITH NEW SUPABASE ONES */}
+            <Route path="products" element={<ProductsAdmin />} />
+            <Route path="categories" element={<CategoriesAdmin />} />
+            <Route path="feedback" element={<FeedbackAdmin />} />
           </Route>
         </Routes>
       </BrowserRouter>

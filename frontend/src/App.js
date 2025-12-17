@@ -13,6 +13,10 @@ import AdminDashboard from '@/pages/admin/AdminDashboard';
 import AdminCategories from '@/pages/admin/AdminCategories';
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminLogin from '@/pages/admin/AdminLogin';
+import ProductsAdmin from "@/pages/admin/ProductsAdmin";
+import CategoriesAdmin from "@/pages/admin/CategoriesAdmin";
+import FeedbackAdmin from "@/pages/admin/FeedbackAdmin";
+
 
 function App() {
   return (
@@ -36,6 +40,10 @@ function App() {
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="categories" element={<AdminCategories />} />
             <Route path="products" element={<AdminProducts />} />
+            <Route path="/admin/products" element={<ProductsAdmin />} />
+            <Route path="/admin/categories" element={<CategoriesAdmin />} />
+            <Route path="/admin/feedback" element={<FeedbackAdmin />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

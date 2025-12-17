@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { getAllFeedback } from "../../services/feedback";
+import React, { useEffect, useState } from "react";
+import { getAllFeedback } from "@/services/feedback";
 
-export default function FeedbackAdmin() {
+const FeedbackAdmin = () => {
   const [feedback, setFeedback] = useState([]);
 
   useEffect(() => {
@@ -13,21 +13,33 @@ export default function FeedbackAdmin() {
   }, []);
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Customer Feedback</h2>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-6">Customer Feedback</h1>
 
       {feedback.map((fb) => (
-        <div key={fb.id} className="border rounded p-3 mb-3">
-          <p><strong>Product:</strong> {fb.products?.name}</p>
-          <p><strong>Name:</strong> {fb.name}</p>
-          <p><strong>Email:</strong> {fb.email}</p>
-          <p><strong>Rating:</strong> {"⭐".repeat(fb.rating)}</p>
-          <p><strong>Message:</strong> {fb.message}</p>
-          <small className="text-gray-500">
+        <div key={fb.id} className="border rounded p-4 mb-4">
+          <p>
+            <strong>Product:</strong> {fb.products?.name}
+          </p>
+          <p>
+            <strong>Name:</strong> {fb.name || "Anonymous"}
+          </p>
+          <p>
+            <strong>Email:</strong> {fb.email}
+          </p>
+          <p>
+            <strong>Rating:</strong> {"⭐".repeat(fb.rating)}
+          </p>
+          <p className="mt-2">
+            <strong>Message:</strong> {fb.message}
+          </p>
+          <p className="text-sm text-gray-500 mt-2">
             {new Date(fb.created_at).toLocaleString()}
-          </small>
+          </p>
         </div>
       ))}
     </div>
   );
-}
+};
+
+export default FeedbackAdmin;

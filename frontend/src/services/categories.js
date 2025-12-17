@@ -1,5 +1,5 @@
 
-import { supabase } from "./supabaseClient";
+import { supabase } from "../lib/supabaseClient";
 
 
 export async function getCategories() {

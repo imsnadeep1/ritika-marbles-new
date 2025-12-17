@@ -1,14 +1,14 @@
-import React from 'react';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import FloatingButtons from '@/components/layout/FloatingButtons';
-import HeroSection from '@/components/home/HeroSection';
-import ProductsSection from '@/components/home/ProductsSection';
-import VideoSection from '@/components/home/VideoSection';
-import FeaturedSections from '@/components/home/FeaturedSections';
-import StatsSection from '@/components/home/StatsSection';
-import QuoteSection from '@/components/home/QuoteSection';
-import WhyChooseUs from '@/components/home/WhyChooseUs';
+import React from "react";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import FloatingButtons from "@/components/layout/FloatingButtons";
+import HeroSection from "@/components/home/HeroSection";
+import ProductsSection from "@/components/home/ProductsSection";
+import VideoSection from "@/components/home/VideoSection";
+import FeaturedSections from "@/components/home/FeaturedSections";
+import StatsSection from "@/components/home/StatsSection";
+import QuoteSection from "@/components/home/QuoteSection";
+import WhyChooseUs from "@/components/home/WhyChooseUs";
 
 const HomePage = () => {
   return (
@@ -16,12 +16,12 @@ const HomePage = () => {
       <Header />
       <main>
         <HeroSection />
-        <ProductsSection />
+        <ProductsSection />       {/* Now dynamic categories */}
         <VideoSection />
         <FeaturedSections />
-        <StatsSection />
+        <StatsSection />          {/* Now dynamic stats */}
         <QuoteSection />
-        <WhyChooseUs />
+        <WhyChooseUs />           {/* Static but optimized */}
       </main>
       <Footer />
       <FloatingButtons />

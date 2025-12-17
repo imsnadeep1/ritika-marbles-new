@@ -38,8 +38,12 @@ const ProductsAdmin = () => {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleFileChange = (e) =>
+  const handleFileChange = (e) => {
+  if (e.target.files && e.target.files.length > 0) {
     setForm({ ...form, imageFile: e.target.files[0] });
+  }
+};
+
 
   // ---------------- SUBMIT ----------------
   async function handleSubmit(e) {

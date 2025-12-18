@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from 'lucide-react';
-import { siteConfig, navItems, categories } from '@/data/mock';
+import { siteConfig, navItems } from '@/data/mock';
+import { getCategories } from '@/services/categories';
 
 const Footer = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function load() {
+      const data = await getCategories();
+
+      // Sort by newest OR alphabetically — choose your preference:
+      const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
+
+      setCategories(sorted.slice(0, 5)); // TOP 5 categories
+    }
+    load();
+  }, []);
+
   return (
     <footer className="bg-[#7B2D3A] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-6">
@@ -22,7 +38,7 @@ const Footer = () => {
               We bring divine beauty to your spaces with our handcrafted masterpieces.
             </p>
             <div className="flex gap-4">
-              <a href={siteConfig.socialLinks.facebook} target="_blank" rel="noopener noreferrer" 
+              <a href={siteConfig.socialLinks.facebook} target="_blank" rel="noopener noreferrer"
                 className="w-10 h-10 bg-[#D4A853]/20 rounded-full flex items-center justify-center hover:bg-[#D4A853]/40 transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
@@ -51,17 +67,24 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Categories */}
+          {/* Our Products – Dynamic Top 5 Categories */}
           <div>
             <h4 className="font-semibold text-lg mb-6 text-[#D4A853]">Our Products</h4>
             <ul className="space-y-3">
-              {categories.slice(0, 6).map((category) => (
-                <li key={category.id}>
-                  <Link to={`/category/${category.slug}`} className="text-white/80 hover:text-[#D4A853] text-sm transition-colors">
-                    {category.name}
-                  </Link>
-                </li>
-              ))}
+              {categories.length === 0 ? (
+                <li className="text-white/60 text-sm">Loading...</li>
+              ) : (
+                categories.map((cat) => (
+                  <li key={cat.id}>
+                    <Link
+                      to={`/category/${cat.slug}`}
+                      className="text-white/80 hover:text-[#D4A853] text-sm transition-colors"
+                    >
+                      {cat.name}
+                    </Link>
+                  </li>
+                ))
+              )}
             </ul>
           </div>
 

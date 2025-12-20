@@ -46,22 +46,30 @@ export async function deleteReview(id) {
 /* ================= PUBLIC ================= */
 
 // Get only approved reviews
-export async function getApprovedReviews(limit = 6) {
+export const getApprovedProductReviews = async () => {
   const { data, error } = await supabase
-    .from("reviews")
-    .select("*")
-    .eq("approved", true)
-    .order("created_at", { ascending: false })
-    .limit(limit);
+    .from('reviews')
+    .select(`
+      id,
+      customer_name,
+      rating,
+      review,
+      products (
+        id,
+        name,
+        slug
+      )
+    `)
+    .eq('approved', true)
+    .order('created_at', { ascending: false });
 
   if (error) {
-    console.error("getApprovedReviews error:", error);
+    console.error('Supabase reviews fetch error:', error);
     return [];
   }
 
   return data;
-}
-
+};
 // Add new review (from product / public form)
 export async function addReview(payload) {
   const { error } = await supabase.from("reviews").insert(payload);

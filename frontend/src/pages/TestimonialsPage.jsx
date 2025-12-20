@@ -2,8 +2,9 @@ import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/layout/FloatingButtons';
-import ClientDiaries from '@/components/ClientDiaries';
-import EsteemedClients from '@/components/EsteemedClients';
+import ClientDiaries from '../components/home/ClientDiaries';
+import EsteemedClients from '../components/home/EsteemedClients';
+
 
 const TestimonialsPage = () => {
   return (

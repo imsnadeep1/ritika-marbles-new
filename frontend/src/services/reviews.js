@@ -48,23 +48,22 @@ export async function deleteReview(id) {
 // Get only approved reviews
 export const getApprovedProductReviews = async () => {
   const { data, error } = await supabase
-    .from('reviews')
+    .from('feedback')
     .select(`
       id,
-      customer_name,
+      name,
       rating,
-      review,
+      message,
       products (
         id,
         name,
         slug
       )
     `)
-    .eq('approved', true)
     .order('created_at', { ascending: false });
 
   if (error) {
-    console.error('Supabase reviews fetch error:', error);
+    console.error('Supabase feedback fetch error:', error);
     return [];
   }
 

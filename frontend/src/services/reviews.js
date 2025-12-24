@@ -60,6 +60,7 @@ export const getApprovedProductReviews = async () => {
         slug
       )
     `)
+    .eq('approved', true)
     .order('created_at', { ascending: false });
 
   if (error) {

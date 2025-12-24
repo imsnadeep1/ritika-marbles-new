@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
+import React, { useEffect, useState } from "react";
+import { supabase } from "../../lib/supabaseClient";
 
-const AdminFeedback = () => {
+const FeedbackAdmin = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -9,7 +9,7 @@ const AdminFeedback = () => {
     setLoading(true);
 
     const { data, error } = await supabase
-      .from('feedback')
+      .from("feedback")
       .select(`
         id,
         name,
@@ -22,28 +22,28 @@ const AdminFeedback = () => {
           name
         )
       `)
-      .order('created_at', { ascending: false });
+      .order("created_at", { ascending: false });
 
     if (error) {
-      console.error('Fetch feedback error:', error);
+      console.error("Error fetching feedback:", error);
     } else {
-      setFeedbacks(data);
+      setFeedbacks(data || []);
     }
 
     setLoading(false);
   };
 
-  const toggleApproval = async (id, currentStatus) => {
+  const toggleApproval = async (id, approved) => {
     const { error } = await supabase
-      .from('feedback')
-      .update({ approved: !currentStatus })
-      .eq('id', id);
+      .from("feedback")
+      .update({ approved: !approved })
+      .eq("id", id);
 
     if (error) {
-      console.error('Approval update failed:', error);
-      alert('Failed to update approval');
+      alert("Failed to update approval");
+      console.error(error);
     } else {
-      fetchFeedbacks(); // refresh list
+      fetchFeedbacks();
     }
   };
 
@@ -60,18 +60,18 @@ const AdminFeedback = () => {
       {loading ? (
         <p>Loading feedback...</p>
       ) : feedbacks.length === 0 ? (
-        <p className="text-gray-500">No feedback available.</p>
+        <p className="text-gray-500">No feedback found.</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full border border-gray-200 rounded-lg">
-            <thead className="bg-gray-100">
-              <tr className="text-left text-sm">
-                <th className="p-3">Customer</th>
-                <th className="p-3">Product</th>
-                <th className="p-3">Rating</th>
-                <th className="p-3">Message</th>
-                <th className="p-3">Status</th>
-                <th className="p-3">Action</th>
+            <thead className="bg-gray-100 text-sm">
+              <tr>
+                <th className="p-3 text-left">Customer</th>
+                <th className="p-3 text-left">Product</th>
+                <th className="p-3 text-left">Rating</th>
+                <th className="p-3 text-left">Message</th>
+                <th className="p-3 text-left">Status</th>
+                <th className="p-3 text-left">Action</th>
               </tr>
             </thead>
 
@@ -112,11 +112,11 @@ const AdminFeedback = () => {
                       onClick={() => toggleApproval(f.id, f.approved)}
                       className={`px-3 py-1 text-xs rounded font-medium ${
                         f.approved
-                          ? 'bg-red-500 text-white hover:bg-red-600'
-                          : 'bg-green-600 text-white hover:bg-green-700'
+                          ? "bg-red-500 text-white hover:bg-red-600"
+                          : "bg-green-600 text-white hover:bg-green-700"
                       }`}
                     >
-                      {f.approved ? 'Unapprove' : 'Approve'}
+                      {f.approved ? "Unapprove" : "Approve"}
                     </button>
                   </td>
                 </tr>
@@ -129,4 +129,4 @@ const AdminFeedback = () => {
   );
 };
 
-export default AdminFeedback;
+export default FeedbackAdmin;

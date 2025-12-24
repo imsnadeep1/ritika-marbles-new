@@ -7,8 +7,12 @@ const ClientDiaries = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getApprovedProductReviews().then(setReviews);
-  }, []);
+  getApprovedProductReviews().then((data) => {
+    console.log('🔥 FEEDBACK DATA:', data);
+    setReviews(data);
+  });
+}, []);
+
 
   if (!reviews.length) return null;
 

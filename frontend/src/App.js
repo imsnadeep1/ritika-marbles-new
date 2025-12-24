@@ -21,7 +21,7 @@ import ProductsAdmin from "@/pages/admin/ProductsAdmin";
 import CategoriesAdmin from "@/pages/admin/CategoriesAdmin";
 import ReviewsAdmin from "@/pages/admin/ReviewsAdmin";
 import EsteemedClientsAdmin from "@/pages/admin/EsteemedClientsAdmin";
-import AdminFeedback from "@/pages/admin/AdminFeedback"; // ✅ MODERATION PAGE
+import FeedbackAdmin from "@/pages/admin/FeedbackAdmin"; // ✅ MODERATION PAGE
 
 function App() {
   return (
@@ -58,7 +58,7 @@ function App() {
             <Route path="clients" element={<EsteemedClientsAdmin />} />
 
             {/* ✅ Customer Feedback Moderation */}
-            <Route path="feedback" element={<AdminFeedback />} />
+            <Route path="feedback" element={<FeedbackAdmin />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -9,20 +9,21 @@ const FeedbackAdmin = () => {
     setLoading(true);
 
     const { data, error } = await supabase
-      .from("feedback")
+      .from('feedback')
       .select(`
         id,
         name,
-        message,
         rating,
+        message,
         approved,
-        created_at,
         products (
           id,
-          name
+          name,
+          slug
         )
       `)
-      .order("created_at", { ascending: false });
+      .eq('approved', true)
+      .order('created_at', { ascending: false });
 
     if (error) {
       console.error("Error fetching feedback:", error);

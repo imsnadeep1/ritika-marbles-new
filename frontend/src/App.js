@@ -15,6 +15,8 @@ import TestimonialsPage from "@/pages/TestimonialsPage";
 import AdminLayout from "@/pages/admin/AdminLayout";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminLogin from "@/pages/admin/AdminLogin";
+import AdminFeedback from '@/pages/admin/AdminFeedback';
+
 
 /* Supabase-powered Admin Pages */
 import ProductsAdmin from "@/pages/admin/ProductsAdmin";

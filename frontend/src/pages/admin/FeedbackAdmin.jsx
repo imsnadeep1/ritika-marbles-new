@@ -96,29 +96,27 @@ const FeedbackAdmin = () => {
                   </td>
 
                   <td className="p-3">
-                    {f.approved ? (
-                      <span className="px-2 py-1 text-xs bg-green-100 text-green-700 rounded">
-                        Approved
-                      </span>
-                    ) : (
-                      <span className="px-2 py-1 text-xs bg-yellow-100 text-yellow-700 rounded">
-                        Pending
-                      </span>
-                    )}
-                  </td>
-
-                  <td className="p-3">
-                    <button
-                      onClick={() => toggleApproval(f.id, f.approved)}
-                      className={`px-3 py-1 text-xs rounded font-medium ${
+                    <span
+                      className={`px-2 py-1 text-xs rounded ${
                         f.approved
-                          ? "bg-red-500 text-white hover:bg-red-600"
-                          : "bg-green-600 text-white hover:bg-green-700"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-yellow-100 text-yellow-700"
                       }`}
                     >
-                      {f.approved ? "Unapprove" : "Approve"}
+                      {f.approved ? "Approved" : "Pending"}
+                    </span>
+                  </td>
+                  
+                  <td className="p-3">
+                    <button
+                      type="button"
+                      onClick={() => toggleApproval(f.id, !!f.approved)}
+                      className="px-3 py-1 text-xs rounded font-medium bg-blue-600 text-white hover:bg-blue-700"
+                    >
+                      {f.approved ? "Mark as Pending" : "Approve"}
                     </button>
                   </td>
+
                 </tr>
               ))}
             </tbody>

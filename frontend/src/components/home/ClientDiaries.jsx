@@ -21,7 +21,7 @@ const ClientDiaries = () => {
             className="min-w-[320px] max-w-[420px] bg-white rounded-xl p-5 shadow flex-shrink-0"
           >
             <p className="text-gray-700 italic mb-3 line-clamp-3">
-              “{r.review}”
+              “{r.message}”
             </p>
 
             <div className="flex items-center gap-1 mb-2">
@@ -33,15 +33,17 @@ const ClientDiaries = () => {
               ))}
             </div>
 
-            <Link
-              to={`/products/${r.products.slug}`}
-              className="text-sm font-semibold text-[#1a5d4c] hover:underline"
-            >
-              {r.products.name}
-            </Link>
+            {r.products && (
+              <Link
+                to={`/products/${r.products.slug}`}
+                className="text-sm font-semibold text-[#1a5d4c] hover:underline"
+              >
+                {r.products.name}
+              </Link>
+            )}
 
             <p className="text-xs text-gray-500 mt-1">
-              — {r.customer_name}
+              — {r.name}
             </p>
           </div>
         ))}

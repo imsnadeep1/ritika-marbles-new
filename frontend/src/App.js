@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-/* Public Pages */
+/* ================= PUBLIC PAGES ================= */
 import HomePage from "@/pages/HomePage";
 import ContactPage from "@/pages/ContactPage";
 import AboutPage from "@/pages/AboutPage";
@@ -11,19 +11,17 @@ import CategoryPage from "@/pages/CategoryPage";
 import ProductDetailPage from "@/pages/ProductDetailPage";
 import TestimonialsPage from "@/pages/TestimonialsPage";
 
-/* Admin Layout & Auth */
+/* ================= ADMIN LAYOUT & AUTH ================= */
 import AdminLayout from "@/pages/admin/AdminLayout";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminLogin from "@/pages/admin/AdminLogin";
-import AdminFeedback from '@/pages/admin/AdminFeedback';
 
-
-/* Supabase-powered Admin Pages */
+/* ================= ADMIN PAGES ================= */
 import ProductsAdmin from "@/pages/admin/ProductsAdmin";
 import CategoriesAdmin from "@/pages/admin/CategoriesAdmin";
-import FeedbackAdmin from "@/pages/admin/FeedbackAdmin";
 import ReviewsAdmin from "@/pages/admin/ReviewsAdmin";
 import EsteemedClientsAdmin from "@/pages/admin/EsteemedClientsAdmin";
+import AdminFeedback from "@/pages/admin/AdminFeedback"; // ✅ MODERATION PAGE
 
 function App() {
   return (
@@ -40,26 +38,27 @@ function App() {
           <Route path="/testimonials" element={<TestimonialsPage />} />
           <Route path="/collections/:type" element={<CategoryPage />} />
 
-          {/* ================= ADMIN ROUTES ================= */}
+          {/* ================= ADMIN LOGIN ================= */}
           <Route path="/admin/login" element={<AdminLogin />} />
 
+          {/* ================= ADMIN PANEL ================= */}
           <Route path="/admin" element={<AdminLayout />}>
             {/* Dashboard */}
             <Route index element={<AdminDashboard />} />
             <Route path="dashboard" element={<AdminDashboard />} />
 
-            {/* Catalog Management */}
+            {/* Catalog */}
             <Route path="categories" element={<CategoriesAdmin />} />
             <Route path="products" element={<ProductsAdmin />} />
 
-            {/* Client Diaries (Reviews) */}
+            {/* Reviews / Client Diaries */}
             <Route path="reviews" element={<ReviewsAdmin />} />
 
             {/* Esteemed Clients */}
             <Route path="clients" element={<EsteemedClientsAdmin />} />
 
-            {/* Contact / Feedback */}
-            <Route path="feedback" element={<FeedbackAdmin />} />
+            {/* ✅ Customer Feedback Moderation */}
+            <Route path="feedback" element={<AdminFeedback />} />
           </Route>
         </Routes>
       </BrowserRouter>

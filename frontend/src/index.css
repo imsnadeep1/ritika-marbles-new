@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,26 +6,26 @@
 
 @layer base {
   :root {
-    --background: 35 37% 96%;
-    --foreground: 22 22% 16%;
+    --background: 40 33% 97%;
+    --foreground: 20 18% 18%;
     --card: 0 0% 100%;
-    --card-foreground: 22 22% 16%;
+    --card-foreground: 20 18% 18%;
     --popover: 0 0% 100%;
-    --popover-foreground: 22 22% 16%;
-    --primary: 345 41% 30%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 32 28% 91%;
-    --secondary-foreground: 345 41% 30%;
-    --muted: 33 24% 92%;
-    --muted-foreground: 24 12% 38%;
-    --accent: 38 57% 56%;
-    --accent-foreground: 24 32% 12%;
+    --popover-foreground: 20 18% 18%;
+    --primary: 336 32% 36%;
+    --primary-foreground: 0 0% 99%;
+    --secondary: 36 31% 92%;
+    --secondary-foreground: 336 32% 34%;
+    --muted: 35 24% 93%;
+    --muted-foreground: 22 10% 42%;
+    --accent: 42 62% 62%;
+    --accent-foreground: 28 35% 18%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 32 20% 84%;
-    --input: 32 20% 84%;
-    --ring: 345 41% 30%;
-    --radius: 0.75rem;
+    --border: 32 22% 85%;
+    --input: 32 22% 85%;
+    --ring: 336 32% 36%;
+    --radius: 0.85rem;
   }
 
   * {
@@ -38,25 +38,25 @@
 
   body {
     margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     @apply bg-background text-foreground;
     background-image:
-      radial-gradient(circle at 0% 0%, rgba(212, 168, 83, 0.18), transparent 40%),
-      radial-gradient(circle at 100% 10%, rgba(123, 45, 58, 0.16), transparent 45%),
-      linear-gradient(180deg, #fffdf9 0%, #f8f3eb 100%);
+      radial-gradient(circle at 0% 0%, rgba(214, 181, 122, 0.22), transparent 40%),
+      radial-gradient(circle at 100% 10%, rgba(104, 63, 74, 0.15), transparent 45%),
+      linear-gradient(180deg, #fffefb 0%, #f6efe4 100%);
     background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
     letter-spacing: 0.01em;
-    color: #4a2430;
+    color: #5a3441;
   }
 
   blockquote, .quote-text {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 
   a {
@@ -66,13 +66,13 @@
 
 @layer components {
   .lux-card {
-    @apply rounded-2xl border bg-white/80 shadow-sm backdrop-blur;
-    box-shadow: 0 12px 36px rgba(74, 36, 48, 0.08);
+    @apply rounded-2xl border bg-white/85 shadow-sm backdrop-blur;
+    box-shadow: 0 14px 36px rgba(80, 46, 58, 0.10);
   }
 
   .lux-section {
-    @apply rounded-2xl border border-white/40 bg-white/60 backdrop-blur;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    @apply rounded-2xl border border-white/50 bg-white/70 backdrop-blur;
+    box-shadow: 0 10px 28px rgba(74, 42, 53, 0.08);
   }
 }
 

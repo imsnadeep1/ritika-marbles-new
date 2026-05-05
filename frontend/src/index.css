@@ -1,147 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
+@layer base {
+  :root {
+    --background: 35 37% 96%;
+    --foreground: 22 22% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 22 22% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 22 22% 16%;
+    --primary: 345 41% 30%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 32 28% 91%;
+    --secondary-foreground: 345 41% 30%;
+    --muted: 33 24% 92%;
+    --muted-foreground: 24 12% 38%;
+    --accent: 38 57% 56%;
+    --accent-foreground: 24 32% 12%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 32 20% 84%;
+    --input: 32 20% 84%;
+    --ring: 345 41% 30%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html, body, #root {
+    min-height: 100%;
+  }
+
+  body {
     margin: 0;
-    font-family:
-        'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(circle at 0% 0%, rgba(212, 168, 83, 0.18), transparent 40%),
+      radial-gradient(circle at 100% 10%, rgba(123, 45, 58, 0.16), transparent 45%),
+      linear-gradient(180deg, #fffdf9 0%, #f8f3eb 100%);
+    background-attachment: fixed;
+  }
 
-/* Elegant heading font */
-h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: 'Cormorant Garamond', Georgia, serif;
-}
+    letter-spacing: 0.01em;
+    color: #4a2430;
+  }
 
-/* Quote and italic text styling */
-blockquote, .quote-text {
+  blockquote, .quote-text {
     font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  a {
+    transition: color 200ms ease;
+  }
 }
 
-code {
-    font-family:
-        source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+@layer components {
+  .lux-card {
+    @apply rounded-2xl border bg-white/80 shadow-sm backdrop-blur;
+    box-shadow: 0 12px 36px rgba(74, 36, 48, 0.08);
+  }
+
+  .lux-section {
+    @apply rounded-2xl border border-white/40 bg-white/60 backdrop-blur;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
 }
 
-@layer base {
-    :root {
-        --background: 30 50% 98%;
-        --foreground: 0 0% 3.9%;
-        --card: 30 50% 99%;
-        --card-foreground: 0 0% 3.9%;
-        --popover: 30 50% 99%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 350 45% 33%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 30 30% 96%;
-        --secondary-foreground: 350 45% 33%;
-        --muted: 30 20% 96%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 43 70% 58%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 30 20% 88%;
-        --input: 30 20% 88%;
-        --ring: 350 45% 33%;
-        --chart-1: 350 45% 33%;
-        --chart-2: 43 70% 58%;
-        --chart-3: 30 30% 50%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 350 30% 45%;
-        --radius: 0.5rem;
-        
-        /* Custom theme colors */
-        --burgundy: #7B2D3A;
-        --burgundy-dark: #5A1F2A;
-        --burgundy-light: #9E4A58;
-        --gold: #D4A853;
-        --gold-dark: #B8923F;
-        --gold-light: #E8C878;
-        --cream: #FDF8F3;
-        --ivory: #FFFBF5;
-    }
-    .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
-    }
-}
 @keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
 .animate-marquee {
   animation: marquee 45s linear infinite;
 }
 
-@layer base {
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
+[data-debug-wrapper="true"] {
+  display: contents !important;
 }
 
-@layer base {
-    [data-debug-wrapper="true"] {
-        display: contents !important;
-    }
-
-    [data-debug-wrapper="true"] > * {
-        margin-left: inherit;
-        margin-right: inherit;
-        margin-top: inherit;
-        margin-bottom: inherit;
-        padding-left: inherit;
-        padding-right: inherit;
-        padding-top: inherit;
-        padding-bottom: inherit;
-        column-gap: inherit;
-        row-gap: inherit;
-        gap: inherit;
-        border-left-width: inherit;
-        border-right-width: inherit;
-        border-top-width: inherit;
-        border-bottom-width: inherit;
-        border-left-style: inherit;
-        border-right-style: inherit;
-        border-top-style: inherit;
-        border-bottom-style: inherit;
-        border-left-color: inherit;
-        border-right-color: inherit;
-        border-top-color: inherit;
-        border-bottom-color: inherit;
-    }
+[data-debug-wrapper="true"] > * {
+  margin: inherit;
+  padding: inherit;
+  column-gap: inherit;
+  row-gap: inherit;
+  gap: inherit;
+  border-width: inherit;
+  border-style: inherit;
+  border-color: inherit;
 }

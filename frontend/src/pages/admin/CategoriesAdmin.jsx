@@ -59,8 +59,9 @@ const CategoriesAdmin = () => {
       alert("Category added successfully");
       window.location.reload();
     } catch (err) {
-      console.error(err);
-      alert("Failed to add category, check console.");
+      console.error("Category creation failed:", err);
+      const message = err?.message || err?.error_description || "Unknown error";
+      alert(`Failed to add category: ${message}`);
     }
   }
 

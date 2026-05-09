@@ -9,19 +9,22 @@ import FeaturedSections from "@/components/home/FeaturedSections";
 import StatsSection from "@/components/home/StatsSection";
 import QuoteSection from "@/components/home/QuoteSection";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const HomePage = () => {
   return (
     <div className="min-h-screen">
       <Header />
       <main>
-        <HeroSection />
-        <ProductsSection />       {/* Now dynamic categories */}
-        <VideoSection />
-        <FeaturedSections />
-        <StatsSection />          {/* Now dynamic stats */}
-        <QuoteSection />
-        <WhyChooseUs />           {/* Static but optimized */}
+        <ErrorBoundary fallback={<div className="py-10 text-center">Unable to load some sections right now.</div>}>
+          <HeroSection />
+          <ProductsSection />
+          <VideoSection />
+          <FeaturedSections />
+          <StatsSection />
+          <QuoteSection />
+          <WhyChooseUs />
+        </ErrorBoundary>
       </main>
       <Footer />
       <FloatingButtons />

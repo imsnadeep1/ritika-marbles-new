@@ -1,9 +1,12 @@
 import { supabase } from "../lib/supabaseClient";
 
+const isSupabaseReady = Boolean(supabase);
+
 /* ================= ADMIN ================= */
 
 // Get all reviews (admin)
 export async function getAllReviews() {
+  if (!isSupabaseReady) return [];
   const { data, error } = await supabase
     .from("reviews")
     .select("*")

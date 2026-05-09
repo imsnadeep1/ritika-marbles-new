@@ -1,13 +1,14 @@
-## Supabase RLS setup for category admin
+## Supabase RLS reset for Categories
 
-If you see:
+If category insert still fails with:
 
-`Failed to add category: new row violates row-level security policy`
+`new row violates row-level security policy`
 
-run `frontend/supabase/rls_policies.sql` in the Supabase SQL editor for your project.
+it usually means old/conflicting policies are still present.
 
-This grants authenticated users access to:
-- `public.categories` CRUD
-- `storage.objects` operations for the `categories` bucket
-
-After applying policies, redeploy and test category creation again.
+Run `frontend/supabase/rls_policies.sql` in Supabase SQL Editor. This script:
+- Enables RLS on `public.categories`
+- Drops all existing policies on `public.categories`
+- Recreates permissive policies for both `anon` and `authenticated`
+- Drops conflicting storage policies on `storage.objects` for `categories`
+- Recreates bucket policies for read/write

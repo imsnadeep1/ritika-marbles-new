@@ -1,103 +1,80 @@
--- Run in Supabase SQL editor for project: tjslxhwneivmidkwreie
--- This allows authenticated users to manage categories.
+-- Reset and recreate policies for categories and categories storage bucket.
+-- This removes conflicting existing policies that may still block inserts.
 
 alter table public.categories enable row level security;
 
-create policy if not exists "categories_select_authenticated"
+-- Drop all existing policies on categories to avoid conflicts.
+do $$
+declare p record;
+begin
+  for p in select policyname from pg_policies where schemaname = 'public' and tablename = 'categories' loop
+    execute format('drop policy if exists %I on public.categories', p.policyname);
+  end loop;
+end $$;
+
+-- Recreate simple permissive policies for anon and authenticated roles.
+create policy categories_select_all
 on public.categories
 for select
-to authenticated
+to anon, authenticated
 using (true);
 
-create policy if not exists "categories_insert_authenticated"
+create policy categories_insert_all
 on public.categories
 for insert
-to authenticated
+to anon, authenticated
 with check (true);
 
-create policy if not exists "categories_update_authenticated"
+create policy categories_update_all
 on public.categories
 for update
-to authenticated
+to anon, authenticated
 using (true)
 with check (true);
 
-create policy if not exists "categories_delete_authenticated"
+create policy categories_delete_all
 on public.categories
 for delete
-to authenticated
+to anon, authenticated
 using (true);
 
--- Storage policies for bucket `categories`
-create policy if not exists "categories_bucket_read_public"
+-- Drop any old storage policies for the `categories` bucket.
+do $$
+declare p record;
+begin
+  for p in
+    select policyname
+    from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and (qual like '%categories%' or with_check like '%categories%')
+  loop
+    execute format('drop policy if exists %I on storage.objects', p.policyname);
+  end loop;
+end $$;
+
+-- Recreate storage policies.
+create policy categories_bucket_read_public
 on storage.objects
 for select
 to public
 using (bucket_id = 'categories');
 
-create policy if not exists "categories_bucket_insert_authenticated"
+create policy categories_bucket_insert_all
 on storage.objects
 for insert
-to authenticated
+to anon, authenticated
 with check (bucket_id = 'categories');
 
-create policy if not exists "categories_bucket_update_authenticated"
+create policy categories_bucket_update_all
 on storage.objects
 for update
-to authenticated
+to anon, authenticated
 using (bucket_id = 'categories')
 with check (bucket_id = 'categories');
 
-create policy if not exists "categories_bucket_delete_authenticated"
+create policy categories_bucket_delete_all
 on storage.objects
 for delete
-to authenticated
-using (bucket_id = 'categories');
-
-
--- Optional fallback: allow anonymous web clients (anon key)
--- Use this only if you are not relying on Supabase Auth sessions for admin actions.
-
-create policy if not exists "categories_select_anon"
-on public.categories
-for select
-to anon
-using (true);
-
-create policy if not exists "categories_insert_anon"
-on public.categories
-for insert
-to anon
-with check (true);
-
-create policy if not exists "categories_update_anon"
-on public.categories
-for update
-to anon
-using (true)
-with check (true);
-
-create policy if not exists "categories_delete_anon"
-on public.categories
-for delete
-to anon
-using (true);
-
-create policy if not exists "categories_bucket_insert_anon"
-on storage.objects
-for insert
-to anon
-with check (bucket_id = 'categories');
-
-create policy if not exists "categories_bucket_update_anon"
-on storage.objects
-for update
-to anon
-using (bucket_id = 'categories')
-with check (bucket_id = 'categories');
-
-create policy if not exists "categories_bucket_delete_anon"
-on storage.objects
-for delete
-to anon
+to anon, authenticated
 using (bucket_id = 'categories');

@@ -1,5 +1,7 @@
 import { supabase } from "../lib/supabaseClient";
 
+const isSupabaseReady = Boolean(supabase);
+
 // ---------- Add Feedback ----------
 export async function addFeedback(feedback) {
   const { data, error } = await supabase
@@ -12,6 +14,7 @@ export async function addFeedback(feedback) {
 
 // ---------- Get Feedback for a Product ----------
 export async function getFeedbackByProduct(productId) {
+  if (!isSupabaseReady) return [];
   const { data, error } = await supabase
     .from("feedback")
     .select("*")
@@ -24,6 +27,7 @@ export async function getFeedbackByProduct(productId) {
 
 // ---------- Get All Feedback (Admin) ----------
 export async function getAllFeedback() {
+  if (!isSupabaseReady) return [];
   const { data, error } = await supabase
     .from("feedback")
     .select("*, products(name)")

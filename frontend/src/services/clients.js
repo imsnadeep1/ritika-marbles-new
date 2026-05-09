@@ -1,8 +1,11 @@
 import { supabase } from "../lib/supabaseClient";
 
+const isSupabaseReady = Boolean(supabase);
+
 /* ================= PUBLIC ================= */
 
 export async function getClients() {
+  if (!isSupabaseReady) return [];
   const { data, error } = await supabase
     .from("esteemed_clients")
     .select("*")

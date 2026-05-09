@@ -26,9 +26,11 @@ export async function getCategories() {
 
 export async function addCategory(category) {
   await ensureSupabaseAdminSession();
-  const { data, error } = await supabase.from("categories").insert([category]);
+  const { error } = await supabase
+    .from("categories")
+    .insert([category], { returning: "minimal" });
   if (error) throw error;
-  return data;
+  return true;
 }
 
 export async function deleteCategory(id) {

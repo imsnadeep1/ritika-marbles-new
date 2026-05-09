@@ -1,7 +1,10 @@
 import { supabase } from "../lib/supabaseClient";
 
+const isSupabaseReady = Boolean(supabase);
+
 // -------- Get All Products ----------
 export async function getProducts() {
+  if (!isSupabaseReady) return [];
   const { data, error } = await supabase
     .from("products")
     .select("*, categories(name)");

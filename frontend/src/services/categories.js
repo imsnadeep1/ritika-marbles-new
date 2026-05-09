@@ -1,6 +1,8 @@
 
 import { supabase } from "../lib/supabaseClient";
 
+const isSupabaseReady = Boolean(supabase);
+
 async function ensureSupabaseAdminSession() {
   const {
     data: { session },
@@ -18,6 +20,7 @@ async function ensureSupabaseAdminSession() {
 }
 
 export async function getCategories() {
+  if (!isSupabaseReady) return [];
   await ensureSupabaseAdminSession();
   const { data, error } = await supabase.from("categories").select("*");
   if (error) throw error;

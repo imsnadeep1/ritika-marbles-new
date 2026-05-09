@@ -26,9 +26,7 @@ export async function getCategories() {
 
 export async function addCategory(category) {
   await ensureSupabaseAdminSession();
-  const { error } = await supabase
-    .from("categories")
-    .insert([category], { returning: "minimal" });
+  const { data, error } = await supabase.from("categories").insert([category]);
   if (error) throw error;
   return true;
 }

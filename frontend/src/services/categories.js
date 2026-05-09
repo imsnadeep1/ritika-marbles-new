@@ -8,8 +8,8 @@ async function ensureSupabaseAdminSession() {
 
   if (session) return;
 
-  const email = import.meta.env.VITE_SUPABASE_ADMIN_EMAIL;
-  const password = import.meta.env.VITE_SUPABASE_ADMIN_PASSWORD;
+  const email = (import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || "").trim();
+  const password = (import.meta.env.VITE_SUPABASE_ADMIN_PASSWORD || "").trim();
 
   if (!email || !password) return;
 
@@ -18,6 +18,7 @@ async function ensureSupabaseAdminSession() {
 }
 
 export async function getCategories() {
+  await ensureSupabaseAdminSession();
   const { data, error } = await supabase.from("categories").select("*");
   if (error) throw error;
   return data;

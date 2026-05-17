@@ -32,47 +32,49 @@ const StatsSection = () => {
   }, []);
 
   return (
-    <section className="py-20 bg-gradient-to-br from-[#FDF8F3] to-[#FFFBF5]">
+    <section className="py-20 bg-gradient-to-br from-[#FDF8F3] to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center rounded-[2rem] bg-[#1F3D36] p-8 md:p-12 shadow-2xl">
           {/* Left Content */}
           <div className="space-y-6">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#7B2D3A]">
-              Come & Discuss
+            <p className="text-[#F8D98E] text-sm font-bold uppercase tracking-[0.25em]">
+              Personal shopping support
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-white">
+              Not sure which marble piece fits your space?
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Discover divine marble artistry, handcrafted with precision and
-              devotion. Let us bring your vision to life.
+            <p className="text-white/75 text-lg leading-relaxed">
+              Tell us your size, placement, budget, and preferred deity or decor style. Our team will guide you with options before you order.
             </p>
             <Button
               onClick={() => navigate("/contact")}
-              className="bg-[#7B2D3A] hover:bg-[#5A1F2A] text-white px-8 py-3 rounded-full text-lg shadow-lg"
+              className="bg-[#D4A853] hover:bg-[#B8872F] text-white px-8 py-3 rounded-full text-lg shadow-lg"
             >
-              Contact Us
+              Get buying help
             </Button>
           </div>
 
           {/* Dynamic Stats */}
           <div className="grid grid-cols-3 gap-6">
-            <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-[#D4A853]/20">
-              <div className="text-4xl font-bold text-[#D4A853] mb-2">
+            <div className="text-center p-6 bg-white/10 rounded-2xl shadow-lg border border-white/15">
+              <div className="text-4xl font-bold text-[#F8D98E] mb-2">
                 {stats.products}
               </div>
-              <p className="text-[#7B2D3A] font-medium text-sm">Products</p>
+              <p className="text-white/80 font-medium text-sm">Products</p>
             </div>
 
-            <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-[#D4A853]/20">
-              <div className="text-4xl font-bold text-[#D4A853] mb-2">
+            <div className="text-center p-6 bg-white/10 rounded-2xl shadow-lg border border-white/15">
+              <div className="text-4xl font-bold text-[#F8D98E] mb-2">
                 {stats.categories}
               </div>
-              <p className="text-[#7B2D3A] font-medium text-sm">Categories</p>
+              <p className="text-white/80 font-medium text-sm">Categories</p>
             </div>
 
-            <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-[#D4A853]/20">
-              <div className="text-4xl font-bold text-[#D4A853] mb-2">
+            <div className="text-center p-6 bg-white/10 rounded-2xl shadow-lg border border-white/15">
+              <div className="text-4xl font-bold text-[#F8D98E] mb-2">
                 {stats.feedback}
               </div>
-              <p className="text-[#7B2D3A] font-medium text-sm">Feedback</p>
+              <p className="text-white/80 font-medium text-sm">Reviews</p>
             </div>
           </div>
         </div>

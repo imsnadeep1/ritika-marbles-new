@@ -11,7 +11,7 @@ const AboutPage = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-[#7B2D3A] via-[#5A1F2A] to-[#7B2D3A] py-24 overflow-hidden">
+        <section className="relative bg-gradient-to-br from-[#1F3D36] via-[#152C27] to-[#1F3D36] py-24 overflow-hidden">
           <div className="absolute inset-0 bg-black/10" />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -36,7 +36,7 @@ const AboutPage = () => {
               </div>
 
               <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold text-[#7B2D3A]">
+                <h2 className="text-3xl md:text-4xl font-bold text-[#1F3D36]">
                   A Legacy of Excellence
                 </h2>
                 <p className="text-gray-600 leading-relaxed">
@@ -61,7 +61,7 @@ const AboutPage = () => {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-[#7B2D3A] mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F3D36] mb-4">
                 Our Values
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
@@ -96,10 +96,10 @@ const AboutPage = () => {
                   key={i}
                   className="text-center p-6 bg-[#FFFBF5] rounded-2xl shadow-lg border border-[#D4A853]/20"
                 >
-                  <div className="w-16 h-16 bg-[#7B2D3A] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-[#1F3D36] rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <item.icon className="w-8 h-8 text-[#D4A853]" />
                   </div>
-                  <h3 className="font-semibold text-[#7B2D3A] mb-2">
+                  <h3 className="font-semibold text-[#1F3D36] mb-2">
                     {item.title}
                   </h3>
                   <p className="text-gray-600 text-sm">{item.desc}</p>
@@ -110,7 +110,7 @@ const AboutPage = () => {
         </section>
 
         {/* Closing Quote */}
-        <section className="py-24 bg-gradient-to-br from-[#7B2D3A] to-[#5A1F2A] text-center">
+        <section className="py-24 bg-gradient-to-br from-[#1F3D36] to-[#152C27] text-center">
           <div className="max-w-4xl mx-auto px-4">
             <p className="text-2xl md:text-3xl text-white italic leading-relaxed">
               “In every block of marble, we see divinity waiting to emerge —

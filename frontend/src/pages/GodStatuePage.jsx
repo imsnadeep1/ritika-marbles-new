@@ -11,7 +11,7 @@ const GodStatuePage = () => {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="bg-[#7B2D3A] py-20">
+        <section className="bg-[#1F3D36] py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-[#D4A853] mb-4">God Statues</h1>
             <p className="text-white/80 text-lg max-w-2xl mx-auto">
@@ -39,7 +39,7 @@ const GodStatuePage = () => {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>
-                    <div className="p-4 bg-[#7B2D3A]">
+                    <div className="p-4 bg-[#1F3D36]">
                       <h3 className="text-white font-medium text-center">{category.name}</h3>
                     </div>
                   </div>
@@ -52,7 +52,7 @@ const GodStatuePage = () => {
         {/* Custom Orders CTA */}
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-[#7B2D3A] mb-4">Looking for Something Custom?</h2>
+            <h2 className="text-3xl font-bold text-[#1F3D36] mb-4">Looking for Something Custom?</h2>
             <p className="text-gray-600 mb-8">
               We specialize in creating custom marble statues tailored to your specifications. 
               Contact us to discuss your unique requirements.

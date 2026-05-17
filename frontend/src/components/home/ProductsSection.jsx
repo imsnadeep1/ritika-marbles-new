@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getCategories } from "@/services/categories";
 
@@ -37,24 +37,41 @@ const ProductsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-[#7B2D3A]">
+    <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <p className="text-[#D4A853] text-lg italic mb-2">This is what we do</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#D4A853]">
-            Our Products
-          </h2>
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+          <div>
+            <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.25em] mb-3">
+              Shop by collection
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#1F3D36]">
+              Find the perfect marble piece
+            </h2>
+            <p className="mt-4 max-w-2xl text-slate-600">
+              Browse curated categories for home temples, gifting, decor, and custom commissioned statues.
+            </p>
+          </div>
+          <Link to="/god-statue">
+            <Button className="bg-[#1F3D36] hover:bg-[#152C27] text-white rounded-full px-6 gap-2 w-fit">
+              <ShoppingBag className="w-4 h-4" />
+              Browse catalog
+            </Button>
+          </Link>
         </div>
 
         {/* Loading */}
         {loading && (
-          <p className="text-center text-white text-lg">Loading categories...</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map((item) => (
+              <div key={item} className="h-80 rounded-[1.75rem] bg-[#F8F1E8] animate-pulse" />
+            ))}
+          </div>
         )}
 
         {/* No categories */}
         {!loading && categories.length === 0 && (
-          <p className="text-center text-white text-lg">
+          <p className="text-center text-slate-600 text-lg">
             No categories available yet.
           </p>
         )}
@@ -67,18 +84,18 @@ const ProductsSection = () => {
               onClick={() => scroll("left")}
               variant="outline"
               size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full shadow-lg -ml-4 hidden md:flex border-[#D4A853]"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-[#FFF7E8] rounded-full shadow-lg -ml-4 hidden md:flex border-[#E8D9C5]"
             >
-              <ChevronLeft className="w-6 h-6 text-[#7B2D3A]" />
+              <ChevronLeft className="w-6 h-6 text-[#1F3D36]" />
             </Button>
 
             <Button
               onClick={() => scroll("right")}
               variant="outline"
               size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full shadow-lg -mr-4 hidden md:flex border-[#D4A853]"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-[#FFF7E8] rounded-full shadow-lg -mr-4 hidden md:flex border-[#E8D9C5]"
             >
-              <ChevronRight className="w-6 h-6 text-[#7B2D3A]" />
+              <ChevronRight className="w-6 h-6 text-[#1F3D36]" />
             </Button>
 
             {/* Scrollable Container */}
@@ -93,19 +110,29 @@ const ProductsSection = () => {
                   to={`/category/${category.slug}`}
                   className="flex-shrink-0 w-72 group"
                 >
-                  <div className="bg-white rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 duration-300">
-                    <div className="aspect-square overflow-hidden">
+                  <div className="bg-white rounded-[1.75rem] overflow-hidden shadow-sm ring-1 ring-[#E8D9C5] transition-all hover:-translate-y-2 hover:shadow-2xl duration-300">
+                    <div className="aspect-square overflow-hidden relative bg-[#F8F1E8]">
                       <img
                         src={category.image_url || "/images/placeholder.jpg"}
                         alt={category.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
+                      <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-[#1F3D36] shadow-sm">
+                        Collection
+                      </div>
                     </div>
 
-                    <div className="p-4 text-center bg-[#5A1F2A]">
-                      <h3 className="text-white font-medium text-sm">
+                    <div className="p-5 bg-white">
+                      <h3 className="text-[#1F3D36] font-semibold text-base line-clamp-2 min-h-[3rem]">
                         {category.name}
                       </h3>
+                      <div className="mt-4 flex items-center justify-between text-sm">
+                        <span className="text-slate-500">Explore designs</span>
+                        <span className="inline-flex items-center gap-1 font-semibold text-[#B8872F]">
+                          Shop
+                          <ChevronRight className="w-4 h-4" />
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </Link>

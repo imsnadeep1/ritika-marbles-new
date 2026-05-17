@@ -17,7 +17,7 @@ const GallerySection = () => {
   };
 
   return (
-    <section className="py-20 bg-[#5A1F2A]">
+    <section className="py-20 bg-[#152C27]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -34,7 +34,7 @@ const GallerySection = () => {
             size="icon"
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full shadow-lg -ml-4 hidden md:flex border-[#D4A853]"
           >
-            <ChevronLeft className="w-6 h-6 text-[#7B2D3A]" />
+            <ChevronLeft className="w-6 h-6 text-[#1F3D36]" />
           </Button>
           <Button
             onClick={() => scroll('right')}
@@ -42,7 +42,7 @@ const GallerySection = () => {
             size="icon"
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full shadow-lg -mr-4 hidden md:flex border-[#D4A853]"
           >
-            <ChevronRight className="w-6 h-6 text-[#7B2D3A]" />
+            <ChevronRight className="w-6 h-6 text-[#1F3D36]" />
           </Button>
 
           {/* Scrollable Container */}
@@ -62,7 +62,7 @@ const GallerySection = () => {
                     alt={item.title}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-[#7B2D3A]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <div className="absolute inset-0 bg-[#1F3D36]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="text-[#D4A853] font-medium">{item.title}</span>
                   </div>
                 </div>

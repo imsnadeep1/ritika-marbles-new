@@ -54,7 +54,7 @@ const ContactPage = () => {
       <Toaster />
       <main>
         {/* Hero Section */}
-        <section className="bg-[#7B2D3A] py-20">
+        <section className="bg-[#1F3D36] py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Reach Us</h1>
             <p className="text-white/80 text-lg max-w-2xl mx-auto">
@@ -69,61 +69,61 @@ const ContactPage = () => {
             <div className="grid lg:grid-cols-2 gap-16">
               {/* Contact Information */}
               <div>
-                <h2 className="text-3xl font-bold text-[#7B2D3A] mb-8">Contact Information</h2>
+                <h2 className="text-3xl font-bold text-[#1F3D36] mb-8">Contact Information</h2>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-[#1F3D36] rounded-lg flex items-center justify-center flex-shrink-0">
                       <MapPin className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Showroom Address</h3>
+                      <h3 className="font-semibold text-[#1F3D36] mb-1">Showroom Address</h3>
                       <p className="text-gray-600">{siteConfig.address}</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-[#1F3D36] rounded-lg flex items-center justify-center flex-shrink-0">
                       <MapPin className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Workshop Address</h3>
+                      <h3 className="font-semibold text-[#1F3D36] mb-1">Workshop Address</h3>
                       <p className="text-gray-600">{siteConfig.address2}</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-[#1F3D36] rounded-lg flex items-center justify-center flex-shrink-0">
                       <Phone className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Phone</h3>
-                      <a href={`tel:${siteConfig.phone}`} className="text-gray-600 hover:text-[#7B2D3A] block">
+                      <h3 className="font-semibold text-[#1F3D36] mb-1">Phone</h3>
+                      <a href={`tel:${siteConfig.phone}`} className="text-gray-600 hover:text-[#1F3D36] block">
                         {siteConfig.phone}
                       </a>
-                      <a href={`tel:${siteConfig.phone2}`} className="text-gray-600 hover:text-[#7B2D3A] block">
+                      <a href={`tel:${siteConfig.phone2}`} className="text-gray-600 hover:text-[#1F3D36] block">
                         {siteConfig.phone2}
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-[#1F3D36] rounded-lg flex items-center justify-center flex-shrink-0">
                       <Mail className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Email</h3>
-                      <a href={`mailto:${siteConfig.email}`} className="text-gray-600 hover:text-[#7B2D3A]">
+                      <h3 className="font-semibold text-[#1F3D36] mb-1">Email</h3>
+                      <a href={`mailto:${siteConfig.email}`} className="text-gray-600 hover:text-[#1F3D36]">
                         {siteConfig.email}
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#7B2D3A] rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-[#1F3D36] rounded-lg flex items-center justify-center flex-shrink-0">
                       <Clock className="w-6 h-6 text-[#D4A853]" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-[#7B2D3A] mb-1">Business Hours</h3>
+                      <h3 className="font-semibold text-[#1F3D36] mb-1">Business Hours</h3>
                       <p className="text-gray-600">Monday - Saturday: 9:00 AM - 7:00 PM</p>
                       <p className="text-gray-600">Sunday: 10:00 AM - 4:00 PM</p>
                     </div>
@@ -148,7 +148,7 @@ const ContactPage = () => {
               {/* Contact Form */}
               <div>
                 <div className="bg-white rounded-2xl shadow-xl p-8 border border-[#D4A853]/20">
-                  <h2 className="text-3xl font-bold text-[#7B2D3A] mb-2">Get a Quote</h2>
+                  <h2 className="text-3xl font-bold text-[#1F3D36] mb-2">Get a Quote</h2>
                   <p className="text-gray-600 mb-8">Fill out the form below and we'll get back to you shortly.</p>
                   
                   <form onSubmit={handleSubmit} className="space-y-6">
@@ -221,7 +221,7 @@ const ContactPage = () => {
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-[#7B2D3A] hover:bg-[#5A1F2A] text-white py-3 rounded-full flex items-center justify-center gap-2"
+                      className="w-full bg-[#1F3D36] hover:bg-[#152C27] text-white py-3 rounded-full flex items-center justify-center gap-2"
                     >
                       {isSubmitting ? 'Sending...' : (
                         <>

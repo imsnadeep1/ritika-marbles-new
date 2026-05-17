@@ -3,7 +3,7 @@ import { Sparkles } from 'lucide-react';
 
 const QuoteSection = () => {
   return (
-    <section className="py-24 bg-gradient-to-br from-[#5A1F2A] via-[#7B2D3A] to-[#5A1F2A] relative overflow-hidden">
+    <section className="py-24 bg-gradient-to-br from-[#10221E] via-[#1F3D36] to-[#10221E] relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute top-10 left-10 w-40 h-40 bg-[#D4A853]/10 rounded-full blur-3xl" />
       <div className="absolute bottom-10 right-10 w-56 h-56 bg-[#D4A853]/5 rounded-full blur-3xl" />
@@ -23,9 +23,8 @@ const QuoteSection = () => {
           {/* Main Quote */}
           <blockquote className="space-y-6">
             <p className="text-3xl md:text-4xl lg:text-5xl text-white font-normal leading-relaxed tracking-wide">
-              "In every block of marble, we see a story waiting to be told — 
-              <span className="text-[#D4A853] italic"> where devotion meets artistry</span>, 
-              timeless beauty is born."
+              "Shop timeless marble pieces made with care, clarity, and craft - 
+              <span className="text-[#D4A853] italic"> from first inquiry to safe delivery</span>."
             </p>
           </blockquote>
           
@@ -38,8 +37,7 @@ const QuoteSection = () => {
           
           {/* Sub Quote */}
           <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-light">
-            We pour our heart into every creation, transforming raw marble 
-            into divine masterpieces that bring blessings to your home.
+            Every order is guided by real artisans, detailed product consultation, and careful finishing for your home or temple.
           </p>
           
           {/* Signature */}

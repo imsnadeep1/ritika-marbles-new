@@ -5,20 +5,25 @@ import { Button } from '@/components/ui/button';
 
 const FeaturedSections = () => {
   return (
-    <section className="py-20 bg-[#FFFBF5]">
+    <section className="py-20 bg-[#F8F1E8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Quote */}
         <div className="text-center mb-16 max-w-4xl mx-auto">
-          <p className="text-xl md:text-2xl text-[#7B2D3A] italic leading-relaxed" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}>
-            "Transform your space into a sanctuary of beauty and harmony with our exquisite products, 
-            where elegance meets enchantment."
+          <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.25em] mb-3">
+            Curated shopping edits
+          </p>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#1F3D36] mb-5">
+            Shop by room, ritual, or occasion
+          </h2>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            Explore handpicked marble collections designed for home temples, festive gifting, heritage interiors, and statement decor.
           </p>
         </div>
 
         {/* Two Column Features */}
         <div className="grid md:grid-cols-2 gap-8">
           {/* Left - Bring Home */}
-          <div className="relative group overflow-hidden rounded-2xl">
+          <div className="relative group overflow-hidden rounded-[2rem] shadow-xl">
             <div className="aspect-[4/3] overflow-hidden">
               <img
                 src="/images/products/decor.png"
@@ -26,12 +31,12 @@ const FeaturedSections = () => {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#7B2D3A]/90 via-[#7B2D3A]/40 to-transparent flex flex-col justify-end p-8">
-              <p className="text-[#D4A853] text-sm font-medium mb-2">BRING HOME</p>
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">BEAUTY AND INSPIRATION</h3>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#10221E]/95 via-[#1F3D36]/45 to-transparent flex flex-col justify-end p-8">
+              <p className="text-[#F8D98E] text-sm font-bold uppercase tracking-[0.2em] mb-2">For home temples</p>
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Idols crafted for daily worship</h3>
               <Link to="/collections/handicrafts">
                 <Button className="bg-[#D4A853] hover:bg-[#B8923F] text-white px-6 py-2 rounded-full flex items-center gap-2 w-fit">
-                  EXPLORE
+                  Shop collection
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -39,7 +44,7 @@ const FeaturedSections = () => {
           </div>
 
           {/* Right - Space Enhancement */}
-          <div className="relative group overflow-hidden rounded-2xl">
+          <div className="relative group overflow-hidden rounded-[2rem] shadow-xl">
             <div className="aspect-[4/3] overflow-hidden">
               <img
                 src="/images/products/decor2.png"
@@ -47,12 +52,12 @@ const FeaturedSections = () => {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#7B2D3A]/90 via-[#7B2D3A]/40 to-transparent flex flex-col justify-end p-8">
-              <p className="text-[#D4A853] text-sm font-medium mb-2">EXQUISITE</p>
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">SPACE ENHANCEMENT</h3>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#10221E]/95 via-[#1F3D36]/45 to-transparent flex flex-col justify-end p-8">
+              <p className="text-[#F8D98E] text-sm font-bold uppercase tracking-[0.2em] mb-2">For premium interiors</p>
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Decor that elevates every space</h3>
               <Link to="/collections/wall-panels">
                 <Button className="bg-[#D4A853] hover:bg-[#B8923F] text-white px-6 py-2 rounded-full flex items-center gap-2 w-fit">
-                  EXPLORE
+                  Shop decor
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </Link>

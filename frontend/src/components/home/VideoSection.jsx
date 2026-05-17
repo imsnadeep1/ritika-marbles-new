@@ -4,7 +4,7 @@ const VideoSection = () => {
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background Video Placeholder - Using gradient as video placeholder */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#5A1F2A] via-[#7B2D3A] to-[#5A1F2A]">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#10221E] via-[#1F3D36] to-[#10221E]">
         <div className="absolute inset-0 bg-[url('https://www.pandeymarblemoorti.com/assets/front/images/uploads/decor.jpg')] bg-cover bg-center opacity-20" />
       </div>
       

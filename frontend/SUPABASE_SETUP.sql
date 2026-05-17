@@ -74,6 +74,7 @@ do $$
 declare
   categories_id_type text;
   products_category_id_type text;
+  categories_id_sql_type text;
 begin
   select udt_name into categories_id_type
   from information_schema.columns
@@ -87,12 +88,18 @@ begin
     and table_name = 'products'
     and column_name = 'category_id';
 
-  if categories_id_type = 'int8' and products_category_id_type = 'uuid' then
-    alter table public.products
-      alter column category_id type bigint using null;
-  elsif categories_id_type = 'uuid' and products_category_id_type = 'int8' then
-    alter table public.products
-      alter column category_id type uuid using null;
+  categories_id_sql_type := case
+    when categories_id_type = 'int8' then 'bigint'
+    when categories_id_type = 'uuid' then 'uuid'
+    else null
+  end;
+
+  if categories_id_sql_type is not null
+    and products_category_id_type is not null
+    and products_category_id_type <> categories_id_type
+  then
+    alter table public.products drop column category_id;
+    execute format('alter table public.products add column category_id %s', categories_id_sql_type);
   end if;
 
   if not exists (
@@ -150,6 +157,7 @@ do $$
 declare
   products_id_type text;
   feedback_product_id_type text;
+  products_id_sql_type text;
 begin
   select udt_name into products_id_type
   from information_schema.columns
@@ -163,12 +171,18 @@ begin
     and table_name = 'feedback'
     and column_name = 'product_id';
 
-  if products_id_type = 'int8' and feedback_product_id_type = 'uuid' then
-    alter table public.feedback
-      alter column product_id type bigint using null;
-  elsif products_id_type = 'uuid' and feedback_product_id_type = 'int8' then
-    alter table public.feedback
-      alter column product_id type uuid using null;
+  products_id_sql_type := case
+    when products_id_type = 'int8' then 'bigint'
+    when products_id_type = 'uuid' then 'uuid'
+    else null
+  end;
+
+  if products_id_sql_type is not null
+    and feedback_product_id_type is not null
+    and feedback_product_id_type <> products_id_type
+  then
+    alter table public.feedback drop column product_id;
+    execute format('alter table public.feedback add column product_id %s', products_id_sql_type);
   end if;
 
   if not exists (

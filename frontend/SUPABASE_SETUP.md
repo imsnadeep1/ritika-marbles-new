@@ -40,6 +40,7 @@ Redeploy after changing Vercel environment variables.
 
 ## If you previously saw a UUID / bigint foreign key error
 
-Run the latest `SUPABASE_SETUP.sql` again. It now detects whether your existing
-`products.id` and `categories.id` columns are `bigint` or `uuid`, aligns the
-relationship columns, and then creates the foreign keys.
+Run the latest `SUPABASE_SETUP.sql` again. It detects whether your existing
+`products.id` and `categories.id` columns are `bigint` or `uuid`. If a previous
+failed run created incompatible relationship columns, it recreates those
+relationship columns with the correct type before adding foreign keys.

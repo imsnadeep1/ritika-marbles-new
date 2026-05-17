@@ -13,6 +13,7 @@ import {
   ShoppingBag
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/lib/supabaseClient';
 
 const AdminLayout = () => {
   const navigate = useNavigate();
@@ -26,8 +27,12 @@ const AdminLayout = () => {
     }
   }, [navigate]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminEmail');
     navigate('/admin/login');
   };
 

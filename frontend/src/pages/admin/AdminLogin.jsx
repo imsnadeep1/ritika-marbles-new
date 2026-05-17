@@ -3,6 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Lock, Mail } from 'lucide-react';
+import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
+
+const fallbackAdminEmail = 'admin@ritikamarbles.com';
+const fallbackAdminPassword = 'admin123';
+const configuredAdminEmail = (import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || '').trim();
+const configuredAdminPassword = (import.meta.env.VITE_SUPABASE_ADMIN_PASSWORD || '').trim();
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -15,26 +21,63 @@ const AdminLogin = () => {
     setIsLoading(true);
     setError('');
 
-    // Mock login - will be replaced with backend
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    if (credentials.email === 'admin@ritikamarbles.com' && credentials.password === 'admin123') {
-      localStorage.setItem('adminToken', 'mock-token-12345');
-      navigate('/admin/dashboard');
-    } else {
-      setError('Invalid email or password');
+    const email = credentials.email.trim();
+    const password = credentials.password;
+
+    try {
+      if (hasSupabaseEnv && supabase) {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (error) throw error;
+
+        if (
+          configuredAdminEmail &&
+          email.toLowerCase() !== configuredAdminEmail.toLowerCase()
+        ) {
+          await supabase.auth.signOut();
+          setError('This account is not authorized for admin access');
+          setIsLoading(false);
+          return;
+        }
+
+        localStorage.setItem('adminToken', data.session?.access_token || 'supabase-admin-session');
+        localStorage.setItem('adminEmail', email);
+        navigate('/admin/dashboard');
+        return;
+      }
+
+      const expectedEmail = configuredAdminEmail || fallbackAdminEmail;
+      const expectedPassword = configuredAdminPassword || fallbackAdminPassword;
+
+      if (
+        email.toLowerCase() === expectedEmail.toLowerCase() &&
+        password === expectedPassword
+      ) {
+        localStorage.setItem('adminToken', 'configured-admin-session');
+        localStorage.setItem('adminEmail', email);
+        navigate('/admin/dashboard');
+      } else {
+        setError('Invalid email or password');
+      }
+    } catch (loginError) {
+      console.error('Admin login failed:', loginError);
+      setError(loginError?.message || 'Invalid email or password');
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FDF8F3] to-[#FFFBF5] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#F4F7F4] via-white to-[#F8F1E8] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-[#D4A853]/20">
+        <div className="bg-white rounded-[2rem] shadow-xl p-8 border border-[#DDE8E2]">
           {/* Logo */}
           <div className="text-center mb-8">
             <img src="/logo.svg" alt="Ritika Marbles Logo" className="w-20 h-20 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-[#7B2D3A]">Admin Panel</h1>
+            <h1 className="text-2xl font-bold text-[#1F3D36]">Admin Panel</h1>
             <p className="text-[#D4A853] mt-1">Ritika Marbles & Handicrafts</p>
           </div>
 
@@ -47,22 +90,22 @@ const AdminLogin = () => {
             )}
             
             <div>
-              <label className="block text-sm font-medium text-[#7B2D3A] mb-2">Email</label>
+              <label className="block text-sm font-medium text-[#1F3D36] mb-2">Email</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#D4A853]" />
                 <Input
                   type="email"
                   value={credentials.email}
                   onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
-                  placeholder="admin@ritikamarbles.com"
-                  className="pl-10 border-[#D4A853]/30 focus:border-[#7B2D3A]"
+                  placeholder={configuredAdminEmail || fallbackAdminEmail}
+                  className="pl-10 border-[#DDE8E2] focus:border-[#1F3D36]"
                   required
                 />
               </div>
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-[#7B2D3A] mb-2">Password</label>
+              <label className="block text-sm font-medium text-[#1F3D36] mb-2">Password</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#D4A853]" />
                 <Input
@@ -70,7 +113,7 @@ const AdminLogin = () => {
                   value={credentials.password}
                   onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                   placeholder="Enter your password"
-                  className="pl-10 border-[#D4A853]/30 focus:border-[#7B2D3A]"
+                  className="pl-10 border-[#DDE8E2] focus:border-[#1F3D36]"
                   required
                 />
               </div>
@@ -79,18 +122,22 @@ const AdminLogin = () => {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#7B2D3A] hover:bg-[#5A1F2A] text-white py-3"
+              className="w-full bg-[#1F3D36] hover:bg-[#152C27] text-white py-3 rounded-full"
             >
               {isLoading ? 'Signing in...' : 'Sign In'}
             </Button>
           </form>
 
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-[#FDF8F3] rounded-lg border border-[#D4A853]/20">
-            <p className="text-sm text-[#7B2D3A] text-center">
-              <strong>Demo Credentials:</strong><br />
-              Email: admin@ritikamarbles.com<br />
-              Password: admin123
+          <div className="mt-6 p-4 bg-[#F8F1E8] rounded-2xl border border-[#E8D9C5]">
+            <p className="text-sm text-[#1F3D36] text-center">
+              <strong>Admin access:</strong><br />
+              Use your Supabase admin user credentials configured in Vercel.
+              {!hasSupabaseEnv && (
+                <>
+                  <br />
+                  Local fallback: {fallbackAdminEmail} / {fallbackAdminPassword}
+                </>
+              )}
             </p>
           </div>
         </div>

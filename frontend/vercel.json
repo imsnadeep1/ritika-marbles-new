@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install",
-  "buildCommand": "npm run build && rm -rf ../dist && cp -R dist ../dist",
+  "buildCommand": "npm run build && mkdir -p ../dist && cp -R dist/. ../dist/",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [

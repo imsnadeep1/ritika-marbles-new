@@ -1,6 +1,6 @@
 {
-  "installCommand": "if [ -d frontend ]; then cd frontend; fi; npm install",
-  "buildCommand": "if [ -d frontend ]; then cd frontend && npm run build && cd .. && rm -rf dist && cp -R frontend/dist dist; else npm run build && rm -rf ../dist && cp -R dist ../dist; fi",
+  "installCommand": "if [ -f package.json ]; then npm install; else cd frontend && npm install; fi",
+  "buildCommand": "if [ -f package.json ]; then npm run build && mkdir -p ../dist && cp -R dist/. ../dist/; else cd frontend && npm run build && cd .. && rm -rf dist && cp -R frontend/dist dist; fi",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [

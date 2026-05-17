@@ -1,6 +1,6 @@
 {
-  "installCommand": "APP_DIR=; for dir in . frontend ../frontend ../../frontend; do if [ -f \"$dir/package.json\" ]; then APP_DIR=\"$dir\"; break; fi; done; if [ -z \"$APP_DIR\" ]; then echo \"Unable to find frontend package.json from $(pwd)\"; exit 1; fi; cd \"$APP_DIR\" && npm install",
-  "buildCommand": "START_DIR=\"$PWD\"; APP_DIR=; for dir in . frontend ../frontend ../../frontend; do if [ -f \"$dir/package.json\" ]; then APP_DIR=\"$dir\"; break; fi; done; if [ -z \"$APP_DIR\" ]; then echo \"Unable to find frontend package.json from $(pwd)\"; exit 1; fi; cd \"$APP_DIR\" && npm run build && APP_ABS=\"$PWD\" && if [ \"$START_DIR\" = \"$APP_ABS\" ]; then mkdir -p ../dist && cp -R dist/. ../dist/; else mkdir -p \"$START_DIR/dist\" && cp -R dist/. \"$START_DIR/dist/\"; fi",
+  "installCommand": "sh frontend/vercel-install.sh || sh vercel-install.sh || sh ../frontend/vercel-install.sh",
+  "buildCommand": "sh frontend/vercel-build.sh || sh vercel-build.sh || sh ../frontend/vercel-build.sh",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [

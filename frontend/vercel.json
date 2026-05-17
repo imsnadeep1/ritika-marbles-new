@@ -1,6 +1,6 @@
 {
-  "installCommand": "npm install",
-  "buildCommand": "npm run build && mkdir -p ../dist && cp -R dist/. ../dist/",
+  "installCommand": "sh vercel-install.sh",
+  "buildCommand": "sh vercel-build.sh",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [

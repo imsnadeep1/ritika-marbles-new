@@ -2,8 +2,17 @@ import { supabase } from "../lib/supabaseClient";
 
 const isSupabaseReady = Boolean(supabase);
 
+function requireSupabase() {
+  if (!supabase) {
+    throw new Error(
+      "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel, then redeploy.",
+    );
+  }
+}
+
 // ---------- Add Feedback ----------
 export async function addFeedback(feedback) {
+  requireSupabase();
   const { data, error } = await supabase
     .from("feedback")
     .insert([feedback]);

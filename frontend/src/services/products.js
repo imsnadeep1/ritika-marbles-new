@@ -2,6 +2,14 @@ import { supabase } from "../lib/supabaseClient";
 
 const isSupabaseReady = Boolean(supabase);
 
+function requireSupabase() {
+  if (!supabase) {
+    throw new Error(
+      "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel, then redeploy.",
+    );
+  }
+}
+
 // -------- Get All Products ----------
 export async function getProducts() {
   if (!isSupabaseReady) return [];
@@ -14,6 +22,7 @@ export async function getProducts() {
 
 // -------- Create / Upload Product Image ----------
 export async function uploadProductImage(file) {
+  requireSupabase();
   const fileName = `${Date.now()}-${file.name}`;
 
   const { error: uploadError } = await supabase.storage
@@ -36,6 +45,7 @@ export async function uploadProductImage(file) {
 }
 
 export async function uploadProductVideo(file) {
+  requireSupabase();
   const fileName = `video-${Date.now()}-${file.name}`;
 
   const { error: uploadError } = await supabase.storage
@@ -60,6 +70,7 @@ export async function uploadProductVideo(file) {
 
 // -------- Create Product ----------
 export async function addProduct(product) {
+  requireSupabase();
   const { data, error } = await supabase.from("products").insert([
     {
       name: product.name,
@@ -81,6 +92,7 @@ export async function addProduct(product) {
 
 // -------- Update Product ----------
 export async function updateProduct(id, updates) {
+  requireSupabase();
   const { data, error } = await supabase
     .from("products")
     .update(updates)
@@ -92,6 +104,7 @@ export async function updateProduct(id, updates) {
 
 // -------- Delete ----------
 export async function deleteProduct(id) {
+  requireSupabase();
   const { error } = await supabase.from("products").delete().eq("id", id);
   if (error) throw error;
 }

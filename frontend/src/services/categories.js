@@ -3,7 +3,17 @@ import { supabase } from "../lib/supabaseClient";
 
 const isSupabaseReady = Boolean(supabase);
 
+function requireSupabase() {
+  if (!supabase) {
+    throw new Error(
+      "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel, then redeploy.",
+    );
+  }
+}
+
 async function ensureSupabaseAdminSession() {
+  requireSupabase();
+
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -28,6 +38,7 @@ export async function getCategories() {
 }
 
 export async function addCategory(category) {
+  requireSupabase();
   await ensureSupabaseAdminSession();
   const { data, error } = await supabase.from("categories").insert([category]);
   if (error) throw error;
@@ -35,6 +46,7 @@ export async function addCategory(category) {
 }
 
 export async function updateCategory(id, updates) {
+  requireSupabase();
   await ensureSupabaseAdminSession();
   const { data, error } = await supabase
     .from("categories")
@@ -45,6 +57,7 @@ export async function updateCategory(id, updates) {
 }
 
 export async function deleteCategory(id) {
+  requireSupabase();
   await ensureSupabaseAdminSession();
   const { error } = await supabase
     .from("categories")
@@ -54,6 +67,7 @@ export async function deleteCategory(id) {
 }
 
 export async function uploadCategoryImage(file) {
+  requireSupabase();
   await ensureSupabaseAdminSession();
   const fileName = `cat-${Date.now()}-${file.name}`;
 

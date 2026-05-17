@@ -2,6 +2,14 @@ import { supabase } from "../lib/supabaseClient";
 
 const isSupabaseReady = Boolean(supabase);
 
+function requireSupabase() {
+  if (!supabase) {
+    throw new Error(
+      "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel, then redeploy.",
+    );
+  }
+}
+
 /* ================= PUBLIC ================= */
 
 export async function getClients() {
@@ -22,6 +30,7 @@ export async function getClients() {
 /* ================= ADMIN ================= */
 
 export async function addClient(payload) {
+  requireSupabase();
   const { error } = await supabase.from("esteemed_clients").insert(payload);
 
   if (error) {
@@ -31,6 +40,7 @@ export async function addClient(payload) {
 }
 
 export async function deleteClient(id) {
+  requireSupabase();
   const { error } = await supabase
     .from("esteemed_clients")
     .delete()
@@ -45,6 +55,7 @@ export async function deleteClient(id) {
 /* ================= STORAGE ================= */
 
 export async function uploadClientLogo(file) {
+  requireSupabase();
   const fileExt = file.name.split(".").pop();
   const fileName = `${Date.now()}.${fileExt}`;
 

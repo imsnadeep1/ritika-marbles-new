@@ -2,6 +2,14 @@ import { supabase } from "../lib/supabaseClient";
 
 const isSupabaseReady = Boolean(supabase);
 
+function requireSupabase() {
+  if (!supabase) {
+    throw new Error(
+      "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel, then redeploy.",
+    );
+  }
+}
+
 /* ================= ADMIN ================= */
 
 // Get all reviews (admin)
@@ -22,6 +30,7 @@ export async function getAllReviews() {
 
 // Approve review
 export async function approveReview(id) {
+  requireSupabase();
   const { error } = await supabase
     .from("reviews")
     .update({ approved: true })
@@ -35,6 +44,7 @@ export async function approveReview(id) {
 
 // Delete review
 export async function deleteReview(id) {
+  requireSupabase();
   const { error } = await supabase
     .from("reviews")
     .delete()
@@ -50,6 +60,7 @@ export async function deleteReview(id) {
 
 // Get only approved reviews
 export const getApprovedProductReviews = async () => {
+  if (!isSupabaseReady) return [];
   const { data, error } = await supabase
     .from('feedback')
     .select(`
@@ -75,6 +86,7 @@ export const getApprovedProductReviews = async () => {
 };
 // Add new review (from product / public form)
 export async function addReview(payload) {
+  requireSupabase();
   const { error } = await supabase.from("reviews").insert(payload);
 
   if (error) {

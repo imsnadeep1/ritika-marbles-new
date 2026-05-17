@@ -6,6 +6,7 @@ import { Lock, Mail } from 'lucide-react';
 import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
 
 const configuredAdminEmail = (import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || '').trim();
+const localAdminPassword = (import.meta.env.VITE_ADMIN_PASSWORD || '').trim();
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -23,7 +24,23 @@ const AdminLogin = () => {
 
     try {
       if (!hasSupabaseEnv || !supabase) {
-        setError('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY, then redeploy.');
+        if (!configuredAdminEmail || !localAdminPassword) {
+          setError('Admin login is not configured. Add VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY, or set VITE_SUPABASE_ADMIN_EMAIL + VITE_ADMIN_PASSWORD.');
+          return;
+        }
+
+        if (
+          email.toLowerCase() !== configuredAdminEmail.toLowerCase() ||
+          password !== localAdminPassword
+        ) {
+          setError('Invalid email or password');
+          return;
+        }
+
+        localStorage.setItem('adminToken', 'local-admin-session');
+        localStorage.setItem('adminEmail', email);
+        localStorage.setItem('adminAuthMode', 'local');
+        navigate('/admin/dashboard');
         return;
       }
 
@@ -45,6 +62,7 @@ const AdminLogin = () => {
 
       localStorage.setItem('adminToken', data.session?.access_token || 'supabase-admin-session');
       localStorage.setItem('adminEmail', email);
+      localStorage.setItem('adminAuthMode', 'supabase');
       navigate('/admin/dashboard');
     } catch (loginError) {
       console.error('Admin login failed:', loginError);
@@ -115,7 +133,7 @@ const AdminLogin = () => {
           <div className="mt-6 p-4 bg-[#F8F1E8] rounded-2xl border border-[#E8D9C5]">
             <p className="text-sm text-[#1F3D36] text-center">
               <strong>Admin access:</strong><br />
-              Sign in with your Supabase Auth admin user. Admin writes are protected by Supabase RLS.
+              Sign in with your Supabase Auth admin user. If Supabase is not configured, use VITE_SUPABASE_ADMIN_EMAIL + VITE_ADMIN_PASSWORD for local admin login.
             </p>
           </div>
         </div>

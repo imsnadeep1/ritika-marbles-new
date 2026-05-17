@@ -6,6 +6,8 @@ import { Lock, Mail } from 'lucide-react';
 import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
 
 const configuredAdminEmail = (import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || '').trim();
+const localAdminPassword = (import.meta.env.VITE_ADMIN_PASSWORD || '').trim();
+const hasLocalAdminEnv = Boolean(configuredAdminEmail && localAdminPassword);
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -20,10 +22,27 @@ const AdminLogin = () => {
 
     const email = credentials.email.trim();
     const password = credentials.password;
+    const isLocalCredentialsMatch =
+      hasLocalAdminEnv &&
+      email.toLowerCase() === configuredAdminEmail.toLowerCase() &&
+      password === localAdminPassword;
 
     try {
+      if (isLocalCredentialsMatch) {
+        localStorage.setItem('adminToken', 'local-admin-session');
+        localStorage.setItem('adminEmail', email);
+        localStorage.setItem('adminAuthMode', 'local');
+        navigate('/admin/dashboard');
+        return;
+      }
+
       if (!hasSupabaseEnv || !supabase) {
-        setError('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY, then redeploy.');
+        if (hasLocalAdminEnv) {
+          setError('Invalid email or password');
+          return;
+        }
+
+        setError('Admin login is not configured. Set VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_SUPABASE_ADMIN_EMAIL, and VITE_ADMIN_PASSWORD, then redeploy.');
         return;
       }
 
@@ -34,21 +53,25 @@ const AdminLogin = () => {
 
       if (error) throw error;
 
-      if (
-        configuredAdminEmail &&
-        email.toLowerCase() !== configuredAdminEmail.toLowerCase()
-      ) {
+      const signedInEmail = (data.session?.user?.email || email).toLowerCase();
+
+      if (configuredAdminEmail && signedInEmail !== configuredAdminEmail.toLowerCase()) {
         await supabase.auth.signOut();
-        setError('This account is not authorized for admin access');
+        setError(`This account is not authorized for admin access. Use ${configuredAdminEmail}.`);
         return;
       }
 
       localStorage.setItem('adminToken', data.session?.access_token || 'supabase-admin-session');
       localStorage.setItem('adminEmail', email);
+      localStorage.setItem('adminAuthMode', 'supabase');
       navigate('/admin/dashboard');
     } catch (loginError) {
       console.error('Admin login failed:', loginError);
-      setError(loginError?.message || 'Invalid email or password');
+      if (loginError?.message === 'Invalid login credentials') {
+        setError('Invalid email or password. If these were recently changed in Supabase, redeploy so Vite env values refresh.');
+      } else {
+        setError(loginError?.message || 'Invalid email or password');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -78,7 +101,7 @@ const AdminLogin = () => {
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#D4A853]" />
                 <Input
-                  type="email"
+                  type="text"
                   value={credentials.email}
                   onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                   placeholder={configuredAdminEmail || 'admin@example.com'}
@@ -115,7 +138,7 @@ const AdminLogin = () => {
           <div className="mt-6 p-4 bg-[#F8F1E8] rounded-2xl border border-[#E8D9C5]">
             <p className="text-sm text-[#1F3D36] text-center">
               <strong>Admin access:</strong><br />
-              Sign in with your Supabase Auth admin user. Admin writes are protected by Supabase RLS.
+              Sign in with your Supabase Auth admin user. If Supabase is not configured, use VITE_SUPABASE_ADMIN_EMAIL + VITE_ADMIN_PASSWORD for local admin login.
             </p>
           </div>
         </div>

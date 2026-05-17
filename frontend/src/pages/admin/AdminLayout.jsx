@@ -27,7 +27,17 @@ const AdminLayout = () => {
   useEffect(() => {
     async function checkSession() {
       if (!hasSupabaseEnv || !supabase) {
+        const token = localStorage.getItem('adminToken');
+        const authMode = localStorage.getItem('adminAuthMode');
+
+        if (token && authMode === 'local') {
+          setCheckingSession(false);
+          return;
+        }
+
         localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminEmail');
+        localStorage.removeItem('adminAuthMode');
         navigate('/admin/login');
         return;
       }
@@ -39,10 +49,12 @@ const AdminLayout = () => {
       if (!session) {
         localStorage.removeItem('adminToken');
         localStorage.removeItem('adminEmail');
+        localStorage.removeItem('adminAuthMode');
         navigate('/admin/login');
       } else {
         localStorage.setItem('adminToken', session.access_token);
         localStorage.setItem('adminEmail', session.user?.email || '');
+        localStorage.setItem('adminAuthMode', 'supabase');
         setCheckingSession(false);
       }
     }
@@ -59,10 +71,12 @@ const AdminLayout = () => {
       if (!session) {
         localStorage.removeItem('adminToken');
         localStorage.removeItem('adminEmail');
+        localStorage.removeItem('adminAuthMode');
       navigate('/admin/login');
       } else {
         localStorage.setItem('adminToken', session.access_token);
         localStorage.setItem('adminEmail', session.user?.email || '');
+        localStorage.setItem('adminAuthMode', 'supabase');
     }
     });
 
@@ -75,6 +89,7 @@ const AdminLayout = () => {
     }
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminEmail');
+    localStorage.removeItem('adminAuthMode');
     navigate('/admin/login');
   };
 

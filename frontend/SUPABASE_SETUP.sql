@@ -1,0 +1,410 @@
+-- Ritika Marbles Supabase setup
+-- Run this in Supabase Dashboard > SQL Editor.
+-- It is safe to run more than once.
+
+create extension if not exists pgcrypto;
+
+create or replace function public.set_updated_at()
+returns trigger
+language plpgsql
+as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
+-- =========================
+-- Storefront product catalog
+-- =========================
+
+create table if not exists public.categories (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  slug text not null,
+  description text,
+  image_url text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.categories add column if not exists name text;
+alter table public.categories add column if not exists slug text;
+alter table public.categories add column if not exists description text;
+alter table public.categories add column if not exists image_url text;
+alter table public.categories add column if not exists created_at timestamptz not null default now();
+alter table public.categories add column if not exists updated_at timestamptz not null default now();
+
+create unique index if not exists categories_slug_unique_idx on public.categories (slug);
+create index if not exists categories_created_at_idx on public.categories (created_at desc);
+
+drop trigger if exists set_categories_updated_at on public.categories;
+create trigger set_categories_updated_at
+before update on public.categories
+for each row execute function public.set_updated_at();
+
+create table if not exists public.products (
+  id uuid primary key default gen_random_uuid(),
+  category_id uuid,
+  name text not null,
+  slug text not null,
+  price numeric(12,2) not null default 0,
+  description text,
+  image_url text,
+  video_url text,
+  features text[] not null default '{}'::text[],
+  in_stock boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.products add column if not exists category_id uuid;
+alter table public.products add column if not exists name text;
+alter table public.products add column if not exists slug text;
+alter table public.products add column if not exists price numeric(12,2) not null default 0;
+alter table public.products add column if not exists description text;
+alter table public.products add column if not exists image_url text;
+alter table public.products add column if not exists video_url text;
+alter table public.products add column if not exists features text[] not null default '{}'::text[];
+alter table public.products add column if not exists in_stock boolean not null default true;
+alter table public.products add column if not exists created_at timestamptz not null default now();
+alter table public.products add column if not exists updated_at timestamptz not null default now();
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'products_category_id_fkey'
+  ) and exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'products'
+      and column_name = 'category_id'
+      and udt_name = 'uuid'
+  ) then
+    alter table public.products
+      add constraint products_category_id_fkey
+      foreign key (category_id) references public.categories(id) on delete set null;
+  end if;
+end;
+$$;
+
+create unique index if not exists products_slug_unique_idx on public.products (slug);
+create index if not exists products_category_id_idx on public.products (category_id);
+create index if not exists products_created_at_idx on public.products (created_at desc);
+
+drop trigger if exists set_products_updated_at on public.products;
+create trigger set_products_updated_at
+before update on public.products
+for each row execute function public.set_updated_at();
+
+-- =========================
+-- Customer requests / product feedback
+-- =========================
+
+create table if not exists public.feedback (
+  id uuid primary key default gen_random_uuid(),
+  product_id uuid,
+  name text,
+  email text,
+  rating integer not null default 5 check (rating between 1 and 5),
+  message text not null,
+  approved boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.feedback add column if not exists product_id uuid;
+alter table public.feedback add column if not exists name text;
+alter table public.feedback add column if not exists email text;
+alter table public.feedback add column if not exists rating integer not null default 5;
+alter table public.feedback add column if not exists message text;
+alter table public.feedback add column if not exists approved boolean not null default false;
+alter table public.feedback add column if not exists created_at timestamptz not null default now();
+alter table public.feedback add column if not exists updated_at timestamptz not null default now();
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'feedback_product_id_fkey'
+  ) and exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'feedback'
+      and column_name = 'product_id'
+      and udt_name = 'uuid'
+  ) then
+    alter table public.feedback
+      add constraint feedback_product_id_fkey
+      foreign key (product_id) references public.products(id) on delete cascade;
+  end if;
+end;
+$$;
+
+create index if not exists feedback_product_id_idx on public.feedback (product_id);
+create index if not exists feedback_approved_idx on public.feedback (approved);
+create index if not exists feedback_created_at_idx on public.feedback (created_at desc);
+
+drop trigger if exists set_feedback_updated_at on public.feedback;
+create trigger set_feedback_updated_at
+before update on public.feedback
+for each row execute function public.set_updated_at();
+
+-- =========================
+-- Client diary reviews
+-- =========================
+
+create table if not exists public.reviews (
+  id uuid primary key default gen_random_uuid(),
+  customer_name text,
+  rating integer not null default 5 check (rating between 1 and 5),
+  review text,
+  approved boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.reviews add column if not exists customer_name text;
+alter table public.reviews add column if not exists rating integer not null default 5;
+alter table public.reviews add column if not exists review text;
+alter table public.reviews add column if not exists approved boolean not null default false;
+alter table public.reviews add column if not exists created_at timestamptz not null default now();
+alter table public.reviews add column if not exists updated_at timestamptz not null default now();
+
+create index if not exists reviews_approved_idx on public.reviews (approved);
+create index if not exists reviews_created_at_idx on public.reviews (created_at desc);
+
+drop trigger if exists set_reviews_updated_at on public.reviews;
+create trigger set_reviews_updated_at
+before update on public.reviews
+for each row execute function public.set_updated_at();
+
+-- =========================
+-- Esteemed clients
+-- =========================
+
+create table if not exists public.esteemed_clients (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  testimonial text,
+  logo_url text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.esteemed_clients add column if not exists name text;
+alter table public.esteemed_clients add column if not exists testimonial text;
+alter table public.esteemed_clients add column if not exists logo_url text;
+alter table public.esteemed_clients add column if not exists created_at timestamptz not null default now();
+alter table public.esteemed_clients add column if not exists updated_at timestamptz not null default now();
+
+create index if not exists esteemed_clients_created_at_idx on public.esteemed_clients (created_at desc);
+
+drop trigger if exists set_esteemed_clients_updated_at on public.esteemed_clients;
+create trigger set_esteemed_clients_updated_at
+before update on public.esteemed_clients
+for each row execute function public.set_updated_at();
+
+-- =========================
+-- Admin-managed storefront content
+-- =========================
+
+create table if not exists public.storefront_content (
+  id text primary key,
+  content jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.storefront_content add column if not exists content jsonb not null default '{}'::jsonb;
+alter table public.storefront_content add column if not exists updated_at timestamptz not null default now();
+
+drop trigger if exists set_storefront_content_updated_at on public.storefront_content;
+create trigger set_storefront_content_updated_at
+before update on public.storefront_content
+for each row execute function public.set_updated_at();
+
+insert into public.storefront_content (id, content)
+values (
+  'main',
+  '{
+    "bestseller": {
+      "title": "White Marble Ganesh Statue",
+      "subtitle": "Ready for inquiry",
+      "imageUrl": "/images/products/ganesh-new-top.png",
+      "ctaLabel": "View",
+      "ctaHref": "/god-statue"
+    },
+    "collections": [
+      {
+        "id": "home-temple",
+        "title": "Home Temple Essentials",
+        "description": "Curated idols and decor for daily worship spaces.",
+        "imageUrl": "/images/products/decor.png",
+        "href": "/collections/handicrafts",
+        "enabled": true
+      },
+      {
+        "id": "premium-decor",
+        "title": "Premium Marble Decor",
+        "description": "Statement pieces for interiors, gifting, and display.",
+        "imageUrl": "/images/products/decor2.png",
+        "href": "/collections/home-decor",
+        "enabled": true
+      }
+    ],
+    "godStatues": {
+      "title": "God Statues",
+      "description": "Explore our divine collection of handcrafted marble god statues, each piece created with devotion and precision.",
+      "ctaTitle": "Looking for Something Custom?",
+      "ctaDescription": "We specialize in creating custom marble statues tailored to your specifications."
+    },
+    "clientDiary": {
+      "title": "Client Diaries",
+      "description": "Hear what our valued customers have to say about their experience with Ritika Marbles."
+    },
+    "blogPosts": []
+  }'::jsonb
+)
+on conflict (id) do nothing;
+
+-- =========================
+-- Storage buckets
+-- =========================
+
+insert into storage.buckets (id, name, public)
+values
+  ('products', 'products', true),
+  ('categories', 'categories', true),
+  ('clients', 'clients', true)
+on conflict (id) do update set public = excluded.public;
+
+-- =========================
+-- Row Level Security
+-- =========================
+
+alter table public.categories enable row level security;
+alter table public.products enable row level security;
+alter table public.feedback enable row level security;
+alter table public.reviews enable row level security;
+alter table public.esteemed_clients enable row level security;
+alter table public.storefront_content enable row level security;
+
+drop policy if exists "Public can read categories" on public.categories;
+create policy "Public can read categories"
+on public.categories for select
+to anon, authenticated
+using (true);
+
+drop policy if exists "Authenticated users can manage categories" on public.categories;
+create policy "Authenticated users can manage categories"
+on public.categories for all
+to authenticated
+using (true)
+with check (true);
+
+drop policy if exists "Public can read products" on public.products;
+create policy "Public can read products"
+on public.products for select
+to anon, authenticated
+using (true);
+
+drop policy if exists "Authenticated users can manage products" on public.products;
+create policy "Authenticated users can manage products"
+on public.products for all
+to authenticated
+using (true)
+with check (true);
+
+drop policy if exists "Public can submit feedback" on public.feedback;
+create policy "Public can submit feedback"
+on public.feedback for insert
+to anon, authenticated
+with check (true);
+
+drop policy if exists "Public can read approved feedback" on public.feedback;
+create policy "Public can read approved feedback"
+on public.feedback for select
+to anon
+using (approved = true);
+
+drop policy if exists "Authenticated users can manage feedback" on public.feedback;
+create policy "Authenticated users can manage feedback"
+on public.feedback for all
+to authenticated
+using (true)
+with check (true);
+
+drop policy if exists "Public can submit reviews" on public.reviews;
+create policy "Public can submit reviews"
+on public.reviews for insert
+to anon, authenticated
+with check (true);
+
+drop policy if exists "Public can read approved reviews" on public.reviews;
+create policy "Public can read approved reviews"
+on public.reviews for select
+to anon
+using (approved = true);
+
+drop policy if exists "Authenticated users can manage reviews" on public.reviews;
+create policy "Authenticated users can manage reviews"
+on public.reviews for all
+to authenticated
+using (true)
+with check (true);
+
+drop policy if exists "Public can read esteemed clients" on public.esteemed_clients;
+create policy "Public can read esteemed clients"
+on public.esteemed_clients for select
+to anon, authenticated
+using (true);
+
+drop policy if exists "Authenticated users can manage esteemed clients" on public.esteemed_clients;
+create policy "Authenticated users can manage esteemed clients"
+on public.esteemed_clients for all
+to authenticated
+using (true)
+with check (true);
+
+drop policy if exists "Public can read storefront content" on public.storefront_content;
+create policy "Public can read storefront content"
+on public.storefront_content for select
+to anon, authenticated
+using (true);
+
+drop policy if exists "Authenticated users can manage storefront content" on public.storefront_content;
+create policy "Authenticated users can manage storefront content"
+on public.storefront_content for all
+to authenticated
+using (true)
+with check (true);
+
+-- =========================
+-- Storage RLS policies
+-- =========================
+
+drop policy if exists "Public can read Ritika storage assets" on storage.objects;
+create policy "Public can read Ritika storage assets"
+on storage.objects for select
+to anon, authenticated
+using (bucket_id in ('products', 'categories', 'clients'));
+
+drop policy if exists "Authenticated users can upload Ritika storage assets" on storage.objects;
+create policy "Authenticated users can upload Ritika storage assets"
+on storage.objects for insert
+to authenticated
+with check (bucket_id in ('products', 'categories', 'clients'));
+
+drop policy if exists "Authenticated users can update Ritika storage assets" on storage.objects;
+create policy "Authenticated users can update Ritika storage assets"
+on storage.objects for update
+to authenticated
+using (bucket_id in ('products', 'categories', 'clients'))
+with check (bucket_id in ('products', 'categories', 'clients'));
+
+drop policy if exists "Authenticated users can delete Ritika storage assets" on storage.objects;
+create policy "Authenticated users can delete Ritika storage assets"
+on storage.objects for delete
+to authenticated
+using (bucket_id in ('products', 'categories', 'clients'));

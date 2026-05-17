@@ -1,19 +1,3 @@
-create table if not exists public.storefront_content (
-  id text primary key,
-  content jsonb not null default '{}'::jsonb,
-  updated_at timestamptz not null default now()
-);
-
-alter table public.storefront_content enable row level security;
-
-create policy "Allow public storefront content reads"
-on public.storefront_content
-for select
-using (true);
-
-create policy "Allow authenticated storefront content writes"
-on public.storefront_content
-for all
-to authenticated
-using (true)
-with check (true);
+-- Deprecated: use SUPABASE_SETUP.sql instead.
+-- SUPABASE_SETUP.sql includes storefront_content plus all other tables,
+-- storage buckets, indexes, triggers, and RLS policies needed by the app.

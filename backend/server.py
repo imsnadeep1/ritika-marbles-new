@@ -27,8 +27,14 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
-# Upload directory for images
-UPLOAD_DIR = Path("/app/frontend/public/images/uploads")
+# Upload directory for images. Default to the repo-local frontend public folder
+# so the backend can run outside the original container layout.
+UPLOAD_DIR = Path(
+    os.environ.get(
+        "UPLOAD_DIR",
+        ROOT_DIR.parent / "frontend" / "public" / "images" / "uploads",
+    )
+)
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 

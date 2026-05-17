@@ -119,7 +119,22 @@ export async function saveStorefrontContent(content) {
     .upsert({ id: CONTENT_ID, content: merged });
 
   if (error) {
-    return { savedRemotely: false, content: merged, error };
+    const isMissingTable =
+      error?.code === "42P01" ||
+      /relation .*storefront_content.* does not exist/i.test(error?.message || "");
+    const isPermissionIssue =
+      error?.code === "42501" || /permission denied|row-level security/i.test(error?.message || "");
+
+    return {
+      savedRemotely: false,
+      content: merged,
+      error,
+      reason: isMissingTable
+        ? "missing_table"
+        : isPermissionIssue
+          ? "permission_denied"
+          : "unknown",
+    };
   }
 
   return { savedRemotely: true, content: merged };

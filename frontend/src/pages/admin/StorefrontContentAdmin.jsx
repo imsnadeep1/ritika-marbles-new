@@ -174,11 +174,26 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
     if (result.savedRemotely) {
       setStatus("Saved and published to Supabase.");
     } else {
-      setStatus(
-        result.error
-          ? "Saved locally, but Supabase table `storefront_content` is missing or blocked."
-          : "Saved locally. Configure Supabase to publish for all visitors.",
-      );
+      if (!result.error) {
+        setStatus("Saved locally. Configure Supabase to publish for all visitors.");
+        return;
+      }
+
+      if (result.reason === "missing_table") {
+        setStatus(
+          "Saved locally. Supabase table `storefront_content` was not found — run `frontend/SUPABASE_SETUP.sql`.",
+        );
+        return;
+      }
+
+      if (result.reason === "permission_denied") {
+        setStatus(
+          "Saved locally. Supabase denied write access to `storefront_content` (check RLS policy for authenticated/admin users).",
+        );
+        return;
+      }
+
+      setStatus(`Saved locally. Supabase sync failed: ${result.error.message || "Unknown error"}`);
     }
   };
 

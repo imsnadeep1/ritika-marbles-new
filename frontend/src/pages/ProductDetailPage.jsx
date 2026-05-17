@@ -69,6 +69,8 @@ const ProductDetailPage = () => {
     );
   }
 
+  const isProductAvailable = product.in_stock ?? product.inStock ?? true;
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -156,11 +158,11 @@ const ProductDetailPage = () => {
                 <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF3EF] px-4 py-2">
                   <span
                     className={`w-3 h-3 rounded-full ${
-                      product.inStock ? "bg-green-500" : "bg-red-500"
+                      isProductAvailable ? "bg-green-500" : "bg-red-500"
                     }`}
                   />
                   <span className="text-[#1F3D36] font-semibold">
-                    {product.inStock ? "In Stock" : "Made to Order"}
+                    {isProductAvailable ? "In Stock" : "Made to Order"}
                   </span>
                 </div>
 
@@ -196,6 +198,21 @@ const ProductDetailPage = () => {
                     and get a personalized quote.
                   </p>
                 </div>
+
+                {product.video_url && (
+                  <div className="bg-white rounded-2xl p-5 border border-[#E8D9C5]">
+                    <h3 className="font-semibold text-[#1F3D36] mb-3">
+                      Product Video
+                    </h3>
+                    <video
+                      src={product.video_url}
+                      controls
+                      className="w-full rounded-xl bg-black"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                )}
               </div>
             </div>
           </div>

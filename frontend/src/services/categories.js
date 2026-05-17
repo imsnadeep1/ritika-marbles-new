@@ -34,6 +34,16 @@ export async function addCategory(category) {
   return data;
 }
 
+export async function updateCategory(id, updates) {
+  await ensureSupabaseAdminSession();
+  const { data, error } = await supabase
+    .from("categories")
+    .update(updates)
+    .eq("id", id);
+  if (error) throw error;
+  return data;
+}
+
 export async function deleteCategory(id) {
   await ensureSupabaseAdminSession();
   const { error } = await supabase

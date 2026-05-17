@@ -35,6 +35,28 @@ export async function uploadProductImage(file) {
   return publicUrl;
 }
 
+export async function uploadProductVideo(file) {
+  const fileName = `video-${Date.now()}-${file.name}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from("products")
+    .upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
+
+  if (uploadError) {
+    console.error("Video Upload Error:", uploadError);
+    throw uploadError;
+  }
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("products").getPublicUrl(fileName);
+
+  return publicUrl;
+}
+
 
 // -------- Create Product ----------
 export async function addProduct(product) {
@@ -45,6 +67,9 @@ export async function addProduct(product) {
       description: product.description,
       category_id: product.category_id,
       image_url: product.image_url,
+      video_url: product.video_url,
+      features: product.features,
+      in_stock: product.in_stock,
       slug: product.slug || product.name.toLowerCase().replace(/\s+/g, "-")
     }
   ]);

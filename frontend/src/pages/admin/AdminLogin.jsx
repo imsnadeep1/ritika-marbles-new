@@ -51,12 +51,11 @@ const AdminLogin = () => {
 
       if (error) throw error;
 
-      if (
-        configuredAdminEmail &&
-        email.toLowerCase() !== configuredAdminEmail.toLowerCase()
-      ) {
+      const signedInEmail = (data.session?.user?.email || email).toLowerCase();
+
+      if (configuredAdminEmail && signedInEmail !== configuredAdminEmail.toLowerCase()) {
         await supabase.auth.signOut();
-        setError('This account is not authorized for admin access');
+        setError(`This account is not authorized for admin access. Use ${configuredAdminEmail}.`);
         return;
       }
 
@@ -66,7 +65,11 @@ const AdminLogin = () => {
       navigate('/admin/dashboard');
     } catch (loginError) {
       console.error('Admin login failed:', loginError);
-      setError(loginError?.message || 'Invalid email or password');
+      if (loginError?.message === 'Invalid login credentials') {
+        setError('Invalid email or password. If these were recently changed in Supabase, redeploy so Vite env values refresh.');
+      } else {
+        setError(loginError?.message || 'Invalid email or password');
+      }
     } finally {
       setIsLoading(false);
     }

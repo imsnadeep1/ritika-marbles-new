@@ -114,6 +114,18 @@ export async function saveStorefrontContent(content) {
 
   if (!supabase) return { savedRemotely: false, content: merged };
 
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    return {
+      savedRemotely: false,
+      content: merged,
+      reason: "unauthenticated",
+    };
+  }
+
   const { error } = await supabase
     .from("storefront_content")
     .upsert({ id: CONTENT_ID, content: merged });

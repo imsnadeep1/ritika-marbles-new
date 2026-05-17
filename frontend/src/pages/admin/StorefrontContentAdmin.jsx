@@ -174,6 +174,11 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
     if (result.savedRemotely) {
       setStatus("Saved and published to Supabase.");
     } else {
+      if (result.reason === "unauthenticated") {
+        setStatus("Saved locally. You are in local admin mode, so Supabase publish is disabled. Log in with Supabase admin auth to publish changes.");
+        return;
+      }
+
       if (!result.error) {
         setStatus("Saved locally. Configure Supabase to publish for all visitors.");
         return;

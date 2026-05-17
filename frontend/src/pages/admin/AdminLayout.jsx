@@ -16,18 +16,57 @@ import {
   ShoppingBag
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/lib/supabaseClient';
+import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
 
 const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [checkingSession, setCheckingSession] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (!token) {
-      navigate('/admin/login');
+    async function checkSession() {
+      if (!hasSupabaseEnv || !supabase) {
+        localStorage.removeItem('adminToken');
+        navigate('/admin/login');
+        return;
+      }
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminEmail');
+        navigate('/admin/login');
+      } else {
+        localStorage.setItem('adminToken', session.access_token);
+        localStorage.setItem('adminEmail', session.user?.email || '');
+        setCheckingSession(false);
+      }
     }
+
+    checkSession();
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!supabase) return undefined;
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminEmail');
+      navigate('/admin/login');
+      } else {
+        localStorage.setItem('adminToken', session.access_token);
+        localStorage.setItem('adminEmail', session.user?.email || '');
+    }
+    });
+
+    return () => subscription.unsubscribe();
   }, [navigate]);
 
   const handleLogout = async () => {
@@ -54,6 +93,16 @@ const AdminLayout = () => {
   ];
 
   const isActive = (path) => location.pathname.startsWith(path);
+
+  if (checkingSession) {
+    return (
+      <div className="min-h-screen bg-[#F4F7F4] flex items-center justify-center">
+        <div className="rounded-3xl bg-white px-6 py-5 text-[#1F3D36] shadow-sm border border-[#DDE8E2]">
+          Checking admin session...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#F4F7F4] flex">

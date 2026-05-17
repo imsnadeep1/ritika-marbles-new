@@ -18,15 +18,9 @@ async function ensureSupabaseAdminSession() {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (session) return;
-
-  const email = (import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || "").trim();
-  const password = (import.meta.env.VITE_SUPABASE_ADMIN_PASSWORD || "").trim();
-
-  if (!email || !password) return;
-
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) throw error;
+  if (!session) {
+    throw new Error("Admin session expired. Please sign in again.");
+  }
 }
 
 export async function getCategories() {

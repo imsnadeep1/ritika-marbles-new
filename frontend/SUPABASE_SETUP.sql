@@ -14,6 +14,26 @@ begin
 end;
 $$;
 
+create table if not exists public.admin_users (
+  email text primary key,
+  created_at timestamptz not null default now()
+);
+
+alter table public.admin_users add column if not exists created_at timestamptz not null default now();
+
+create or replace function public.is_admin()
+returns boolean
+language sql
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.admin_users
+    where lower(email) = lower(coalesce(auth.jwt() ->> 'email', ''))
+  );
+$$;
+
 -- =========================
 -- Storefront product catalog
 -- =========================
@@ -349,6 +369,13 @@ alter table public.feedback enable row level security;
 alter table public.reviews enable row level security;
 alter table public.esteemed_clients enable row level security;
 alter table public.storefront_content enable row level security;
+alter table public.admin_users enable row level security;
+
+drop policy if exists "Admins can read admin users" on public.admin_users;
+create policy "Admins can read admin users"
+on public.admin_users for select
+to authenticated
+using (public.is_admin());
 
 drop policy if exists "Public can read categories" on public.categories;
 create policy "Public can read categories"
@@ -357,11 +384,12 @@ to anon, authenticated
 using (true);
 
 drop policy if exists "Authenticated users can manage categories" on public.categories;
-create policy "Authenticated users can manage categories"
+drop policy if exists "Admins can manage categories" on public.categories;
+create policy "Admins can manage categories"
 on public.categories for all
 to authenticated
-using (true)
-with check (true);
+using (public.is_admin())
+with check (public.is_admin());
 
 drop policy if exists "Public can read products" on public.products;
 create policy "Public can read products"
@@ -370,11 +398,12 @@ to anon, authenticated
 using (true);
 
 drop policy if exists "Authenticated users can manage products" on public.products;
-create policy "Authenticated users can manage products"
+drop policy if exists "Admins can manage products" on public.products;
+create policy "Admins can manage products"
 on public.products for all
 to authenticated
-using (true)
-with check (true);
+using (public.is_admin())
+with check (public.is_admin());
 
 drop policy if exists "Public can submit feedback" on public.feedback;
 create policy "Public can submit feedback"
@@ -389,11 +418,12 @@ to anon
 using (approved = true);
 
 drop policy if exists "Authenticated users can manage feedback" on public.feedback;
-create policy "Authenticated users can manage feedback"
+drop policy if exists "Admins can manage feedback" on public.feedback;
+create policy "Admins can manage feedback"
 on public.feedback for all
 to authenticated
-using (true)
-with check (true);
+using (public.is_admin())
+with check (public.is_admin());
 
 drop policy if exists "Public can submit reviews" on public.reviews;
 create policy "Public can submit reviews"
@@ -408,11 +438,12 @@ to anon
 using (approved = true);
 
 drop policy if exists "Authenticated users can manage reviews" on public.reviews;
-create policy "Authenticated users can manage reviews"
+drop policy if exists "Admins can manage reviews" on public.reviews;
+create policy "Admins can manage reviews"
 on public.reviews for all
 to authenticated
-using (true)
-with check (true);
+using (public.is_admin())
+with check (public.is_admin());
 
 drop policy if exists "Public can read esteemed clients" on public.esteemed_clients;
 create policy "Public can read esteemed clients"
@@ -421,11 +452,12 @@ to anon, authenticated
 using (true);
 
 drop policy if exists "Authenticated users can manage esteemed clients" on public.esteemed_clients;
-create policy "Authenticated users can manage esteemed clients"
+drop policy if exists "Admins can manage esteemed clients" on public.esteemed_clients;
+create policy "Admins can manage esteemed clients"
 on public.esteemed_clients for all
 to authenticated
-using (true)
-with check (true);
+using (public.is_admin())
+with check (public.is_admin());
 
 drop policy if exists "Public can read storefront content" on public.storefront_content;
 create policy "Public can read storefront content"
@@ -434,11 +466,12 @@ to anon, authenticated
 using (true);
 
 drop policy if exists "Authenticated users can manage storefront content" on public.storefront_content;
-create policy "Authenticated users can manage storefront content"
+drop policy if exists "Admins can manage storefront content" on public.storefront_content;
+create policy "Admins can manage storefront content"
 on public.storefront_content for all
 to authenticated
-using (true)
-with check (true);
+using (public.is_admin())
+with check (public.is_admin());
 
 -- =========================
 -- Storage RLS policies
@@ -451,20 +484,23 @@ to anon, authenticated
 using (bucket_id in ('products', 'categories', 'clients'));
 
 drop policy if exists "Authenticated users can upload Ritika storage assets" on storage.objects;
-create policy "Authenticated users can upload Ritika storage assets"
+drop policy if exists "Admins can upload Ritika storage assets" on storage.objects;
+create policy "Admins can upload Ritika storage assets"
 on storage.objects for insert
 to authenticated
-with check (bucket_id in ('products', 'categories', 'clients'));
+with check (bucket_id in ('products', 'categories', 'clients') and public.is_admin());
 
 drop policy if exists "Authenticated users can update Ritika storage assets" on storage.objects;
-create policy "Authenticated users can update Ritika storage assets"
+drop policy if exists "Admins can update Ritika storage assets" on storage.objects;
+create policy "Admins can update Ritika storage assets"
 on storage.objects for update
 to authenticated
-using (bucket_id in ('products', 'categories', 'clients'))
-with check (bucket_id in ('products', 'categories', 'clients'));
+using (bucket_id in ('products', 'categories', 'clients') and public.is_admin())
+with check (bucket_id in ('products', 'categories', 'clients') and public.is_admin());
 
 drop policy if exists "Authenticated users can delete Ritika storage assets" on storage.objects;
-create policy "Authenticated users can delete Ritika storage assets"
+drop policy if exists "Admins can delete Ritika storage assets" on storage.objects;
+create policy "Admins can delete Ritika storage assets"
 on storage.objects for delete
 to authenticated
-using (bucket_id in ('products', 'categories', 'clients'));
+using (bucket_id in ('products', 'categories', 'clients') and public.is_admin());

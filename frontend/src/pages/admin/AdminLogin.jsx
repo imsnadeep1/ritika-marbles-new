@@ -5,10 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Lock, Mail } from 'lucide-react';
 import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
 
-const fallbackAdminEmail = 'admin@ritikamarbles.com';
-const fallbackAdminPassword = 'admin123';
 const configuredAdminEmail = (import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || '').trim();
-const configuredAdminPassword = (import.meta.env.VITE_SUPABASE_ADMIN_PASSWORD || '').trim();
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -25,43 +22,30 @@ const AdminLogin = () => {
     const password = credentials.password;
 
     try {
-      if (hasSupabaseEnv && supabase) {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-        if (error) throw error;
-
-        if (
-          configuredAdminEmail &&
-          email.toLowerCase() !== configuredAdminEmail.toLowerCase()
-        ) {
-          await supabase.auth.signOut();
-          setError('This account is not authorized for admin access');
-          setIsLoading(false);
-          return;
-        }
-
-        localStorage.setItem('adminToken', data.session?.access_token || 'supabase-admin-session');
-        localStorage.setItem('adminEmail', email);
-        navigate('/admin/dashboard');
+      if (!hasSupabaseEnv || !supabase) {
+        setError('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY, then redeploy.');
         return;
       }
 
-      const expectedEmail = configuredAdminEmail || fallbackAdminEmail;
-      const expectedPassword = configuredAdminPassword || fallbackAdminPassword;
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
 
       if (
-        email.toLowerCase() === expectedEmail.toLowerCase() &&
-        password === expectedPassword
+        configuredAdminEmail &&
+        email.toLowerCase() !== configuredAdminEmail.toLowerCase()
       ) {
-        localStorage.setItem('adminToken', 'configured-admin-session');
-        localStorage.setItem('adminEmail', email);
-        navigate('/admin/dashboard');
-      } else {
-        setError('Invalid email or password');
+        await supabase.auth.signOut();
+        setError('This account is not authorized for admin access');
+        return;
       }
+
+      localStorage.setItem('adminToken', data.session?.access_token || 'supabase-admin-session');
+      localStorage.setItem('adminEmail', email);
+      navigate('/admin/dashboard');
     } catch (loginError) {
       console.error('Admin login failed:', loginError);
       setError(loginError?.message || 'Invalid email or password');
@@ -97,7 +81,7 @@ const AdminLogin = () => {
                   type="email"
                   value={credentials.email}
                   onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
-                  placeholder={configuredAdminEmail || fallbackAdminEmail}
+                  placeholder={configuredAdminEmail || 'admin@example.com'}
                   className="pl-10 border-[#DDE8E2] focus:border-[#1F3D36]"
                   required
                 />
@@ -131,13 +115,7 @@ const AdminLogin = () => {
           <div className="mt-6 p-4 bg-[#F8F1E8] rounded-2xl border border-[#E8D9C5]">
             <p className="text-sm text-[#1F3D36] text-center">
               <strong>Admin access:</strong><br />
-              Use your Supabase admin user credentials configured in Vercel.
-              {!hasSupabaseEnv && (
-                <>
-                  <br />
-                  Local fallback: {fallbackAdminEmail} / {fallbackAdminPassword}
-                </>
-              )}
+              Sign in with your Supabase Auth admin user. Admin writes are protected by Supabase RLS.
             </p>
           </div>
         </div>

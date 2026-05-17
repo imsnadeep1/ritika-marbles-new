@@ -7,6 +7,7 @@ import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
 
 const configuredAdminEmail = (import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || '').trim();
 const localAdminPassword = (import.meta.env.VITE_ADMIN_PASSWORD || '').trim();
+const hasLocalAdminEnv = Boolean(configuredAdminEmail && localAdminPassword);
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -21,26 +22,27 @@ const AdminLogin = () => {
 
     const email = credentials.email.trim();
     const password = credentials.password;
+    const isLocalCredentialsMatch =
+      hasLocalAdminEnv &&
+      email.toLowerCase() === configuredAdminEmail.toLowerCase() &&
+      password === localAdminPassword;
 
     try {
-      if (!hasSupabaseEnv || !supabase) {
-        if (!configuredAdminEmail || !localAdminPassword) {
-          setError('Admin login is not configured. Add VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY, or set VITE_SUPABASE_ADMIN_EMAIL + VITE_ADMIN_PASSWORD.');
-          return;
-        }
-
-        if (
-          email.toLowerCase() !== configuredAdminEmail.toLowerCase() ||
-          password !== localAdminPassword
-        ) {
-          setError('Invalid email or password');
-          return;
-        }
-
+      if (isLocalCredentialsMatch) {
         localStorage.setItem('adminToken', 'local-admin-session');
         localStorage.setItem('adminEmail', email);
         localStorage.setItem('adminAuthMode', 'local');
         navigate('/admin/dashboard');
+        return;
+      }
+
+      if (!hasSupabaseEnv || !supabase) {
+        if (hasLocalAdminEnv) {
+          setError('Invalid email or password');
+          return;
+        }
+
+        setError('Admin login is not configured. Set VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_SUPABASE_ADMIN_EMAIL, and VITE_ADMIN_PASSWORD, then redeploy.');
         return;
       }
 

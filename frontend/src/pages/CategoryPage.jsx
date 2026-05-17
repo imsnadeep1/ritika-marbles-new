@@ -7,6 +7,7 @@ import { ChevronRight } from "lucide-react";
 
 import { getCategories } from "@/services/categories";
 import { getProducts } from "@/services/products";
+import ComingSoon from "@/components/ComingSoon";
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -146,9 +147,10 @@ const CategoryPage = () => {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">
-                  No products found in this category.
-                </p>
+                <ComingSoon
+                  title="Products coming soon"
+                  description="This collection is ready, and products will appear here once they are added from the admin dashboard."
+                />
                 <Link
                   to="/"
                   className="text-[#D4A853] hover:underline mt-4 inline-block"

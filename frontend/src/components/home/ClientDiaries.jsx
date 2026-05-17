@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getApprovedProductReviews } from '@/services/reviews';
 import { Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ComingSoon from '@/components/ComingSoon';
 
 const ClientDiaries = () => {
   const [reviews, setReviews] = useState([]);
@@ -13,7 +14,18 @@ const ClientDiaries = () => {
 }, []);
 
 
-  if (!reviews.length) return null;
+  if (!reviews.length) {
+    return (
+      <section className="bg-[#F8F1E8] py-12 px-4">
+        <div className="max-w-5xl mx-auto">
+          <ComingSoon
+            title="Client diaries coming soon"
+            description="Approved customer stories and product experiences will show here once they are added from the admin dashboard."
+          />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="bg-[#1a5d4c] py-6 overflow-hidden">

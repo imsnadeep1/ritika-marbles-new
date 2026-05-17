@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
+import ComingSoon from '@/components/ComingSoon';
 
 const FeaturedSections = () => {
   const [collections, setCollections] = useState(defaultStorefrontContent.collections);
@@ -30,6 +31,12 @@ const FeaturedSections = () => {
         </div>
 
         {/* Two Column Features */}
+        {collections.length === 0 ? (
+          <ComingSoon
+            title="Collections coming soon"
+            description="Curated shopping collections will appear here once they are enabled from the admin dashboard."
+          />
+        ) : (
         <div className="grid md:grid-cols-2 gap-8">
           {collections.map((collection, index) => (
           <div key={collection.id || collection.title} className="relative group overflow-hidden rounded-[2rem] shadow-xl">
@@ -56,6 +63,7 @@ const FeaturedSections = () => {
           </div>
           ))}
         </div>
+        )}
       </div>
     </section>
   );

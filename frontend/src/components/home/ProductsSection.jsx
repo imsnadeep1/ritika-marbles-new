@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getCategories } from "@/services/categories";
+import ComingSoon from "@/components/ComingSoon";
 
 const ProductsSection = () => {
   const scrollRef = useRef(null);
@@ -71,9 +72,10 @@ const ProductsSection = () => {
 
         {/* No categories */}
         {!loading && categories.length === 0 && (
-          <p className="text-center text-slate-600 text-lg">
-            No categories available yet.
-          </p>
+          <ComingSoon
+            title="Product collections coming soon"
+            description="Categories added from the admin dashboard will appear here automatically."
+          />
         )}
 
         {/* Category Carousel */}

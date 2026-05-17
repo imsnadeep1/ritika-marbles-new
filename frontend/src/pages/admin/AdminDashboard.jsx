@@ -13,6 +13,7 @@ import { getProducts } from "@/services/products";
 import { getCategories } from "@/services/categories";
 import { getAllFeedback } from "@/services/feedback";
 import { getAllReviews } from "@/services/reviews";
+import ComingSoon from "@/components/ComingSoon";
 
 const statCards = [
   { key: "categories", label: "Categories", icon: FolderOpen, color: "bg-emerald-50 text-emerald-700" },
@@ -120,7 +121,11 @@ const AdminDashboard = () => {
           </div>
           <div className="space-y-3">
             {recentProducts.length === 0 ? (
-              <p className="text-sm text-slate-500">No products yet.</p>
+              <ComingSoon
+                title="Products coming soon"
+                description="Add products from the Products tab to populate this dashboard section."
+                className="py-6"
+              />
             ) : (
               recentProducts.map((product) => (
                 <div key={product.id} className="flex items-center gap-4 rounded-2xl border border-[#EEF3EF] p-3">
@@ -150,12 +155,20 @@ const AdminDashboard = () => {
               <p className="text-2xl font-bold text-[#1F3D36]">{pendingFeedback.length}</p>
               <p className="text-sm text-slate-600">Customer requests waiting for review</p>
             </div>
-            {recentRequests.map((item) => (
-              <div key={item.id} className="border-b border-[#EEF3EF] pb-3 last:border-b-0">
-                <p className="font-semibold text-[#1F3D36]">{item.name || "Anonymous customer"}</p>
-                <p className="text-sm text-slate-500 line-clamp-2">{item.message || "No message provided"}</p>
-              </div>
-            ))}
+            {recentRequests.length === 0 ? (
+              <ComingSoon
+                title="Requests coming soon"
+                description="Customer inquiries and feedback will show here when visitors start submitting them."
+                className="py-6"
+              />
+            ) : (
+              recentRequests.map((item) => (
+                <div key={item.id} className="border-b border-[#EEF3EF] pb-3 last:border-b-0">
+                  <p className="font-semibold text-[#1F3D36]">{item.name || "Anonymous customer"}</p>
+                  <p className="text-sm text-slate-500 line-clamp-2">{item.message || "No message provided"}</p>
+                </div>
+              ))
+            )}
             <Link to="/admin/feedback" className="inline-flex items-center gap-2 text-sm font-semibold text-[#B8872F] hover:text-[#1F3D36]">
               Open request inbox
               <ArrowRight className="w-4 h-4" />

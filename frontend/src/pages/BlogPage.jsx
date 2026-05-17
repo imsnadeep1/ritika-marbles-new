@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import FloatingButtons from "@/components/layout/FloatingButtons";
 import { ArrowRight, Calendar } from "lucide-react";
 import { defaultStorefrontContent, getStorefrontContent } from "@/services/storefrontContent";
+import ComingSoon from "@/components/ComingSoon";
 
 const BlogPage = () => {
   const [posts, setPosts] = useState(defaultStorefrontContent.blogPosts);
@@ -35,9 +36,10 @@ const BlogPage = () => {
         <section className="py-20 bg-[#F8F1E8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {posts.length === 0 ? (
-              <div className="rounded-[2rem] bg-white p-10 text-center text-slate-500">
-                No blog posts are published yet.
-              </div>
+              <ComingSoon
+                title="Blog coming soon"
+                description="Buying guides, care tips, and custom-order advice will appear here once published from the admin dashboard."
+              />
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {posts.map((post) => (

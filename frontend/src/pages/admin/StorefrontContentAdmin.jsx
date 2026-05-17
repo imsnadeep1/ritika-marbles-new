@@ -15,6 +15,7 @@ import {
   saveStorefrontContent,
   uploadStorefrontAsset,
 } from "@/services/storefrontContent";
+import ComingSoon from "@/components/ComingSoon";
 
 const sectionMeta = {
   bestseller: {
@@ -383,7 +384,15 @@ const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUplo
     </div>
 
     <div className="grid lg:grid-cols-2 gap-5">
-      {items.map((item, index) => (
+      {items.length === 0 ? (
+        <div className="lg:col-span-2">
+          <ComingSoon
+            title={`${itemType === "blog" ? "Blog posts" : "Collection cards"} coming soon`}
+            description="Use the Add item button above to create the first item for this dashboard section."
+            className="bg-[#F8FBF9]"
+          />
+        </div>
+      ) : items.map((item, index) => (
         <article key={item.id || index} className="rounded-3xl border border-[#DDE8E2] p-5 space-y-4">
           <div className="flex items-start justify-between gap-4">
             <h3 className="font-bold text-[#1F3D36]">

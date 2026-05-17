@@ -37,3 +37,9 @@ Redeploy after changing Vercel environment variables.
 - Public visitors can submit product feedback.
 - Authenticated users can manage all admin content and upload assets.
 - Product/category/client images and product videos are stored in Supabase Storage.
+
+## If you previously saw a UUID / bigint foreign key error
+
+Run the latest `SUPABASE_SETUP.sql` again. It now detects whether your existing
+`products.id` and `categories.id` columns are `bigint` or `uuid`, aligns the
+relationship columns, and then creates the foreign keys.

@@ -8,7 +8,6 @@ const ClientDiaries = () => {
 
   useEffect(() => {
   getApprovedProductReviews().then((data) => {
-    console.log('🔥 FEEDBACK DATA:', data);
     setReviews(data);
   });
 }, []);

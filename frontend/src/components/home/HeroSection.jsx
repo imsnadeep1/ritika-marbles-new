@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, MessageCircle, ShieldCheck, Sparkles, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/data/mock';
+import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
 
 const HeroSection = () => {
+  const [bestseller, setBestseller] = useState(defaultStorefrontContent.bestseller);
+
+  useEffect(() => {
+    getStorefrontContent().then((content) => setBestseller(content.bestseller));
+  }, []);
+
   return (
     <section className="relative bg-[radial-gradient(circle_at_top_left,#FFF7E8,transparent_35%),linear-gradient(135deg,#F9F3EA_0%,#FFFFFF_45%,#EAF3EF_100%)] min-h-[82vh] flex items-center overflow-hidden">
       {/* Decorative Elements */}
@@ -76,19 +83,21 @@ const HeroSection = () => {
                   Best seller
                 </div>
                 <img
-                  src="/images/products/ganesh-new-top.png"
-                  alt="Marble Ganesh Statue"
+                  src={bestseller.imageUrl}
+                  alt={bestseller.title}
                   className="relative z-10 max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
                 />
                 <div className="absolute bottom-6 left-6 right-6 z-20 rounded-3xl bg-white/95 p-4 shadow-xl border border-[#E8D9C5]">
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wide text-[#B8872F]">Ready for inquiry</p>
-                      <h3 className="text-lg font-semibold text-[#1F3D36]">White Marble Ganesh Statue</h3>
+                      <p className="text-xs font-bold uppercase tracking-wide text-[#B8872F]">
+                        {bestseller.subtitle}
+                      </p>
+                      <h3 className="text-lg font-semibold text-[#1F3D36]">{bestseller.title}</h3>
                     </div>
-                    <Link to="/god-statue">
+                    <Link to={bestseller.ctaHref || "/god-statue"}>
                       <Button className="rounded-full bg-[#D4A853] hover:bg-[#B8872F] text-white">
-                        View
+                        {bestseller.ctaLabel || "View"}
                       </Button>
                     </Link>
                   </div>

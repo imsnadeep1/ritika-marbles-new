@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
+  BookOpen,
   FolderOpen, 
   Package, 
   MessageSquare,
   Star,
+  Sparkles,
   Users,
+  ImagePlus,
   LogOut,
   Home,
   Menu,
@@ -38,8 +41,13 @@ const AdminLayout = () => {
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard', helper: 'Business overview' },
-    { icon: FolderOpen, label: 'Categories', path: '/admin/categories', helper: 'Collections and images' },
     { icon: Package, label: 'Products', path: '/admin/products', helper: 'Catalog, media and price' },
+    { icon: ImagePlus, label: 'Bestseller', path: '/admin/bestseller', helper: 'Homepage hero product' },
+    { icon: FolderOpen, label: 'Collections', path: '/admin/collections', helper: 'Storefront collection cards' },
+    { icon: Sparkles, label: 'God Statues', path: '/admin/god-statues', helper: 'Landing page content' },
+    { icon: Users, label: 'Client Diary', path: '/admin/client-diary', helper: 'Testimonials page copy' },
+    { icon: BookOpen, label: 'Blog', path: '/admin/blog', helper: 'Buying guide posts' },
+    { icon: FolderOpen, label: 'Categories', path: '/admin/categories', helper: 'Product categories' },
     { icon: MessageSquare, label: 'Customer Requests', path: '/admin/feedback', helper: 'Feedback and inquiries' },
     { icon: Star, label: 'Reviews', path: '/admin/reviews', helper: 'Client diaries' },
     { icon: Users, label: 'Clients', path: '/admin/clients', helper: 'Logos and testimonials' },
@@ -87,7 +95,7 @@ const AdminLayout = () => {
           </div>
 
           {/* Menu */}
-          <nav className="flex-1 p-4 space-y-2">
+          <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
             {menuItems.map((item) => (
               <Link
                 key={item.path}

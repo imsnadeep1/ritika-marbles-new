@@ -10,6 +10,7 @@ import GodStatuePage from "@/pages/GodStatuePage";
 import CategoryPage from "@/pages/CategoryPage";
 import ProductDetailPage from "@/pages/ProductDetailPage";
 import TestimonialsPage from "@/pages/TestimonialsPage";
+import BlogPage from "@/pages/BlogPage";
 
 /* ================= ADMIN LAYOUT & AUTH ================= */
 import AdminLayout from "@/pages/admin/AdminLayout";
@@ -22,6 +23,7 @@ import CategoriesAdmin from "@/pages/admin/CategoriesAdmin";
 import ReviewsAdmin from "@/pages/admin/ReviewsAdmin";
 import EsteemedClientsAdmin from "@/pages/admin/EsteemedClientsAdmin";
 import FeedbackAdmin from "@/pages/admin/FeedbackAdmin"; // ✅ MODERATION PAGE
+import StorefrontContentAdmin from "@/pages/admin/StorefrontContentAdmin";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
           <Route path="/category/:slug" element={<CategoryPage />} />
           <Route path="/product/:slug" element={<ProductDetailPage />} />
           <Route path="/testimonials" element={<TestimonialsPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPage />} />
           <Route path="/collections/:type" element={<CategoryPage />} />
 
           {/* ================= ADMIN LOGIN ================= */}
@@ -50,6 +54,11 @@ function App() {
             {/* Catalog */}
             <Route path="categories" element={<CategoriesAdmin />} />
             <Route path="products" element={<ProductsAdmin />} />
+            <Route path="bestseller" element={<StorefrontContentAdmin section="bestseller" />} />
+            <Route path="collections" element={<StorefrontContentAdmin section="collections" />} />
+            <Route path="god-statues" element={<StorefrontContentAdmin section="god-statues" />} />
+            <Route path="client-diary" element={<StorefrontContentAdmin section="client-diary" />} />
+            <Route path="blog" element={<StorefrontContentAdmin section="blog" />} />
 
             {/* Reviews / Client Diaries */}
             <Route path="reviews" element={<ReviewsAdmin />} />

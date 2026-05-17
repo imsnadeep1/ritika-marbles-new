@@ -12,11 +12,18 @@ for route in \
   admin \
   admin/login \
   admin/dashboard \
+  admin/bestseller \
+  admin/collections \
+  admin/god-statues \
+  admin/client-diary \
+  admin/blog \
   admin/categories \
   admin/products \
   admin/feedback \
   admin/reviews \
-  admin/clients
+  admin/clients \
+  blog \
+  blog/choosing-marble-idol
 do
   mkdir -p "dist/$route"
   cp dist/index.html "dist/$route/index.html"

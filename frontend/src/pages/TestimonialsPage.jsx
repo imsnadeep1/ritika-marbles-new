@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/layout/FloatingButtons';
 import ClientDiaries from '../components/home/ClientDiaries';
 import EsteemedClients from '../components/home/EsteemedClients';
+import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
 
 
 const TestimonialsPage = () => {
+  const [content, setContent] = useState(defaultStorefrontContent.clientDiary);
+
+  useEffect(() => {
+    getStorefrontContent().then((data) => setContent(data.clientDiary));
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -16,10 +23,10 @@ const TestimonialsPage = () => {
         <section className="bg-[#1a5d4c] py-20">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Client Diaries
+              {content.title}
             </h1>
             <p className="text-white/80 text-lg max-w-2xl mx-auto">
-              Hear what our valued customers have to say about their experience with Ritika Marbles.
+              {content.description}
             </p>
           </div>
         </section>

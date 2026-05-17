@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/layout/FloatingButtons';
 import { categories } from '@/data/mock';
+import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
 
 const GodStatuePage = () => {
+  const [content, setContent] = useState(defaultStorefrontContent.godStatues);
+
+  useEffect(() => {
+    getStorefrontContent().then((data) => setContent(data.godStatues));
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -13,10 +20,9 @@ const GodStatuePage = () => {
         {/* Hero Section */}
         <section className="bg-[#1F3D36] py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#D4A853] mb-4">God Statues</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-[#D4A853] mb-4">{content.title}</h1>
             <p className="text-white/80 text-lg max-w-2xl mx-auto">
-              Explore our divine collection of handcrafted marble god statues, each piece created 
-              with devotion and precision.
+              {content.description}
             </p>
           </div>
         </section>
@@ -52,10 +58,9 @@ const GodStatuePage = () => {
         {/* Custom Orders CTA */}
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-[#1F3D36] mb-4">Looking for Something Custom?</h2>
+            <h2 className="text-3xl font-bold text-[#1F3D36] mb-4">{content.ctaTitle}</h2>
             <p className="text-gray-600 mb-8">
-              We specialize in creating custom marble statues tailored to your specifications. 
-              Contact us to discuss your unique requirements.
+              {content.ctaDescription}
             </p>
             <Link
               to="/contact"

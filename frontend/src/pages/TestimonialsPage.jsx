@@ -20,8 +20,13 @@ const TestimonialsPage = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="bg-[#1a5d4c] py-20">
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#10221E] via-[#1F3D36] to-[#10221E] py-24">
+          <div className="absolute left-8 top-8 h-40 w-40 rounded-full bg-[#D4A853]/10 blur-3xl" />
+          <div className="absolute bottom-8 right-8 h-52 w-52 rounded-full bg-white/5 blur-3xl" />
           <div className="max-w-7xl mx-auto px-4 text-center">
+            <p className="text-[#D4A853] text-sm font-bold uppercase tracking-[0.25em] mb-4">
+              Customer stories
+            </p>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {content.title}
             </h1>

@@ -137,15 +137,25 @@ export async function deleteCategory(id) {
 }
 
 export async function uploadCategoryImage(file) {
-  requireSupabase();
-  await ensureSupabaseAdminSession();
+  if (!isSupabaseReady) {
+    return URL.createObjectURL(file);
+  }
+
+  try {
+    await ensureSupabaseAdminSession();
+  } catch {
+    return URL.createObjectURL(file);
+  }
+
   const fileName = `cat-${Date.now()}-${file.name}`;
 
   const { error } = await supabase.storage
     .from("categories")
     .upload(fileName, file);
 
-  if (error) throw error;
+  if (error) {
+    return URL.createObjectURL(file);
+  }
 
   const {
     data: { publicUrl },

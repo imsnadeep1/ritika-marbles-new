@@ -21,7 +21,7 @@ const ClientDiaries = () => {
         <div className="max-w-5xl mx-auto">
           <ComingSoon
             title="Client diaries coming soon"
-            description="Approved customer stories and product experiences will show here once they are added from the admin dashboard."
+            description="Every piece we deliver carries a part of our craft story. Your story could be the first one featured here."
           />
         </div>
       </section>

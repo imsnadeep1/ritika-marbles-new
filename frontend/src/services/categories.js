@@ -1,7 +1,6 @@
 
 import { supabase } from "../lib/supabaseClient";
 
-const isSupabaseReady = Boolean(supabase);
 const CATEGORIES_STORAGE_KEY = "ritika-categories-local";
 
 function getLocalCategories() {
@@ -38,114 +37,50 @@ async function ensureSupabaseAdminSession() {
 }
 
 export async function getCategories() {
-  if (!isSupabaseReady) return getLocalCategories();
-
-  try {
-    await ensureSupabaseAdminSession();
-  } catch {
-    return getLocalCategories();
-  }
+  requireSupabase();
+  await ensureSupabaseAdminSession();
 
   const { data, error } = await supabase.from("categories").select("*");
-  if (error) return getLocalCategories();
+  if (error) throw error;
   setLocalCategories(data || []);
   return data;
 }
 
 export async function addCategory(category) {
-  const localCategory = {
-    ...category,
-    id: category.id || `local-cat-${Date.now()}`,
-  };
-
-  if (!isSupabaseReady) {
-    const categories = getLocalCategories();
-    const next = [...categories, localCategory];
-    setLocalCategories(next);
-    return [localCategory];
-  }
-
-  try {
-    await ensureSupabaseAdminSession();
-  } catch {
-    const categories = getLocalCategories();
-    const next = [...categories, localCategory];
-    setLocalCategories(next);
-    return [localCategory];
-  }
+  requireSupabase();
+  await ensureSupabaseAdminSession();
 
   const { data, error } = await supabase.from("categories").insert([category]);
-  if (error) {
-    const categories = getLocalCategories();
-    const next = [...categories, localCategory];
-    setLocalCategories(next);
-    return [localCategory];
-  }
+  if (error) throw error;
   return data;
 }
 
 export async function updateCategory(id, updates) {
-  const updateLocal = () => {
-    const categories = getLocalCategories();
-    const next = categories.map((item) => (item.id === id ? { ...item, ...updates } : item));
-    setLocalCategories(next);
-    return next;
-  };
-
-  if (!isSupabaseReady) {
-    return updateLocal();
-  }
-
-  try {
-    await ensureSupabaseAdminSession();
-  } catch {
-    return updateLocal();
-  }
+  requireSupabase();
+  await ensureSupabaseAdminSession();
 
   const { data, error } = await supabase
     .from("categories")
     .update(updates)
     .eq("id", id);
-  if (error) return updateLocal();
+  if (error) throw error;
   return data;
 }
 
 export async function deleteCategory(id) {
-  const deleteLocal = () => {
-    const categories = getLocalCategories();
-    const next = categories.filter((item) => item.id !== id);
-    setLocalCategories(next);
-  };
-
-  if (!isSupabaseReady) {
-    deleteLocal();
-    return;
-  }
-
-  try {
-    await ensureSupabaseAdminSession();
-  } catch {
-    deleteLocal();
-    return;
-  }
+  requireSupabase();
+  await ensureSupabaseAdminSession();
 
   const { error } = await supabase
     .from("categories")
     .delete()
     .eq("id", id);
-  if (error) deleteLocal();
+  if (error) throw error;
 }
 
 export async function uploadCategoryImage(file) {
-  if (!isSupabaseReady) {
-    return URL.createObjectURL(file);
-  }
-
-  try {
-    await ensureSupabaseAdminSession();
-  } catch {
-    return URL.createObjectURL(file);
-  }
+  requireSupabase();
+  await ensureSupabaseAdminSession();
 
   const fileName = `cat-${Date.now()}-${file.name}`;
 
@@ -153,9 +88,7 @@ export async function uploadCategoryImage(file) {
     .from("categories")
     .upload(fileName, file);
 
-  if (error) {
-    return URL.createObjectURL(file);
-  }
+  if (error) throw error;
 
   const {
     data: { publicUrl },

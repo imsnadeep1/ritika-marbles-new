@@ -1,6 +1,5 @@
 import { supabase } from "../lib/supabaseClient";
 
-const isSupabaseReady = Boolean(supabase);
 const PRODUCTS_STORAGE_KEY = "ritika-products-local";
 
 function getLocalProducts() {
@@ -26,18 +25,18 @@ function requireSupabase() {
 
 // -------- Get All Products ----------
 export async function getProducts() {
-  if (!isSupabaseReady) return getLocalProducts();
+  requireSupabase();
   const { data, error } = await supabase
     .from("products")
     .select("*, categories(name)");
-  if (error) return getLocalProducts();
+  if (error) throw error;
   setLocalProducts(data || []);
   return data;
 }
 
 // -------- Create / Upload Product Image ----------
 export async function uploadProductImage(file) {
-  if (!isSupabaseReady) return URL.createObjectURL(file);
+  requireSupabase();
   const fileName = `${Date.now()}-${file.name}`;
 
   const { error: uploadError } = await supabase.storage
@@ -49,7 +48,7 @@ export async function uploadProductImage(file) {
 
   if (uploadError) {
     console.error("Image Upload Error:", uploadError);
-    return URL.createObjectURL(file);
+    throw uploadError;
   }
 
   const {
@@ -60,7 +59,7 @@ export async function uploadProductImage(file) {
 }
 
 export async function uploadProductVideo(file) {
-  if (!isSupabaseReady) return URL.createObjectURL(file);
+  requireSupabase();
   const fileName = `video-${Date.now()}-${file.name}`;
 
   const { error: uploadError } = await supabase.storage
@@ -72,7 +71,7 @@ export async function uploadProductVideo(file) {
 
   if (uploadError) {
     console.error("Video Upload Error:", uploadError);
-    return URL.createObjectURL(file);
+    throw uploadError;
   }
 
   const {
@@ -85,18 +84,7 @@ export async function uploadProductVideo(file) {
 
 // -------- Create Product ----------
 export async function addProduct(product) {
-  const localProduct = {
-    ...product,
-    id: product.id || `local-prod-${Date.now()}`,
-    slug: product.slug || product.name.toLowerCase().replace(/\s+/g, "-"),
-  };
-
-  if (!isSupabaseReady) {
-    const products = getLocalProducts();
-    const next = [...products, localProduct];
-    setLocalProducts(next);
-    return [localProduct];
-  }
+  requireSupabase();
 
   const { data, error } = await supabase.from("products").insert([
     {
@@ -112,49 +100,28 @@ export async function addProduct(product) {
     }
   ]);
 
-  if (error) {
-    const products = getLocalProducts();
-    const next = [...products, localProduct];
-    setLocalProducts(next);
-    return [localProduct];
-  }
+  if (error) throw error;
   return data;
 }
 
 
 // -------- Update Product ----------
 export async function updateProduct(id, updates) {
-  const updateLocal = () => {
-    const products = getLocalProducts();
-    const next = products.map((item) => (item.id === id ? { ...item, ...updates } : item));
-    setLocalProducts(next);
-    return next;
-  };
-
-  if (!isSupabaseReady) return updateLocal();
+  requireSupabase();
 
   const { data, error } = await supabase
     .from("products")
     .update(updates)
     .eq("id", id);
 
-  if (error) return updateLocal();
+  if (error) throw error;
   return data;
 }
 
 // -------- Delete ----------
 export async function deleteProduct(id) {
-  const deleteLocal = () => {
-    const products = getLocalProducts();
-    const next = products.filter((item) => item.id !== id);
-    setLocalProducts(next);
-  };
-
-  if (!isSupabaseReady) {
-    deleteLocal();
-    return;
-  }
+  requireSupabase();
 
   const { error } = await supabase.from("products").delete().eq("id", id);
-  if (error) deleteLocal();
+  if (error) throw error;
 }

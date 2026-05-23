@@ -25,13 +25,21 @@ const AdminLogin = () => {
           password,
         });
 
-        if (!signInError && data?.session) {
+        if (signInError) {
+          setError(signInError.message || 'Invalid email or password');
+          return;
+        }
+
+        if (data?.session) {
           localStorage.setItem('adminToken', data.session.access_token || 'supabase-admin-session');
           localStorage.setItem('adminEmail', data.session.user?.email || email);
           localStorage.setItem('adminAuthMode', 'supabase');
           navigate('/admin/dashboard');
           return;
         }
+
+        setError('Login failed. Supabase session was not created.');
+        return;
       }
 
       localStorage.setItem('adminToken', 'admin-auth-disabled');

@@ -6,6 +6,7 @@ import ComingSoon from '@/components/ComingSoon';
 
 const ClientDiaries = () => {
   const [reviews, setReviews] = useState([]);
+  const shouldAutoScroll = reviews.length > 3;
 
   useEffect(() => {
   getApprovedProductReviews().then((data) => {
@@ -20,7 +21,7 @@ const ClientDiaries = () => {
         <div className="max-w-5xl mx-auto">
           <ComingSoon
             title="Client diaries coming soon"
-            description="Approved customer stories and product experiences will show here once they are added from the admin dashboard."
+            description="Every piece we deliver carries a part of our craft story. Your story could be the first one featured here."
           />
         </div>
       </section>
@@ -44,10 +45,10 @@ const ClientDiaries = () => {
         </p>
       </div>
 
-      <div className="relative z-10 flex gap-6 px-6 animate-marquee">
-        {reviews.map((r) => (
+      <div className={`relative z-10 flex gap-6 px-6 ${shouldAutoScroll ? "animate-marquee" : "justify-center flex-wrap"}`}>
+        {(shouldAutoScroll ? [...reviews, ...reviews] : reviews).map((r, idx) => (
           <div
-            key={r.id}
+            key={`${r.id}-${idx}`}
             className="min-w-[320px] max-w-[440px] bg-white rounded-[1.75rem] p-6 shadow-xl flex-shrink-0 border border-[#E8D9C5]"
           >
             <Quote className="w-8 h-8 text-[#D4A853] mb-4" />

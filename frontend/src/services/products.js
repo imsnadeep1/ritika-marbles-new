@@ -1,6 +1,19 @@
 import { supabase } from "../lib/supabaseClient";
 
-const isSupabaseReady = Boolean(supabase);
+const PRODUCTS_STORAGE_KEY = "ritika-products-local";
+
+function getLocalProducts() {
+  try {
+    const raw = localStorage.getItem(PRODUCTS_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function setLocalProducts(products) {
+  localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+}
 
 function requireSupabase() {
   if (!supabase) {
@@ -12,11 +25,12 @@ function requireSupabase() {
 
 // -------- Get All Products ----------
 export async function getProducts() {
-  if (!isSupabaseReady) return [];
+  requireSupabase();
   const { data, error } = await supabase
     .from("products")
     .select("*, categories(name)");
   if (error) throw error;
+  setLocalProducts(data || []);
   return data;
 }
 
@@ -71,6 +85,7 @@ export async function uploadProductVideo(file) {
 // -------- Create Product ----------
 export async function addProduct(product) {
   requireSupabase();
+
   const { data, error } = await supabase.from("products").insert([
     {
       name: product.name,
@@ -93,6 +108,7 @@ export async function addProduct(product) {
 // -------- Update Product ----------
 export async function updateProduct(id, updates) {
   requireSupabase();
+
   const { data, error } = await supabase
     .from("products")
     .update(updates)
@@ -105,6 +121,7 @@ export async function updateProduct(id, updates) {
 // -------- Delete ----------
 export async function deleteProduct(id) {
   requireSupabase();
+
   const { error } = await supabase.from("products").delete().eq("id", id);
   if (error) throw error;
 }

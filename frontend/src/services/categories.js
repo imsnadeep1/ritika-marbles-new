@@ -1,7 +1,20 @@
 
 import { supabase } from "../lib/supabaseClient";
 
-const isSupabaseReady = Boolean(supabase);
+const CATEGORIES_STORAGE_KEY = "ritika-categories-local";
+
+function getLocalCategories() {
+  try {
+    const raw = localStorage.getItem(CATEGORIES_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function setLocalCategories(categories) {
+  localStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories));
+}
 
 function requireSupabase() {
   if (!supabase) {
@@ -19,21 +32,23 @@ async function ensureSupabaseAdminSession() {
   } = await supabase.auth.getSession();
 
   if (!session) {
-    throw new Error("Admin session expired. Please sign in again.");
+    throw new Error("Admin session unavailable. Changes will be saved locally in admin mode.");
   }
 }
 
 export async function getCategories() {
-  if (!isSupabaseReady) return [];
-  await ensureSupabaseAdminSession();
+  requireSupabase();
+
   const { data, error } = await supabase.from("categories").select("*");
   if (error) throw error;
+  setLocalCategories(data || []);
   return data;
 }
 
 export async function addCategory(category) {
   requireSupabase();
   await ensureSupabaseAdminSession();
+
   const { data, error } = await supabase.from("categories").insert([category]);
   if (error) throw error;
   return data;
@@ -42,6 +57,7 @@ export async function addCategory(category) {
 export async function updateCategory(id, updates) {
   requireSupabase();
   await ensureSupabaseAdminSession();
+
   const { data, error } = await supabase
     .from("categories")
     .update(updates)
@@ -53,6 +69,7 @@ export async function updateCategory(id, updates) {
 export async function deleteCategory(id) {
   requireSupabase();
   await ensureSupabaseAdminSession();
+
   const { error } = await supabase
     .from("categories")
     .delete()
@@ -63,6 +80,7 @@ export async function deleteCategory(id) {
 export async function uploadCategoryImage(file) {
   requireSupabase();
   await ensureSupabaseAdminSession();
+
   const fileName = `cat-${Date.now()}-${file.name}`;
 
   const { error } = await supabase.storage

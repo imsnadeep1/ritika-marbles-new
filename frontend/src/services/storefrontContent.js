@@ -114,19 +114,46 @@ export async function saveStorefrontContent(content) {
 
   if (!supabase) return { savedRemotely: false, content: merged };
 
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    return {
+      savedRemotely: false,
+      content: merged,
+      reason: "unauthenticated",
+    };
+  }
+
   const { error } = await supabase
     .from("storefront_content")
     .upsert({ id: CONTENT_ID, content: merged });
 
   if (error) {
-    return { savedRemotely: false, content: merged, error };
+    const isMissingTable =
+      error?.code === "42P01" ||
+      /relation .*storefront_content.* does not exist/i.test(error?.message || "");
+    const isPermissionIssue =
+      error?.code === "42501" || /permission denied|row-level security/i.test(error?.message || "");
+
+    return {
+      savedRemotely: false,
+      content: merged,
+      error,
+      reason: isMissingTable
+        ? "missing_table"
+        : isPermissionIssue
+          ? "permission_denied"
+          : "unknown",
+    };
   }
 
   return { savedRemotely: true, content: merged };
 }
 
 export async function uploadStorefrontAsset(file) {
-  if (!supabase) throw new Error("Supabase is not configured for uploads.");
+  if (!supabase) return URL.createObjectURL(file);
 
   const fileName = `storefront-${Date.now()}-${file.name}`;
   const { error } = await supabase.storage
@@ -136,7 +163,7 @@ export async function uploadStorefrontAsset(file) {
       upsert: false,
     });
 
-  if (error) throw error;
+  if (error) return URL.createObjectURL(file);
 
   const {
     data: { publicUrl },

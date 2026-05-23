@@ -1,7 +1,15 @@
 import { createClient } from "@supabase/supabase-js";
+import {
+  SUPABASE_ANON_KEY_FALLBACK,
+  SUPABASE_URL_FALLBACK,
+} from "@/lib/supabaseStaticConfig";
 
-const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || "").trim();
-const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || "").trim();
+const supabaseUrl = (
+  import.meta.env.VITE_SUPABASE_URL || SUPABASE_URL_FALLBACK || ""
+).trim();
+const supabaseAnonKey = (
+  import.meta.env.VITE_SUPABASE_ANON_KEY || SUPABASE_ANON_KEY_FALLBACK || ""
+).trim();
 
 const hasSupabaseEnv = Boolean(supabaseUrl && supabaseAnonKey);
 

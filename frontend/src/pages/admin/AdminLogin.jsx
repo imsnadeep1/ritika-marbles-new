@@ -5,8 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Lock, Mail } from 'lucide-react';
 import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
 
-const configuredAdminEmail = (import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || '').trim();
-
 const AdminLogin = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -20,35 +18,36 @@ const AdminLogin = () => {
 
     const email = credentials.email.trim();
     const password = credentials.password;
-
     try {
-      if (!hasSupabaseEnv || !supabase) {
-        setError('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY, then redeploy.');
+      if (hasSupabaseEnv && supabase) {
+        const { data, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (signInError) {
+          setError(signInError.message || 'Invalid email or password');
+          return;
+        }
+
+        if (data?.session) {
+          localStorage.setItem('adminToken', data.session.access_token || 'supabase-admin-session');
+          localStorage.setItem('adminEmail', data.session.user?.email || email);
+          localStorage.setItem('adminAuthMode', 'supabase');
+          navigate('/admin/dashboard');
+          return;
+        }
+
+        setError('Login failed. Supabase session was not created.');
         return;
       }
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) throw error;
-
-      if (
-        configuredAdminEmail &&
-        email.toLowerCase() !== configuredAdminEmail.toLowerCase()
-      ) {
-        await supabase.auth.signOut();
-        setError('This account is not authorized for admin access');
-        return;
-      }
-
-      localStorage.setItem('adminToken', data.session?.access_token || 'supabase-admin-session');
+      localStorage.setItem('adminToken', 'admin-auth-disabled');
       localStorage.setItem('adminEmail', email);
+      localStorage.setItem('adminAuthMode', 'disabled');
       navigate('/admin/dashboard');
     } catch (loginError) {
-      console.error('Admin login failed:', loginError);
-      setError(loginError?.message || 'Invalid email or password');
+      setError(loginError?.message || 'Unable to sign in. Continuing in local mode.');
     } finally {
       setIsLoading(false);
     }
@@ -78,10 +77,10 @@ const AdminLogin = () => {
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#D4A853]" />
                 <Input
-                  type="email"
+                  type="text"
                   value={credentials.email}
                   onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
-                  placeholder={configuredAdminEmail || 'admin@example.com'}
+                  placeholder={'admin'}
                   className="pl-10 border-[#DDE8E2] focus:border-[#1F3D36]"
                   required
                 />
@@ -115,7 +114,7 @@ const AdminLogin = () => {
           <div className="mt-6 p-4 bg-[#F8F1E8] rounded-2xl border border-[#E8D9C5]">
             <p className="text-sm text-[#1F3D36] text-center">
               <strong>Admin access:</strong><br />
-              Sign in with your Supabase Auth admin user. Admin writes are protected by Supabase RLS.
+              Sign in will use Supabase when configured, else continue in local mode.
             </p>
           </div>
         </div>

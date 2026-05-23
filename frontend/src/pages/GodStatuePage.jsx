@@ -3,14 +3,19 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/layout/FloatingButtons';
-import { categories } from '@/data/mock';
+import { getCategories } from '@/services/categories';
 import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
+import ComingSoon from '@/components/ComingSoon';
 
 const GodStatuePage = () => {
   const [content, setContent] = useState(defaultStorefrontContent.godStatues);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     getStorefrontContent().then((data) => setContent(data.godStatues));
+    getCategories()
+      .then((data) => setCategories((data || []).filter((c) => c.show_in_god_statues !== false)))
+      .catch(() => setCategories([]));
   }, []);
 
   return (
@@ -30,8 +35,14 @@ const GodStatuePage = () => {
         {/* Categories Grid */}
         <section className="py-20 bg-[#FDF8F3]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {categories.map((category) => (
+            {categories.length === 0 ? (
+              <ComingSoon
+                title="God statue categories coming soon"
+                description="Divine category collections will appear here as soon as they are enabled from the admin dashboard."
+              />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {categories.map((category) => (
                 <Link
                   key={category.id}
                   to={`/category/${category.slug}`}
@@ -50,8 +61,9 @@ const GodStatuePage = () => {
                     </div>
                   </div>
                 </Link>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 

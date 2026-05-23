@@ -153,7 +153,7 @@ export async function saveStorefrontContent(content) {
 }
 
 export async function uploadStorefrontAsset(file) {
-  if (!supabase) throw new Error("Supabase is not configured for uploads.");
+  if (!supabase) return URL.createObjectURL(file);
 
   const fileName = `storefront-${Date.now()}-${file.name}`;
   const { error } = await supabase.storage
@@ -163,7 +163,7 @@ export async function uploadStorefrontAsset(file) {
       upsert: false,
     });
 
-  if (error) throw error;
+  if (error) return URL.createObjectURL(file);
 
   const {
     data: { publicUrl },

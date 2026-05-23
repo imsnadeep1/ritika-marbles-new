@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Lock, Mail } from 'lucide-react';
+import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -16,11 +17,29 @@ const AdminLogin = () => {
     setError('');
 
     const email = credentials.email.trim();
+    const password = credentials.password;
     try {
+      if (hasSupabaseEnv && supabase) {
+        const { data, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (!signInError && data?.session) {
+          localStorage.setItem('adminToken', data.session.access_token || 'supabase-admin-session');
+          localStorage.setItem('adminEmail', data.session.user?.email || email);
+          localStorage.setItem('adminAuthMode', 'supabase');
+          navigate('/admin/dashboard');
+          return;
+        }
+      }
+
       localStorage.setItem('adminToken', 'admin-auth-disabled');
       localStorage.setItem('adminEmail', email);
       localStorage.setItem('adminAuthMode', 'disabled');
       navigate('/admin/dashboard');
+    } catch (loginError) {
+      setError(loginError?.message || 'Unable to sign in. Continuing in local mode.');
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +106,7 @@ const AdminLogin = () => {
           <div className="mt-6 p-4 bg-[#F8F1E8] rounded-2xl border border-[#E8D9C5]">
             <p className="text-sm text-[#1F3D36] text-center">
               <strong>Admin access:</strong><br />
-              Authentication is temporarily disabled until site launch.
+              Sign in will use Supabase when configured, else continue in local mode.
             </p>
           </div>
         </div>

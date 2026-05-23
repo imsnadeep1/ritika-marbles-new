@@ -81,18 +81,18 @@ const Header = () => {
           {/* Right Section */}
           <div className="flex items-center gap-4">
             <button
-              onClick={() => navigate('/god-statue')}
+              onClick={() => navigate('/collections/handicrafts')}
               className="hidden md:flex items-center gap-2 text-slate-600 hover:text-[#1F3D36] transition-colors"
             >
               <Search className="w-5 h-5" />
-              <span className="hidden xl:inline text-sm font-medium">Search catalog</span>
+              <span className="hidden xl:inline text-sm font-medium">Search Catalog</span>
             </button>
             <Button
-              onClick={() => navigate('/god-statue')}
+              onClick={() => navigate('/collections/handicrafts')}
               className="hidden sm:flex bg-[#1F3D36] hover:bg-[#152C27] text-white px-6 py-2 rounded-full font-semibold transition-all shadow-md items-center gap-2"
             >
               <ShoppingBag className="w-4 h-4" />
-              Shop collections
+              Shop Collections
             </Button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -141,12 +141,12 @@ const Header = () => {
               ))}
               <Button
                 onClick={() => {
-                  navigate('/contact');
+                  navigate('/collections/handicrafts');
                   setMobileMenuOpen(false);
                 }}
                 className="mx-4 mt-4 bg-[#1F3D36] hover:bg-[#152C27] text-white rounded-full"
               >
-                Shop collections
+                Shop Collections
               </Button>
             </nav>
           </div>

@@ -52,6 +52,8 @@ alter table public.categories add column if not exists name text;
 alter table public.categories add column if not exists slug text;
 alter table public.categories add column if not exists description text;
 alter table public.categories add column if not exists image_url text;
+alter table public.categories add column if not exists show_in_collections boolean not null default true;
+alter table public.categories add column if not exists show_in_god_statues boolean not null default true;
 alter table public.categories add column if not exists created_at timestamptz not null default now();
 alter table public.categories add column if not exists updated_at timestamptz not null default now();
 

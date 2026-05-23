@@ -38,7 +38,6 @@ async function ensureSupabaseAdminSession() {
 
 export async function getCategories() {
   requireSupabase();
-  await ensureSupabaseAdminSession();
 
   const { data, error } = await supabase.from("categories").select("*");
   if (error) throw error;

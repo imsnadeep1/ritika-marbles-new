@@ -14,6 +14,8 @@ const emptyForm = {
   description: "",
   image_url: "",
   imageFile: null,
+  show_in_collections: true,
+  show_in_god_statues: true,
 };
 
 const generateSlug = (name) =>
@@ -72,6 +74,8 @@ const CategoriesAdmin = () => {
         slug: form.slug || generateSlug(form.name),
         description: form.description,
         image_url,
+        show_in_collections: form.show_in_collections,
+        show_in_god_statues: form.show_in_god_statues,
       };
 
       if (editingId) {
@@ -109,6 +113,8 @@ const CategoriesAdmin = () => {
       description: category.description || "",
       image_url: category.image_url || "",
       imageFile: null,
+      show_in_collections: category.show_in_collections !== false,
+      show_in_god_statues: category.show_in_god_statues !== false,
     });
   }
 
@@ -192,6 +198,22 @@ const CategoriesAdmin = () => {
                 onChange={handleChange}
                 placeholder="Describe this collection for shoppers."
               />
+            </label>
+            <label className="flex items-center gap-3 text-sm font-semibold text-slate-700">
+              <input
+                type="checkbox"
+                checked={form.show_in_collections}
+                onChange={(event) => setForm({ ...form, show_in_collections: event.target.checked })}
+              />
+              Show this category in Shop Collections
+            </label>
+            <label className="flex items-center gap-3 text-sm font-semibold text-slate-700">
+              <input
+                type="checkbox"
+                checked={form.show_in_god_statues}
+                onChange={(event) => setForm({ ...form, show_in_god_statues: event.target.checked })}
+              />
+              Show this category in God Statues page
             </label>
           </div>
 

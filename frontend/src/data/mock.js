@@ -3,6 +3,7 @@
 export const siteConfig = {
   name: "Ritika Marbles",
   tagline: "& Handicrafts",
+  description: "Ritika Marbles and Handicrafts by Ritika Murti Bhandar",
   phone: "+91-8003324471",
   phone2: "+91-8769263869",
   whatsapp: "918003324471",

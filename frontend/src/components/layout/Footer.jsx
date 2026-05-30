@@ -34,7 +34,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-white/80 text-sm leading-relaxed mb-6">
-              A premium marble ecommerce experience for handcrafted idols, temples, decor, and custom commissioned pieces.
+              {siteConfig.description}
             </p>
             <div className="flex gap-4">
               <a href={siteConfig.socialLinks.facebook} target="_blank" rel="noopener noreferrer"

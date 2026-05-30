@@ -14,8 +14,8 @@ import {
 
 const fallbackMenuCategories = fallbackCategories.map((category, index) => ({
   ...category,
-  sort_order: index + 1,
-  menu_group: category.slug === 'temples' ? CATEGORY_GROUPS.MARBLE_COLLECTIONS : CATEGORY_GROUPS.GOD_STATUES,
+  sort_order: category.sort_order ?? index + 1,
+  menu_group: category.menu_group || (category.slug === 'temples' ? CATEGORY_GROUPS.MARBLE_COLLECTIONS : CATEGORY_GROUPS.GOD_STATUES),
 }));
 
 const Header = () => {

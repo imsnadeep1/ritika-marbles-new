@@ -42,7 +42,7 @@ Redeploy after changing Vercel environment variables.
 ## Notes
 
 - Public visitors can read products, categories, approved feedback, approved reviews, clients, and storefront content.
-- Admins can use **Admin > Categories** to assign each collection to the God Statues or Marble Collections menu, toggle navbar/homepage visibility, hide collections, and set display order.
+- Admins can use **Admin > Menu & Collection Cards** to assign each collection to the God Statues or Marble Collections menu, toggle navbar/homepage visibility, hide collections, and set display order.
 - Public visitors can submit product feedback.
 - Only emails listed in `admin_users` can manage admin content and upload assets.
 - Product/category/client images and product videos are stored in Supabase Storage.
@@ -57,3 +57,16 @@ relationship columns with the correct type before adding foreign keys.
 ## Existing deployments: enable admin-managed collection menus
 
 If your Supabase project was configured before collection placement controls were added, run `SUPABASE_COLLECTIONS_MIGRATION.sql` once in **Supabase Dashboard > SQL Editor**. It adds the safe, non-destructive category metadata columns and applies a recommended order to existing starter categories. Existing categories and products are preserved.
+
+## Marble Collections starter setup
+
+Run [`SUPABASE_COLLECTIONS_MIGRATION.sql`](./SUPABASE_COLLECTIONS_MIGRATION.sql) once in **Supabase Dashboard → SQL Editor** for an existing project. It preserves existing products and categories, adds the collection-placement fields, and safely adds starter Marble Collections when their slugs do not already exist.
+
+The starter Marble Collections are:
+
+- Marble Temples & Mandirs
+- Marble Handicrafts & Home Décor
+- Marble Tulsi Stands & Planters
+- Custom Marble Statues & Projects
+
+Use **Admin → Menu & Collection Cards** to edit the names and images, reorder the category cards, or control whether each category appears in the navbar and on the homepage. Use **Admin → Featured Edits** to adjust the two large editorial cards lower on the homepage. Use **Admin → Products** to assign products to each category.

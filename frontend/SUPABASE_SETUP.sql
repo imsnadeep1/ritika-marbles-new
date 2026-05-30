@@ -515,3 +515,41 @@ create policy "Admins can delete Ritika storage assets"
 on storage.objects for delete
 to authenticated
 using (bucket_id in ('products', 'categories', 'clients') and public.is_admin());
+
+-- =========================
+-- Starter Marble Collections
+-- =========================
+-- These categories populate the Marble Collections navbar menu and homepage
+-- collection cards. Manage them after setup from Admin > Menu & Collection Cards.
+insert into public.categories (
+  name,
+  slug,
+  description,
+  image_url,
+  menu_group,
+  show_in_nav,
+  show_on_homepage,
+  is_active,
+  sort_order
+)
+select
+  starter.name,
+  starter.slug,
+  starter.description,
+  starter.image_url,
+  'marble-collections',
+  true,
+  true,
+  true,
+  starter.sort_order
+from (values
+  ('Marble Temples & Mandirs', 'temples', 'Beautiful marble temples and mandirs for homes, offices, and religious spaces.', '/images/products/mander-marble1.png', 80),
+  ('Marble Handicrafts & Home Décor', 'marble-handicrafts-home-decor', 'Explore handcrafted marble décor, gifting items, pooja accessories, and decorative pieces made by skilled artisans.', '/images/products/decor.png', 90),
+  ('Marble Tulsi Stands & Planters', 'tulsi-stands-planters', 'Discover carved marble Tulsi stands, pots, and planters for devotional and decorative spaces.', '/images/products/decor2.png', 100),
+  ('Custom Marble Statues & Projects', 'custom-marble-projects', 'Commission custom marble statues, temples, décor, and architectural pieces crafted for your requirements.', '/images/products/gallery3.png', 110)
+) as starter(name, slug, description, image_url, sort_order)
+where not exists (
+  select 1
+  from public.categories existing
+  where existing.slug = starter.slug
+);

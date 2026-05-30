@@ -75,7 +75,9 @@ export const categories = [
     name: "Marble Temples",
     slug: "temples",
     image: "/images/products/mander-marble1.png",
-    description: "Beautiful marble temples for home and commercial spaces"
+    description: "Beautiful marble temples for home and commercial spaces",
+    menu_group: "marble-collections",
+    sort_order: 80
   },
   {
     id: "8",
@@ -83,6 +85,33 @@ export const categories = [
     slug: "laddu-gopal",
     image: "/images/products/laddu-gopal-3.png",
     description: "Adorable Laddu Gopal marble statues"
+  },
+  {
+    id: "9",
+    name: "Marble Handicrafts & Home Décor",
+    slug: "marble-handicrafts-home-decor",
+    image: "/images/products/decor.png",
+    description: "Handcrafted marble décor, gifting items, and pooja accessories",
+    menu_group: "marble-collections",
+    sort_order: 90
+  },
+  {
+    id: "10",
+    name: "Marble Tulsi Stands & Planters",
+    slug: "tulsi-stands-planters",
+    image: "/images/products/decor2.png",
+    description: "Carved marble Tulsi stands, pots, and planters",
+    menu_group: "marble-collections",
+    sort_order: 100
+  },
+  {
+    id: "11",
+    name: "Custom Marble Statues & Projects",
+    slug: "custom-marble-projects",
+    image: "/images/products/gallery3.png",
+    description: "Custom marble statues, temples, décor, and architectural pieces",
+    menu_group: "marble-collections",
+    sort_order: 110
   }
 ];
 

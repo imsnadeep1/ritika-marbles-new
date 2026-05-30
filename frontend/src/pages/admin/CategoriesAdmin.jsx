@@ -146,7 +146,7 @@ const CategoriesAdmin = () => {
               Create storefront collections
             </h1>
             <p className="text-slate-500 mt-2">
-              Add categories, choose where they appear, and control their storefront display order.
+              Add menu items and homepage collection cards, choose where they appear, and control their display order.
             </p>
           </div>
           <button

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ChevronDown, Menu, X, ShoppingBag, ShieldCheck, Truck } from 'lucide-react';
+import { Search, ChevronDown, Menu, X, ShoppingBag, ShieldCheck, Truck, ReceiptText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { siteConfig, navItems } from '@/data/mock';
 import {
@@ -16,9 +16,9 @@ const Header = () => {
 
   return (
     <header className="bg-white/95 backdrop-blur-xl shadow-sm sticky top-0 z-50 border-b border-[#E8D9C5]">
-      <div className="hidden md:block bg-[#1F3D36] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
-          <div className="flex items-center gap-5">
+      <div className="bg-[#1F3D36] text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-9 py-2 md:py-0 flex items-center justify-between gap-4 text-xs">
+          <div className="hidden md:flex items-center gap-5">
             <span className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#D4A853]" />
               Secure custom orders
@@ -28,9 +28,15 @@ const Header = () => {
               Safe pan-India delivery
             </span>
           </div>
-          <a href={`tel:${siteConfig.phone}`} className="text-[#F8E7C8] hover:text-white transition-colors">
-            Talk to a marble expert: {siteConfig.phone}
-          </a>
+          <div className="flex w-full md:w-auto items-center justify-between md:justify-end gap-4">
+            <span className="flex items-center gap-2 text-[#F8E7C8]">
+              <ReceiptText className="w-4 h-4 text-[#D4A853]" />
+              GSTIN: {siteConfig.gstNumber}
+            </span>
+            <a href={`tel:${siteConfig.phone}`} className="hidden sm:inline text-[#F8E7C8] hover:text-white transition-colors">
+              Talk to a marble expert: {siteConfig.phone}
+            </a>
+          </div>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

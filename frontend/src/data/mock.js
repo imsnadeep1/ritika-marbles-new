@@ -7,6 +7,7 @@ export const siteConfig = {
   phone2: "+91-8769263869",
   whatsapp: "918003324471",
   email: "contact@ritikamarbles.com",
+  gstNumber: "08DIRPS9834N1ZX",
   address: "1360, Maliyon ka Chowk, 2nd Cross, Khejdo ka Rasta, Chandpole Bajar, Jaipur, Rajasthan, India - 302001",
   address2: "Ritika Moorti Arts, Village-Chhitoli, Tehsil-Viratnagar, Jaipur, Rajasthan, India - 303102",
   socialLinks: {

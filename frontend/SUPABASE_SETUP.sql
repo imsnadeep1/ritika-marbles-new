@@ -44,6 +44,11 @@ create table if not exists public.categories (
   slug text not null,
   description text,
   image_url text,
+  menu_group text not null default 'god-statues',
+  show_in_nav boolean not null default true,
+  show_on_homepage boolean not null default true,
+  is_active boolean not null default true,
+  sort_order integer not null default 100,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -52,11 +57,17 @@ alter table public.categories add column if not exists name text;
 alter table public.categories add column if not exists slug text;
 alter table public.categories add column if not exists description text;
 alter table public.categories add column if not exists image_url text;
+alter table public.categories add column if not exists menu_group text not null default 'god-statues';
+alter table public.categories add column if not exists show_in_nav boolean not null default true;
+alter table public.categories add column if not exists show_on_homepage boolean not null default true;
+alter table public.categories add column if not exists is_active boolean not null default true;
+alter table public.categories add column if not exists sort_order integer not null default 100;
 alter table public.categories add column if not exists created_at timestamptz not null default now();
 alter table public.categories add column if not exists updated_at timestamptz not null default now();
 
 create unique index if not exists categories_slug_unique_idx on public.categories (slug);
 create index if not exists categories_created_at_idx on public.categories (created_at desc);
+create index if not exists categories_storefront_idx on public.categories (is_active, menu_group, sort_order);
 
 drop trigger if exists set_categories_updated_at on public.categories;
 create trigger set_categories_updated_at

@@ -19,25 +19,6 @@ export const siteConfig = {
 
 export const navItems = [
   { label: "HOME", href: "/" },
-  {
-    label: "COLLECTIONS",
-    href: "/collections",
-    dropdown: [
-      { label: "Marble Handicrafts", href: "/collections/handicrafts" },
-      { label: "Wall Panels", href: "/collections/wall-panels" },
-      { label: "Home Decor", href: "/collections/home-decor" }
-    ]
-  },
-  {
-    label: "GOD STATUE",
-    href: "/god-statue",
-    dropdown: [
-      { label: "Ganesh Statue", href: "/god-statue/ganesh" },
-      { label: "Krishna Statue", href: "/god-statue/krishna" },
-      { label: "Shiv Statue", href: "/god-statue/shiv" },
-      { label: "Hanuman Statue", href: "/god-statue/hanuman" }
-    ]
-  },
   { label: "OUR STORY", href: "/about" },
   { label: "CLIENT DIARIES", href: "/testimonials" },
   { label: "BLOG", href: "/blog" },

@@ -42,6 +42,7 @@ Redeploy after changing Vercel environment variables.
 ## Notes
 
 - Public visitors can read products, categories, approved feedback, approved reviews, clients, and storefront content.
+- Admins can use **Admin > Categories** to assign each collection to the God Statues or Marble Collections menu, toggle navbar/homepage visibility, hide collections, and set display order.
 - Public visitors can submit product feedback.
 - Only emails listed in `admin_users` can manage admin content and upload assets.
 - Product/category/client images and product videos are stored in Supabase Storage.
@@ -52,3 +53,7 @@ Run the latest `SUPABASE_SETUP.sql` again. It detects whether your existing
 `products.id` and `categories.id` columns are `bigint` or `uuid`. If a previous
 failed run created incompatible relationship columns, it recreates those
 relationship columns with the correct type before adding foreign keys.
+
+## Existing deployments: enable admin-managed collection menus
+
+If your Supabase project was configured before collection placement controls were added, run `SUPABASE_COLLECTIONS_MIGRATION.sql` once in **Supabase Dashboard > SQL Editor**. It adds the safe, non-destructive category metadata columns and applies a recommended order to existing starter categories. Existing categories and products are preserved.

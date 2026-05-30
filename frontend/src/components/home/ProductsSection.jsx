@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getCategories } from "@/services/categories";
 import ComingSoon from "@/components/ComingSoon";
+import { getVisibleCategories } from "@/lib/categories";
 
 const ProductsSection = () => {
   const scrollRef = useRef(null);
@@ -16,7 +17,7 @@ const ProductsSection = () => {
     async function loadCategories() {
       try {
         const data = await getCategories();
-        setCategories(data || []);
+        setCategories(getVisibleCategories(data, { placement: "show_on_homepage" }));
       } catch (err) {
         console.error("Failed to load categories:", err);
       } finally {

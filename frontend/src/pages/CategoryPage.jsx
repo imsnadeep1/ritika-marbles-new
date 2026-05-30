@@ -8,6 +8,7 @@ import { ChevronRight } from "lucide-react";
 import { getCategories } from "@/services/categories";
 import { getProducts } from "@/services/products";
 import ComingSoon from "@/components/ComingSoon";
+import { getVisibleCategories } from "@/lib/categories";
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -20,7 +21,7 @@ const CategoryPage = () => {
   // Load category + products
   useEffect(() => {
     async function loadData() {
-      const categories = await getCategories();
+      const categories = getVisibleCategories(await getCategories());
       const products = await getProducts();
 
       setAllCategories(categories);

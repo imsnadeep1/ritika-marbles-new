@@ -11,6 +11,7 @@ import CategoryPage from "@/pages/CategoryPage";
 import ProductDetailPage from "@/pages/ProductDetailPage";
 import TestimonialsPage from "@/pages/TestimonialsPage";
 import BlogPage from "@/pages/BlogPage";
+import { CATEGORY_GROUPS } from "@/lib/categories";
 
 /* ================= ADMIN LAYOUT & AUTH ================= */
 import AdminLayout from "@/pages/admin/AdminLayout";
@@ -35,12 +36,13 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/god-statue" element={<GodStatuePage />} />
+          <Route path="/collections" element={<GodStatuePage group={CATEGORY_GROUPS.MARBLE_COLLECTIONS} />} />
           <Route path="/category/:slug" element={<CategoryPage />} />
           <Route path="/product/:slug" element={<ProductDetailPage />} />
           <Route path="/testimonials" element={<TestimonialsPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPage />} />
-          <Route path="/collections/:type" element={<CategoryPage />} />
+          <Route path="/collections/:slug" element={<CategoryPage />} />
 
           {/* ================= ADMIN LOGIN ================= */}
           <Route path="/admin/login" element={<AdminLogin />} />

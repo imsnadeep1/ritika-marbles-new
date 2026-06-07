@@ -7,6 +7,7 @@ import {
   uploadCategoryImage,
 } from "@/services/categories";
 import { FolderOpen, ImagePlus, Pencil, Plus, Search, Trash2, UploadCloud } from "lucide-react";
+import { CATEGORY_GROUP_OPTIONS, CATEGORY_GROUPS } from "@/lib/categories";
 
 const emptyForm = {
   name: "",
@@ -14,6 +15,11 @@ const emptyForm = {
   description: "",
   image_url: "",
   imageFile: null,
+  menu_group: CATEGORY_GROUPS.GOD_STATUES,
+  show_in_nav: true,
+  show_on_homepage: true,
+  is_active: true,
+  sort_order: 100,
 };
 
 const generateSlug = (name) =>
@@ -49,8 +55,10 @@ const CategoriesAdmin = () => {
     loadCategories();
   }, []);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { checked, name, type, value } = e.target;
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+  };
 
   const handleFileChange = (e) =>
     setForm({ ...form, imageFile: e.target.files?.[0] || null });
@@ -72,6 +80,11 @@ const CategoriesAdmin = () => {
         slug: form.slug || generateSlug(form.name),
         description: form.description,
         image_url,
+        menu_group: form.menu_group,
+        show_in_nav: form.show_in_nav,
+        show_on_homepage: form.show_on_homepage,
+        is_active: form.is_active,
+        sort_order: Number(form.sort_order) || 100,
       };
 
       if (editingId) {
@@ -109,6 +122,11 @@ const CategoriesAdmin = () => {
       description: category.description || "",
       image_url: category.image_url || "",
       imageFile: null,
+      menu_group: category.menu_group || CATEGORY_GROUPS.GOD_STATUES,
+      show_in_nav: category.show_in_nav !== false,
+      show_on_homepage: category.show_on_homepage !== false,
+      is_active: category.is_active !== false,
+      sort_order: category.sort_order ?? 100,
     });
   }
 
@@ -128,7 +146,7 @@ const CategoriesAdmin = () => {
               Create storefront collections
             </h1>
             <p className="text-slate-500 mt-2">
-              Add categories with SEO-friendly slugs, descriptions, and visual collection images.
+              Add menu items and homepage collection cards, choose where they appear, and control their display order.
             </p>
           </div>
           <button
@@ -180,6 +198,32 @@ const CategoriesAdmin = () => {
                   placeholder="marble-ganesh-statues"
                 />
               </label>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <label className="space-y-2">
+                <span className="text-sm font-semibold text-slate-700">Collection group</span>
+                <select name="menu_group" value={form.menu_group} onChange={handleChange} className="w-full rounded-2xl border border-[#DDE8E2] px-4 py-3 outline-none focus:border-[#1F3D36]">
+                  {CATEGORY_GROUP_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+              </label>
+              <label className="space-y-2">
+                <span className="text-sm font-semibold text-slate-700">Display order</span>
+                <input name="sort_order" type="number" min="0" value={form.sort_order} onChange={handleChange} className="w-full rounded-2xl border border-[#DDE8E2] px-4 py-3 outline-none focus:border-[#1F3D36]" />
+              </label>
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-3 rounded-2xl border border-[#DDE8E2] p-4">
+              {[
+                ["is_active", "Active collection"],
+                ["show_in_nav", "Show in navbar"],
+                ["show_on_homepage", "Show on homepage"],
+              ].map(([name, label]) => (
+                <label key={name} className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                  <input name={name} type="checkbox" checked={form[name]} onChange={handleChange} className="h-4 w-4 accent-[#1F3D36]" />
+                  {label}
+                </label>
+              ))}
             </div>
 
             <label className="space-y-2 block">
@@ -275,6 +319,13 @@ const CategoriesAdmin = () => {
                       <p className="text-xs text-[#B8872F]">{cat.slug}</p>
                     </div>
                     <FolderOpen className="w-5 h-5 text-[#B8872F]" />
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-wide">
+                    <span className="rounded-full bg-[#EAF3EF] px-2.5 py-1 text-[#1F3D36]">{cat.menu_group === CATEGORY_GROUPS.MARBLE_COLLECTIONS ? "Marble collection" : "God statue"}</span>
+                    <span className="rounded-full bg-[#F8F1E8] px-2.5 py-1 text-[#B8872F]">Order {cat.sort_order ?? 100}</span>
+                    {cat.show_in_nav !== false && <span className="rounded-full bg-blue-50 px-2.5 py-1 text-blue-700">Navbar</span>}
+                    {cat.show_on_homepage !== false && <span className="rounded-full bg-purple-50 px-2.5 py-1 text-purple-700">Homepage</span>}
+                    {cat.is_active === false && <span className="rounded-full bg-red-50 px-2.5 py-1 text-red-700">Hidden</span>}
                   </div>
                   <p className="mt-3 text-sm text-slate-500 line-clamp-2">
                     {cat.description || "No description added yet."}

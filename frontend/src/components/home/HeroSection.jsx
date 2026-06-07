@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, MessageCircle, ShieldCheck, Sparkles, Truck } from 'lucide-react';
+import { ArrowDown, ChevronRight, MessageCircle, ShieldCheck, Sparkles, Star, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/data/mock';
 import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
@@ -19,25 +19,25 @@ const HeroSection = () => {
       <div className="absolute bottom-20 right-20 w-56 h-56 bg-[#D4A853]/20 rounded-full blur-3xl" />
       <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-[#1F3D36]/10 rounded-full blur-2xl" />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#D4A853]/40 bg-white/80 px-4 py-2 text-sm font-semibold text-[#1F3D36] shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 lg:py-16 w-full">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Product-first mobile layout keeps the first viewport visual and inviting. */}
+          <div className="order-2 lg:order-1 space-y-5 sm:space-y-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#D4A853]/40 bg-white/80 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-[#1F3D36] shadow-sm">
               <Sparkles className="w-4 h-4 text-[#B8872F]" />
               Premium handcrafted marble store
             </div>
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#1F3D36] leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#1F3D36] leading-[1.05]">
                 Shop marble idols, temples and decor
               </h1>
-              <p className="text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
                 Discover handcrafted Makrana marble pieces, compare collections, and request a custom quote directly from our Jaipur workshop.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/god-statue">
-                <Button className="bg-[#1F3D36] hover:bg-[#152C27] text-white px-8 py-6 text-lg rounded-full flex items-center gap-2 transition-all hover:gap-4 shadow-lg">
+            <div className="grid grid-cols-1 sm:flex sm:flex-row gap-3 sm:gap-4">
+              <Link to="/god-statue" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-[#1F3D36] hover:bg-[#152C27] text-white px-7 py-5 sm:px-8 sm:py-6 text-base sm:text-lg rounded-full flex items-center justify-center gap-2 transition-all hover:gap-4 shadow-lg">
                   Shop bestsellers
                   <ChevronRight className="w-5 h-5" />
                 </Button>
@@ -46,14 +46,19 @@ const HeroSection = () => {
                 href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I want help choosing a marble product`}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="w-full sm:w-auto"
               >
-                <Button variant="outline" className="border-[#D4A853] bg-white/80 text-[#1F3D36] hover:bg-[#FFF7E8] px-8 py-6 text-lg rounded-full flex items-center gap-2 shadow-sm">
+                <Button variant="outline" className="w-full sm:w-auto border-[#D4A853] bg-white/80 text-[#1F3D36] hover:bg-[#FFF7E8] px-7 py-5 sm:px-8 sm:py-6 text-base sm:text-lg rounded-full flex items-center justify-center gap-2 shadow-sm">
                   <MessageCircle className="w-5 h-5" />
                   Ask on WhatsApp
                 </Button>
               </a>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
+            <a href="#collections" className="inline-flex items-center gap-2 text-sm font-bold text-[#1F3D36] hover:text-[#B8872F] transition-colors">
+              Explore collections below
+              <ArrowDown className="w-4 h-4 animate-bounce" />
+            </a>
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 max-w-2xl">
               {[
                 { icon: ShieldCheck, title: "Quality checked", text: "Premium marble" },
                 { icon: Truck, title: "Safe shipping", text: "Packed with care" },
@@ -61,10 +66,10 @@ const HeroSection = () => {
               ].map((item) => {
                 const Icon = item.icon;
                 return (
-                  <div key={item.title} className="rounded-2xl border border-[#E8D9C5] bg-white/80 p-4 shadow-sm">
-                    <Icon className="w-5 h-5 text-[#B8872F] mb-2" />
-                    <p className="font-semibold text-[#1F3D36] text-sm">{item.title}</p>
-                    <p className="text-slate-500 text-xs">{item.text}</p>
+                  <div key={item.title} className="rounded-2xl border border-[#E8D9C5] bg-white/80 p-3 sm:p-4 shadow-sm">
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-[#B8872F] mb-2" />
+                    <p className="font-semibold text-[#1F3D36] text-xs sm:text-sm leading-tight">{item.title}</p>
+                    <p className="hidden sm:block text-slate-500 text-xs">{item.text}</p>
                   </div>
                 );
               })}
@@ -72,31 +77,31 @@ const HeroSection = () => {
           </div>
 
           {/* Right Content - Ecommerce product preview */}
-          <div className="relative flex justify-center">
+          <div className="order-1 lg:order-2 relative flex justify-center">
             <div className="relative w-full max-w-xl">
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-b from-[#D4A853]/30 to-[#1F3D36]/10 rounded-full blur-3xl scale-125" />
               
               {/* Main Image Container */}
-              <div className="relative rounded-[2rem] border border-white/80 bg-white/70 p-6 shadow-2xl backdrop-blur">
-                <div className="absolute left-6 top-6 z-20 rounded-full bg-[#1F3D36] px-4 py-2 text-xs font-bold uppercase tracking-wide text-white">
+              <div className="relative rounded-[1.5rem] sm:rounded-[2rem] border border-white/80 bg-white/70 p-3 sm:p-6 shadow-2xl backdrop-blur">
+                <div className="absolute left-4 top-4 sm:left-6 sm:top-6 z-20 rounded-full bg-[#1F3D36] px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wide text-white">
                   Best seller
                 </div>
                 <img
                   src={bestseller.imageUrl}
                   alt={bestseller.title}
-                  className="relative z-10 max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
+                  className="relative z-10 w-full h-[300px] sm:h-[430px] lg:h-auto lg:max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
                 />
-                <div className="absolute bottom-6 left-6 right-6 z-20 rounded-3xl bg-white/95 p-4 shadow-xl border border-[#E8D9C5]">
-                  <div className="flex items-center justify-between gap-4">
+                <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 z-20 rounded-2xl sm:rounded-3xl bg-white/95 p-3 sm:p-4 shadow-xl border border-[#E8D9C5]">
+                  <div className="flex items-center justify-between gap-2 sm:gap-4">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wide text-[#B8872F]">
+                      <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-[#B8872F]">
                         {bestseller.subtitle}
                       </p>
-                      <h3 className="text-lg font-semibold text-[#1F3D36]">{bestseller.title}</h3>
+                      <h3 className="text-base sm:text-lg font-semibold leading-tight text-[#1F3D36]">{bestseller.title}</h3>
                     </div>
                     <Link to={bestseller.ctaHref || "/god-statue"}>
-                      <Button className="rounded-full bg-[#D4A853] hover:bg-[#B8872F] text-white">
+                      <Button className="h-9 rounded-full bg-[#D4A853] hover:bg-[#B8872F] px-4 text-sm text-white">
                         {bestseller.ctaLabel || "View"}
                       </Button>
                     </Link>
@@ -104,6 +109,11 @@ const HeroSection = () => {
                 </div>
               </div>
               
+              <div className="absolute -right-2 top-4 z-30 flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#1F3D36] shadow-lg sm:right-4 sm:top-4 sm:text-xs">
+                <Star className="w-3 h-3 fill-[#D4A853] text-[#D4A853]" />
+                Jaipur handcrafted
+              </div>
+
               {/* Decorative Lotus Flowers */}
               <div className="absolute -left-4 top-1/3 w-16 h-16 opacity-70">
                 <svg viewBox="0 0 100 100" className="w-full h-full fill-[#D4A853]">

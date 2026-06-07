@@ -55,7 +55,7 @@ const blankCollection = () => ({
   title: "",
   description: "",
   imageUrl: "",
-  href: "/collections/",
+  href: "/category/",
   enabled: true,
 });
 
@@ -428,7 +428,7 @@ const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUplo
               onChange={(value) => onUpdate(index, { imageUrl: value })}
             />
             <TextField
-              label="Link"
+              label={itemType === "blog" ? "Link" : "Category link"}
               value={item.href}
               onChange={(value) => onUpdate(index, { href: value })}
             />

@@ -25,7 +25,6 @@ async function ensureSupabaseAdminSession() {
 
 export async function getCategories() {
   if (!isSupabaseReady) return [];
-  await ensureSupabaseAdminSession();
   const { data, error } = await supabase.from("categories").select("*");
   if (error) throw error;
   return data;

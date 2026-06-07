@@ -5,6 +5,13 @@ import { Button } from '@/components/ui/button';
 import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
 import ComingSoon from '@/components/ComingSoon';
 
+const legacyCollectionHrefs = {
+  "/collections/handicrafts": "/category/marble-handicrafts-home-decor",
+  "/collections/home-decor": "/category/marble-handicrafts-home-decor",
+};
+
+const getCollectionHref = (href) => legacyCollectionHrefs[href] || href || "/collections";
+
 const FeaturedSections = () => {
   const [collections, setCollections] = useState(defaultStorefrontContent.collections);
 
@@ -42,7 +49,7 @@ const FeaturedSections = () => {
           <div key={collection.id || collection.title} className="relative group overflow-hidden rounded-[2rem] shadow-xl">
             <div className="aspect-[4/3] overflow-hidden">
               <img
-                src={collection.imageUrl}
+                src={collection.imageUrl || "/images/placeholder.jpg"}
                 alt={collection.title}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
@@ -53,7 +60,7 @@ const FeaturedSections = () => {
               </p>
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">{collection.title}</h3>
               <p className="text-white/75 mb-5 max-w-md">{collection.description}</p>
-              <Link to={collection.href || "/god-statue"}>
+              <Link to={getCollectionHref(collection.href)}>
                 <Button className="bg-[#D4A853] hover:bg-[#B8923F] text-white px-6 py-2 rounded-full flex items-center gap-2 w-fit">
                   Shop collection
                   <ChevronRight className="w-4 h-4" />

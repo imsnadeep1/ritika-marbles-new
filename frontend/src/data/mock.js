@@ -3,10 +3,13 @@
 export const siteConfig = {
   name: "Ritika Marbles",
   tagline: "& Handicrafts",
+  description: "A premium marble ecommerce experience for handcrafted idols, temples, decor, and custom commissioned pieces.",
+  legalBusinessName: "Ritika Murti Bhandar",
   phone: "+91-8003324471",
   phone2: "+91-8769263869",
   whatsapp: "918003324471",
   email: "contact@ritikamarbles.com",
+  gstNumber: "08DIRPS9834N1ZX",
   address: "1360, Maliyon ka Chowk, 2nd Cross, Khejdo ka Rasta, Chandpole Bajar, Jaipur, Rajasthan, India - 302001",
   address2: "Ritika Moorti Arts, Village-Chhitoli, Tehsil-Viratnagar, Jaipur, Rajasthan, India - 303102",
   socialLinks: {
@@ -18,25 +21,6 @@ export const siteConfig = {
 
 export const navItems = [
   { label: "HOME", href: "/" },
-  {
-    label: "COLLECTIONS",
-    href: "/collections",
-    dropdown: [
-      { label: "Marble Handicrafts", href: "/collections/handicrafts" },
-      { label: "Wall Panels", href: "/collections/wall-panels" },
-      { label: "Home Decor", href: "/collections/home-decor" }
-    ]
-  },
-  {
-    label: "GOD STATUE",
-    href: "/god-statue",
-    dropdown: [
-      { label: "Ganesh Statue", href: "/god-statue/ganesh" },
-      { label: "Krishna Statue", href: "/god-statue/krishna" },
-      { label: "Shiv Statue", href: "/god-statue/shiv" },
-      { label: "Hanuman Statue", href: "/god-statue/hanuman" }
-    ]
-  },
   { label: "OUR STORY", href: "/about" },
   { label: "CLIENT DIARIES", href: "/testimonials" },
   { label: "BLOG", href: "/blog" },
@@ -91,7 +75,9 @@ export const categories = [
     name: "Marble Temples",
     slug: "temples",
     image: "/images/products/mander-marble1.png",
-    description: "Beautiful marble temples for home and commercial spaces"
+    description: "Beautiful marble temples for home and commercial spaces",
+    menu_group: "marble-collections",
+    sort_order: 80
   },
   {
     id: "8",
@@ -99,6 +85,33 @@ export const categories = [
     slug: "laddu-gopal",
     image: "/images/products/laddu-gopal-3.png",
     description: "Adorable Laddu Gopal marble statues"
+  },
+  {
+    id: "9",
+    name: "Marble Handicrafts & Home Décor",
+    slug: "marble-handicrafts-home-decor",
+    image: "/images/products/decor.png",
+    description: "Handcrafted marble décor, gifting items, and pooja accessories",
+    menu_group: "marble-collections",
+    sort_order: 90
+  },
+  {
+    id: "10",
+    name: "Marble Tulsi Stands & Planters",
+    slug: "tulsi-stands-planters",
+    image: "/images/products/decor2.png",
+    description: "Carved marble Tulsi stands, pots, and planters",
+    menu_group: "marble-collections",
+    sort_order: 100
+  },
+  {
+    id: "11",
+    name: "Custom Marble Statues & Projects",
+    slug: "custom-marble-projects",
+    image: "/images/products/gallery3.png",
+    description: "Custom marble statues, temples, décor, and architectural pieces",
+    menu_group: "marble-collections",
+    sort_order: 110
   }
 ];
 

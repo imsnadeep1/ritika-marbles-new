@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getCategories } from "@/services/categories";
 import ComingSoon from "@/components/ComingSoon";
+import { getVisibleCategories } from "@/lib/categories";
 
 const ProductsSection = () => {
   const scrollRef = useRef(null);
@@ -16,7 +17,7 @@ const ProductsSection = () => {
     async function loadCategories() {
       try {
         const data = await getCategories();
-        setCategories(data || []);
+        setCategories(getVisibleCategories(data, { placement: "show_on_homepage" }));
       } catch (err) {
         console.error("Failed to load categories:", err);
       } finally {
@@ -38,15 +39,15 @@ const ProductsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section id="collections" className="scroll-mt-32 py-14 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-8 sm:mb-12">
           <div>
             <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.25em] mb-3">
               Shop by collection
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1F3D36]">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#1F3D36]">
               Find the perfect marble piece
             </h2>
             <p className="mt-4 max-w-2xl text-slate-600">
@@ -81,6 +82,9 @@ const ProductsSection = () => {
         {/* Category Carousel */}
         {categories.length > 0 && (
           <div className="relative">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#B8872F] md:hidden">
+              Swipe to explore collections →
+            </p>
             {/* Navigation Buttons */}
             <Button
               onClick={() => scroll("left")}
@@ -110,7 +114,7 @@ const ProductsSection = () => {
                 <Link
                   key={category.id}
                   to={`/category/${category.slug}`}
-                  className="flex-shrink-0 w-72 group"
+                  className="flex-shrink-0 w-[78vw] max-w-72 group"
                 >
                   <div className="bg-white rounded-[1.75rem] overflow-hidden shadow-sm ring-1 ring-[#E8D9C5] transition-all hover:-translate-y-2 hover:shadow-2xl duration-300">
                     <div className="aspect-square overflow-hidden relative bg-[#F8F1E8]">

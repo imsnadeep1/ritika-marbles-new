@@ -33,8 +33,11 @@ const Footer = () => {
                 <p className="text-sm text-[#D4A853]">{siteConfig.tagline}</p>
               </div>
             </div>
-            <p className="text-white/80 text-sm leading-relaxed mb-6">
-              A premium marble ecommerce experience for handcrafted idols, temples, decor, and custom commissioned pieces.
+            <p className="text-white/80 text-sm leading-relaxed mb-3">
+              {siteConfig.description}
+            </p>
+            <p className="text-sm leading-relaxed text-[#D4A853] mb-6">
+              Ritika Marbles &amp; Handicrafts is run by {siteConfig.legalBusinessName}.
             </p>
             <div className="flex gap-4">
               <a href={siteConfig.socialLinks.facebook} target="_blank" rel="noopener noreferrer"

@@ -7,14 +7,20 @@ import {
   uploadCategoryImage,
 } from "@/services/categories";
 import { FolderOpen, ImagePlus, Pencil, Plus, Search, Trash2, UploadCloud } from "lucide-react";
+import { CATEGORY_GROUP_OPTIONS, CATEGORY_GROUPS } from "@/lib/categories";
 
-const emptyForm = {
+const createEmptyForm = (group = CATEGORY_GROUPS.GOD_STATUES) => ({
   name: "",
   slug: "",
   description: "",
   image_url: "",
   imageFile: null,
-};
+  menu_group: group,
+  show_in_nav: true,
+  show_on_homepage: true,
+  is_active: true,
+  sort_order: group === CATEGORY_GROUPS.MARBLE_COLLECTIONS ? 120 : 100,
+});
 
 const generateSlug = (name) =>
   name
@@ -23,9 +29,17 @@ const generateSlug = (name) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-const CategoriesAdmin = () => {
+const CategoriesAdmin = ({
+  defaultGroup = CATEGORY_GROUPS.GOD_STATUES,
+  lockedGroup = false,
+  eyebrow = "Category management",
+  title = "Create storefront collections",
+  description = "Add menu items and homepage collection cards, choose where they appear, and control their display order.",
+  newButtonLabel = "New category",
+  listTitle = "Category list",
+} = {}) => {
   const [categories, setCategories] = useState([]);
-  const [form, setForm] = useState(emptyForm);
+  const [form, setForm] = useState(() => createEmptyForm(defaultGroup));
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -49,8 +63,15 @@ const CategoriesAdmin = () => {
     loadCategories();
   }, []);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  useEffect(() => {
+    setEditingId(null);
+    setForm(createEmptyForm(defaultGroup));
+  }, [defaultGroup]);
+
+  const handleChange = (e) => {
+    const { checked, name, type, value } = e.target;
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+  };
 
   const handleFileChange = (e) =>
     setForm({ ...form, imageFile: e.target.files?.[0] || null });
@@ -72,6 +93,11 @@ const CategoriesAdmin = () => {
         slug: form.slug || generateSlug(form.name),
         description: form.description,
         image_url,
+        menu_group: lockedGroup ? defaultGroup : form.menu_group,
+        show_in_nav: form.show_in_nav,
+        show_on_homepage: form.show_on_homepage,
+        is_active: form.is_active,
+        sort_order: Number(form.sort_order) || 100,
       };
 
       if (editingId) {
@@ -82,7 +108,7 @@ const CategoriesAdmin = () => {
         setStatus("Category added successfully.");
       }
 
-      setForm(emptyForm);
+      setForm(createEmptyForm(defaultGroup));
       setEditingId(null);
       await loadCategories();
     } catch (err) {
@@ -109,10 +135,19 @@ const CategoriesAdmin = () => {
       description: category.description || "",
       image_url: category.image_url || "",
       imageFile: null,
+      menu_group: lockedGroup ? defaultGroup : category.menu_group || defaultGroup,
+      show_in_nav: category.show_in_nav !== false,
+      show_on_homepage: category.show_on_homepage !== false,
+      is_active: category.is_active !== false,
+      sort_order: category.sort_order ?? 100,
     });
   }
 
-  const filteredCategories = categories.filter((category) =>
+  const scopedCategories = lockedGroup
+    ? categories.filter((category) => (category.menu_group || CATEGORY_GROUPS.GOD_STATUES) === defaultGroup)
+    : categories;
+
+  const filteredCategories = scopedCategories.filter((category) =>
     category.name?.toLowerCase().includes(search.toLowerCase()),
   );
 
@@ -122,25 +157,25 @@ const CategoriesAdmin = () => {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
           <div>
             <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.2em]">
-              Category management
+              {eyebrow}
             </p>
             <h1 className="text-3xl font-bold text-[#1F3D36] mt-2">
-              Create storefront collections
+              {title}
             </h1>
             <p className="text-slate-500 mt-2">
-              Add categories with SEO-friendly slugs, descriptions, and visual collection images.
+              {description}
             </p>
           </div>
           <button
             type="button"
             onClick={() => {
               setEditingId(null);
-              setForm(emptyForm);
+              setForm(createEmptyForm(defaultGroup));
             }}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1F3D36] px-5 py-3 text-sm font-semibold text-white hover:bg-[#152C27]"
           >
             <Plus className="w-4 h-4" />
-            New category
+            {newButtonLabel}
           </button>
         </div>
 
@@ -182,6 +217,38 @@ const CategoriesAdmin = () => {
               </label>
             </div>
 
+            <div className="grid md:grid-cols-2 gap-4">
+              <label className="space-y-2">
+                <span className="text-sm font-semibold text-slate-700">Collection group</span>
+                {lockedGroup ? (
+                  <div className="w-full rounded-2xl border border-[#DDE8E2] bg-[#F8FBF9] px-4 py-3 text-[#1F3D36] font-semibold">
+                    {CATEGORY_GROUP_OPTIONS.find((option) => option.value === defaultGroup)?.label || "Selected group"}
+                  </div>
+                ) : (
+                  <select name="menu_group" value={form.menu_group} onChange={handleChange} className="w-full rounded-2xl border border-[#DDE8E2] px-4 py-3 outline-none focus:border-[#1F3D36]">
+                    {CATEGORY_GROUP_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                  </select>
+                )}
+              </label>
+              <label className="space-y-2">
+                <span className="text-sm font-semibold text-slate-700">Display order</span>
+                <input name="sort_order" type="number" min="0" value={form.sort_order} onChange={handleChange} className="w-full rounded-2xl border border-[#DDE8E2] px-4 py-3 outline-none focus:border-[#1F3D36]" />
+              </label>
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-3 rounded-2xl border border-[#DDE8E2] p-4">
+              {[
+                ["is_active", "Active collection"],
+                ["show_in_nav", "Show in navbar"],
+                ["show_on_homepage", "Show on homepage"],
+              ].map(([name, label]) => (
+                <label key={name} className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                  <input name={name} type="checkbox" checked={form[name]} onChange={handleChange} className="h-4 w-4 accent-[#1F3D36]" />
+                  {label}
+                </label>
+              ))}
+            </div>
+
             <label className="space-y-2 block">
               <span className="text-sm font-semibold text-slate-700">Description</span>
               <textarea
@@ -217,7 +284,7 @@ const CategoriesAdmin = () => {
                   type="button"
                   onClick={() => {
                     setEditingId(null);
-                    setForm(emptyForm);
+                    setForm(createEmptyForm(defaultGroup));
                   }}
                   className="flex-1 rounded-full border border-[#DDE8E2] px-5 py-3 font-semibold text-[#1F3D36] hover:bg-[#F4F7F4]"
                 >
@@ -241,7 +308,7 @@ const CategoriesAdmin = () => {
           <div>
             <h2 className="text-2xl font-bold text-[#1F3D36]">Category list</h2>
             <p className="text-sm text-slate-500">
-              {filteredCategories.length} of {categories.length} categories shown
+              {filteredCategories.length} of {scopedCategories.length} categories shown
             </p>
           </div>
           <div className="relative">
@@ -275,6 +342,13 @@ const CategoriesAdmin = () => {
                       <p className="text-xs text-[#B8872F]">{cat.slug}</p>
                     </div>
                     <FolderOpen className="w-5 h-5 text-[#B8872F]" />
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-wide">
+                    <span className="rounded-full bg-[#EAF3EF] px-2.5 py-1 text-[#1F3D36]">{cat.menu_group === CATEGORY_GROUPS.MARBLE_COLLECTIONS ? "Marble collection" : "God statue"}</span>
+                    <span className="rounded-full bg-[#F8F1E8] px-2.5 py-1 text-[#B8872F]">Order {cat.sort_order ?? 100}</span>
+                    {cat.show_in_nav !== false && <span className="rounded-full bg-blue-50 px-2.5 py-1 text-blue-700">Navbar</span>}
+                    {cat.show_on_homepage !== false && <span className="rounded-full bg-purple-50 px-2.5 py-1 text-purple-700">Homepage</span>}
+                    {cat.is_active === false && <span className="rounded-full bg-red-50 px-2.5 py-1 text-red-700">Hidden</span>}
                   </div>
                   <p className="mt-3 text-sm text-slate-500 line-clamp-2">
                     {cat.description || "No description added yet."}

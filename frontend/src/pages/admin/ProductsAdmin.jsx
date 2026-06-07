@@ -8,6 +8,7 @@ import {
   uploadProductVideo,
 } from "@/services/products";
 import { getCategories } from "@/services/categories";
+import { CATEGORY_GROUPS, getCategoryGroup } from "@/lib/categories";
 import {
   ImagePlus,
   Package,
@@ -79,7 +80,7 @@ const ProductsAdmin = () => {
         ?.toLowerCase()
         .includes(search.toLowerCase());
       const matchesCategory =
-        categoryFilter === "all" || product.category_id === categoryFilter;
+        categoryFilter === "all" || String(product.category_id) === categoryFilter;
       return matchesSearch && matchesCategory;
     });
   }, [products, search, categoryFilter]);
@@ -162,7 +163,7 @@ const ProductsAdmin = () => {
   }
 
   const getCategoryName = (categoryId) =>
-    categories.find((category) => category.id === categoryId)?.name || "Uncategorized";
+    categories.find((category) => String(category.id) === String(categoryId))?.name || "Uncategorized";
 
   return (
     <div className="space-y-8">
@@ -253,11 +254,24 @@ const ProductsAdmin = () => {
                   required
                 >
                   <option value="">Select category</option>
-                  {categories.map((cat) => (
-                    <option value={cat.id} key={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
+                  <optgroup label="God Statues">
+                    {categories
+                      .filter((cat) => getCategoryGroup(cat) === CATEGORY_GROUPS.GOD_STATUES)
+                      .map((cat) => (
+                        <option value={cat.id} key={cat.id}>
+                          {cat.name}
+                        </option>
+                      ))}
+                  </optgroup>
+                  <optgroup label="Marble Collections">
+                    {categories
+                      .filter((cat) => getCategoryGroup(cat) === CATEGORY_GROUPS.MARBLE_COLLECTIONS)
+                      .map((cat) => (
+                        <option value={cat.id} key={cat.id}>
+                          {cat.name}
+                        </option>
+                      ))}
+                  </optgroup>
                 </select>
               </label>
             </div>
@@ -399,11 +413,24 @@ const ProductsAdmin = () => {
               className="rounded-full border border-[#DDE8E2] px-4 py-2.5 outline-none focus:border-[#1F3D36]"
             >
               <option value="all">All categories</option>
-              {categories.map((category) => (
-                <option value={category.id} key={category.id}>
-                  {category.name}
-                </option>
-              ))}
+              <optgroup label="God Statues">
+                {categories
+                  .filter((category) => getCategoryGroup(category) === CATEGORY_GROUPS.GOD_STATUES)
+                  .map((category) => (
+                    <option value={category.id} key={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+              </optgroup>
+              <optgroup label="Marble Collections">
+                {categories
+                  .filter((category) => getCategoryGroup(category) === CATEGORY_GROUPS.MARBLE_COLLECTIONS)
+                  .map((category) => (
+                    <option value={category.id} key={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+              </optgroup>
             </select>
           </div>
         </div>

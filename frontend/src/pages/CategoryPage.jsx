@@ -8,6 +8,7 @@ import { ChevronRight } from "lucide-react";
 import { getCategories } from "@/services/categories";
 import { getProducts } from "@/services/products";
 import ComingSoon from "@/components/ComingSoon";
+import { getVisibleCategories } from "@/lib/categories";
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -20,7 +21,7 @@ const CategoryPage = () => {
   // Load category + products
   useEffect(() => {
     async function loadData() {
-      const categories = await getCategories();
+      const categories = getVisibleCategories(await getCategories());
       const products = await getProducts();
 
       setAllCategories(categories);
@@ -31,7 +32,7 @@ const CategoryPage = () => {
 
       if (selectedCategory) {
         const filteredProducts = products.filter(
-          (p) => p.category_id === selectedCategory.id
+          (p) => String(p.category_id) === String(selectedCategory.id)
         );
         setCategoryProducts(filteredProducts);
       }
@@ -123,7 +124,7 @@ const CategoryPage = () => {
                   >
                     <div className="aspect-square overflow-hidden bg-white relative">
                       <img
-                        src={product.image_url}
+                        src={product.image_url || "/images/placeholder.jpg"}
                         alt={product.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />

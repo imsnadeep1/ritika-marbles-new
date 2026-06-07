@@ -44,6 +44,11 @@ create table if not exists public.categories (
   slug text not null,
   description text,
   image_url text,
+  menu_group text not null default 'god-statues',
+  show_in_nav boolean not null default true,
+  show_on_homepage boolean not null default true,
+  is_active boolean not null default true,
+  sort_order integer not null default 100,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -52,11 +57,17 @@ alter table public.categories add column if not exists name text;
 alter table public.categories add column if not exists slug text;
 alter table public.categories add column if not exists description text;
 alter table public.categories add column if not exists image_url text;
+alter table public.categories add column if not exists menu_group text not null default 'god-statues';
+alter table public.categories add column if not exists show_in_nav boolean not null default true;
+alter table public.categories add column if not exists show_on_homepage boolean not null default true;
+alter table public.categories add column if not exists is_active boolean not null default true;
+alter table public.categories add column if not exists sort_order integer not null default 100;
 alter table public.categories add column if not exists created_at timestamptz not null default now();
 alter table public.categories add column if not exists updated_at timestamptz not null default now();
 
 create unique index if not exists categories_slug_unique_idx on public.categories (slug);
 create index if not exists categories_created_at_idx on public.categories (created_at desc);
+create index if not exists categories_storefront_idx on public.categories (is_active, menu_group, sort_order);
 
 drop trigger if exists set_categories_updated_at on public.categories;
 create trigger set_categories_updated_at
@@ -317,19 +328,19 @@ values (
     },
     "collections": [
       {
-        "id": "home-temple",
-        "title": "Home Temple Essentials",
-        "description": "Curated idols and decor for daily worship spaces.",
-        "imageUrl": "/images/products/decor.png",
-        "href": "/collections/handicrafts",
+        "id": "marble-temples",
+        "title": "Marble Temples & Mandirs",
+        "description": "Handcrafted marble temples and mandirs for devotional spaces.",
+        "imageUrl": "/images/products/mander-marble1.png",
+        "href": "/category/temples",
         "enabled": true
       },
       {
-        "id": "premium-decor",
-        "title": "Premium Marble Decor",
-        "description": "Statement pieces for interiors, gifting, and display.",
-        "imageUrl": "/images/products/decor2.png",
-        "href": "/collections/home-decor",
+        "id": "marble-handicrafts-home-decor",
+        "title": "Marble Handicrafts & Home Décor",
+        "description": "Decorative pieces and pooja accessories for interiors and gifting.",
+        "imageUrl": "/images/products/decor.png",
+        "href": "/category/marble-handicrafts-home-decor",
         "enabled": true
       }
     ],
@@ -504,3 +515,41 @@ create policy "Admins can delete Ritika storage assets"
 on storage.objects for delete
 to authenticated
 using (bucket_id in ('products', 'categories', 'clients') and public.is_admin());
+
+-- =========================
+-- Starter Marble Collections
+-- =========================
+-- These categories populate the Marble Collections navbar menu and homepage
+-- collection cards. Manage them after setup from Admin > Menu & Collection Cards.
+insert into public.categories (
+  name,
+  slug,
+  description,
+  image_url,
+  menu_group,
+  show_in_nav,
+  show_on_homepage,
+  is_active,
+  sort_order
+)
+select
+  starter.name,
+  starter.slug,
+  starter.description,
+  starter.image_url,
+  'marble-collections',
+  true,
+  true,
+  true,
+  starter.sort_order
+from (values
+  ('Marble Temples & Mandirs', 'temples', 'Beautiful marble temples and mandirs for homes, offices, and religious spaces.', '/images/products/mander-marble1.png', 80),
+  ('Marble Handicrafts & Home Décor', 'marble-handicrafts-home-decor', 'Explore handcrafted marble décor, gifting items, pooja accessories, and decorative pieces made by skilled artisans.', '/images/products/decor.png', 90),
+  ('Marble Tulsi Stands & Planters', 'tulsi-stands-planters', 'Discover carved marble Tulsi stands, pots, and planters for devotional and decorative spaces.', '/images/products/decor2.png', 100),
+  ('Custom Marble Statues & Projects', 'custom-marble-projects', 'Commission custom marble statues, temples, décor, and architectural pieces crafted for your requirements.', '/images/products/gallery3.png', 110)
+) as starter(name, slug, description, image_url, sort_order)
+where not exists (
+  select 1
+  from public.categories existing
+  where existing.slug = starter.slug
+);

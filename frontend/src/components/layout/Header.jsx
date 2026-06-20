@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, ChevronDown, Menu, X, ShoppingBag, ShieldCheck, Truck, ReceiptText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { categories as fallbackCategories, siteConfig, navItems } from '@/data/mock';
 import { getCategories } from '@/services/categories';
+import { getProducts } from '@/services/products';
 import { CATEGORY_GROUPS, getCategoryHref, getVisibleCategories } from '@/lib/categories';
 import {
   DropdownMenu,
@@ -21,6 +22,9 @@ const fallbackMenuCategories = fallbackCategories.map((category, index) => ({
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categories, setCategories] = useState(fallbackMenuCategories);
+  const [products, setProducts] = useState([]);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +33,44 @@ const Header = () => {
         if (data?.length) setCategories(data);
       })
       .catch((error) => console.error('Failed to load navigation collections:', error));
+
+    getProducts()
+      .then((data) => setProducts(data || []))
+      .catch((error) => console.error('Failed to load catalog search products:', error));
   }, []);
+
+  const searchResults = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return [];
+
+    return products
+      .filter((product) => {
+        const haystack = [product.name, product.description, product.slug, product.categories?.name]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
+        return haystack.includes(query);
+      })
+      .slice(0, 6);
+  }, [products, searchQuery]);
+
+  const openSearch = () => setSearchOpen(true);
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setSearchQuery('');
+  };
+
+  const submitSearch = (event) => {
+    event.preventDefault();
+    if (searchResults[0]?.slug) {
+      navigate(`/product/${searchResults[0].slug}`);
+      closeSearch();
+      return;
+    }
+    navigate('/collections');
+    closeSearch();
+  };
 
   const createCollectionMenu = (label, href, group) => ({
     label,
@@ -112,7 +153,7 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-4">
-            <button onClick={() => navigate('/god-statue')} className="hidden md:flex items-center gap-2 text-slate-600 hover:text-[#1F3D36] transition-colors">
+            <button onClick={openSearch} className="hidden md:flex items-center gap-2 text-slate-600 hover:text-[#1F3D36] transition-colors">
               <Search className="w-5 h-5" />
               <span className="hidden xl:inline text-sm font-medium">Search catalog</span>
             </button>
@@ -159,6 +200,54 @@ const Header = () => {
           </div>
         )}
       </div>
+
+      {searchOpen && (
+        <div className="fixed inset-0 z-[60] bg-slate-950/40 px-4 py-24 backdrop-blur-sm" onClick={closeSearch}>
+          <div className="mx-auto max-w-2xl rounded-[2rem] bg-white p-5 shadow-2xl border border-[#E8D9C5]" onClick={(event) => event.stopPropagation()}>
+            <div className="mb-4 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#B8872F]">Catalog search</p>
+                <h2 className="text-2xl font-bold text-[#1F3D36]">Find products</h2>
+              </div>
+              <button type="button" onClick={closeSearch} className="rounded-full p-2 text-slate-500 hover:bg-[#F8F1E8] hover:text-[#1F3D36]" aria-label="Close catalog search">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <form onSubmit={submitSearch} className="relative">
+              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+              <input
+                autoFocus
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search by product, category or material"
+                className="w-full rounded-full border border-[#DDE8E2] py-3 pl-12 pr-4 outline-none focus:border-[#1F3D36]"
+              />
+            </form>
+            <div className="mt-5 space-y-3">
+              {searchQuery.trim() && searchResults.length === 0 && (
+                <div className="rounded-2xl bg-[#F8F1E8] p-4 text-sm text-slate-600">
+                  No matching products found. Try a category name or browse all collections.
+                </div>
+              )}
+              {searchResults.map((product) => (
+                <Link
+                  key={product.id}
+                  to={`/product/${product.slug}`}
+                  onClick={closeSearch}
+                  className="flex items-center gap-4 rounded-2xl border border-[#EEF3EF] p-3 transition hover:border-[#D4A853] hover:bg-[#F8F1E8]"
+                >
+                  <img src={product.image_url || '/images/placeholder.jpg'} alt={product.name} className="h-16 w-16 rounded-xl object-cover bg-slate-100" />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-[#1F3D36]">{product.name}</p>
+                    <p className="text-sm text-slate-500">{product.categories?.name || 'Catalog item'}</p>
+                  </div>
+                  <span className="text-sm font-bold text-[#B8872F]">View</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

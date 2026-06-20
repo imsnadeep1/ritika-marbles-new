@@ -69,7 +69,8 @@ const ProductDetailPage = () => {
     );
   }
 
-  const isProductAvailable = product.in_stock ?? product.inStock ?? true;
+  const availabilityStatus = product.availability_status || ((product.in_stock ?? product.inStock ?? true) ? "stock_available" : "available_on_order");
+  const isProductAvailable = availabilityStatus === "stock_available";
 
   return (
     <div className="min-h-screen">
@@ -162,7 +163,7 @@ const ProductDetailPage = () => {
                     }`}
                   />
                   <span className="text-[#1F3D36] font-semibold">
-                    {isProductAvailable ? "In Stock" : "Made to Order"}
+                    {isProductAvailable ? "Stock available" : "Available on order"}
                   </span>
                 </div>
 

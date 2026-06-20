@@ -85,6 +85,7 @@ create table if not exists public.products (
   video_url text,
   features text[] not null default '{}'::text[],
   in_stock boolean not null default true,
+  availability_status text not null default 'stock_available' check (availability_status in ('stock_available', 'available_on_order')),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -98,6 +99,7 @@ alter table public.products add column if not exists image_url text;
 alter table public.products add column if not exists video_url text;
 alter table public.products add column if not exists features text[] not null default '{}'::text[];
 alter table public.products add column if not exists in_stock boolean not null default true;
+alter table public.products add column if not exists availability_status text not null default 'stock_available';
 alter table public.products add column if not exists created_at timestamptz not null default now();
 alter table public.products add column if not exists updated_at timestamptz not null default now();
 
@@ -151,7 +153,10 @@ end;
 $$;
 
 create unique index if not exists products_slug_unique_idx on public.products (slug);
+alter table public.products drop constraint if exists products_availability_status_check;
+alter table public.products add constraint products_availability_status_check check (availability_status in ('stock_available', 'available_on_order'));
 create index if not exists products_category_id_idx on public.products (category_id);
+create index if not exists products_availability_status_idx on public.products (availability_status);
 create index if not exists products_created_at_idx on public.products (created_at desc);
 
 drop trigger if exists set_products_updated_at on public.products;

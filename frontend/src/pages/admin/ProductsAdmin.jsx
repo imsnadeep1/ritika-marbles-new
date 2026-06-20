@@ -30,7 +30,7 @@ const emptyForm = {
   video_url: "",
   imageFile: null,
   videoFile: null,
-  in_stock: true,
+  availability_status: "stock_available",
 };
 
 const generateSlug = (name) =>
@@ -115,7 +115,8 @@ const ProductsAdmin = () => {
         image_url,
         video_url,
         features,
-        in_stock: form.in_stock,
+        availability_status: form.availability_status,
+        in_stock: form.availability_status === "stock_available",
       };
 
       if (editingId) {
@@ -150,7 +151,7 @@ const ProductsAdmin = () => {
       video_url: product.video_url || "",
       imageFile: null,
       videoFile: null,
-      in_stock: product.in_stock ?? product.inStock ?? true,
+      availability_status: product.availability_status || ((product.in_stock ?? product.inStock ?? true) ? "stock_available" : "available_on_order"),
     });
   }
 
@@ -339,15 +340,17 @@ const ProductsAdmin = () => {
 
             <label className="flex items-center justify-between rounded-2xl border border-[#DDE8E2] bg-white px-4 py-3">
               <span>
-                <span className="block font-semibold text-[#1F3D36]">Available for sale</span>
-                <span className="text-sm text-slate-500">Show as in stock / inquiry ready.</span>
+                <span className="block font-semibold text-[#1F3D36]">Availability</span>
+                <span className="text-sm text-slate-500">Choose whether this product is in stock or available on order.</span>
               </span>
-              <input
-                type="checkbox"
-                checked={form.in_stock}
-                onChange={(event) => setForm({ ...form, in_stock: event.target.checked })}
-                className="w-5 h-5 accent-[#1F3D36]"
-              />
+              <select
+                value={form.availability_status}
+                onChange={(event) => setForm({ ...form, availability_status: event.target.value })}
+                className="rounded-full border border-[#DDE8E2] px-4 py-2 text-sm font-semibold text-[#1F3D36] outline-none focus:border-[#1F3D36]"
+              >
+                <option value="stock_available">Stock available</option>
+                <option value="available_on_order">Available on order</option>
+              </select>
             </label>
 
             <div className="flex gap-3">
@@ -473,11 +476,11 @@ const ProductsAdmin = () => {
                     </td>
                     <td className="py-4 px-4">
                       <span className={`rounded-full px-3 py-1 text-xs font-bold ${
-                        product.in_stock ?? product.inStock
+                        (product.availability_status || ((product.in_stock ?? product.inStock ?? true) ? "stock_available" : "available_on_order")) === "stock_available"
                           ? "bg-green-50 text-green-700"
                           : "bg-orange-50 text-orange-700"
                       }`}>
-                        {product.in_stock ?? product.inStock ? "In stock" : "Made to order"}
+                        {(product.availability_status || ((product.in_stock ?? product.inStock ?? true) ? "stock_available" : "available_on_order")) === "stock_available" ? "Stock available" : "Available on order"}
                       </span>
                     </td>
                     <td className="py-4 pl-4">

@@ -128,8 +128,14 @@ const CategoryPage = () => {
                         alt={product.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
-                      <span className="absolute left-3 top-3 rounded-full bg-[#1F3D36] px-3 py-1 text-xs font-bold text-white">
-                        Inquire now
+                      <span className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-bold text-white ${
+                        (product.availability_status || ((product.in_stock ?? product.inStock ?? true) ? "stock_available" : "available_on_order")) === "stock_available"
+                          ? "bg-[#1F3D36]"
+                          : "bg-[#B8872F]"
+                      }`}>
+                        {(product.availability_status || ((product.in_stock ?? product.inStock ?? true) ? "stock_available" : "available_on_order")) === "stock_available"
+                          ? "Stock available"
+                          : "Available on order"}
                       </span>
                     </div>
                     <div className="p-4">

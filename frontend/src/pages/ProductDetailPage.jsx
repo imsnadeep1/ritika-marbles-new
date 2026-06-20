@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 import FloatingButtons from "@/components/layout/FloatingButtons";
 import { Button } from "@/components/ui/button";
 
-import { ChevronRight, Check, MessageCircle, Phone } from "lucide-react";
+import { ChevronRight, Check, MessageCircle, Phone, Ruler, Truck, Sparkles } from "lucide-react";
 
 import { getProducts } from "@/services/products";
 import { getCategories } from "@/services/categories";
@@ -22,11 +22,16 @@ const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
   const [category, setCategory] = useState(null);
   const [related, setRelated] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [slug]);
 
   // ---------------- FETCH PRODUCT + CATEGORY DATA ----------------
   useEffect(() => {
     async function loadData() {
+      setLoading(true);
       const products = await getProducts();
       const categories = await getCategories();
 
@@ -38,15 +43,33 @@ const ProductDetailPage = () => {
         setCategory(cat);
 
         // Related products (simple: same category or exclude itself)
-        const rel = products
-          .filter((p) => p.id !== foundProduct.id)
-          .slice(0, 4);
-        setRelated(rel);
+        const sameCategory = products.filter(
+          (p) => p.id !== foundProduct.id && p.category_id === foundProduct.category_id
+        );
+        const fallbackRelated = products.filter((p) => p.id !== foundProduct.id);
+        setRelated((sameCategory.length ? sameCategory : fallbackRelated).slice(0, 4));
+      } else {
+        setCategory(null);
+        setRelated([]);
       }
+
+      setLoading(false);
     }
 
     loadData();
   }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <main className="py-20 text-center">
+          <p className="text-xl text-gray-600">Loading product...</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   // ---------------- PRODUCT NOT FOUND ----------------
   if (!product) {
@@ -104,12 +127,12 @@ const ProductDetailPage = () => {
           </div>
         </div>
 
-        {/* Product Detail Section */}
-        <section className="py-12 bg-white">
+        {/* Product-first hero */}
+        <section className="py-8 sm:py-12 bg-gradient-to-br from-white via-[#F8F1E8] to-[#F4F7F4]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12">
+            <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-12 items-start">
               {/* Image Gallery */}
-              <div className="space-y-4">
+              <div className="space-y-4 lg:sticky lg:top-28">
                 <div className="aspect-square overflow-hidden rounded-[2rem] bg-[#F8F1E8] ring-1 ring-[#E8D9C5] shadow-xl">
                   <img
                     src={product.image_url}
@@ -119,11 +142,11 @@ const ProductDetailPage = () => {
                 </div>
               </div>
 
-              {/* Product Info */}
-              <div className="space-y-6">
+              {/* Product purchase summary */}
+              <div className="space-y-5 rounded-[2rem] border border-[#E8D9C5] bg-white/95 p-5 shadow-xl sm:p-7">
                 <div>
                   <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.25em] mb-3">
-                    Product detail
+                    Ready to inquire
                   </p>
                   <h1 className="text-3xl md:text-5xl font-bold text-[#1F3D36] mb-3">
                     {product.name}
@@ -132,28 +155,6 @@ const ProductDetailPage = () => {
                     ₹{Number(product.price).toLocaleString()}
                   </p>
                 </div>
-
-                <p className="text-slate-600 leading-relaxed text-lg">
-                  {product.description}
-                </p>
-
-                {/* Features (if exists) */}
-                {product.features && (
-                  <div className="space-y-3">
-                    <h3 className="font-semibold text-[#1F3D36]">Features:</h3>
-                    <ul className="space-y-2">
-                      {product.features.map((feature, index) => (
-                        <li
-                          key={index}
-                          className="flex items-center gap-2 text-slate-600"
-                        >
-                          <Check className="w-5 h-5 text-[#B8872F]" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
 
                 {/* Availability */}
                 <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF3EF] px-4 py-2">
@@ -188,34 +189,71 @@ const ProductDetailPage = () => {
                   </a>
                 </div>
 
-                {/* Custom Note */}
-                <div className="bg-[#F8F1E8] rounded-2xl p-6 border border-[#E8D9C5]">
-                  <h3 className="font-semibold text-[#1F3D36] mb-2">
-                    Custom Orders Welcome
-                  </h3>
-                  <p className="text-slate-600 text-sm">
-                    We can create custom sizes and designs based on your
-                    requirements. Contact us to discuss your specifications
-                    and get a personalized quote.
-                  </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="rounded-2xl bg-[#F8F1E8] p-4 text-sm text-[#1F3D36]">
+                    <Sparkles className="mb-2 h-5 w-5 text-[#B8872F]" />
+                    Handcrafted finish
+                  </div>
+                  <div className="rounded-2xl bg-[#F8F1E8] p-4 text-sm text-[#1F3D36]">
+                    <Ruler className="mb-2 h-5 w-5 text-[#B8872F]" />
+                    Custom sizing
+                  </div>
+                  <div className="rounded-2xl bg-[#F8F1E8] p-4 text-sm text-[#1F3D36]">
+                    <Truck className="mb-2 h-5 w-5 text-[#B8872F]" />
+                    Delivery support
+                  </div>
                 </div>
 
-                {product.video_url && (
-                  <div className="bg-white rounded-2xl p-5 border border-[#E8D9C5]">
-                    <h3 className="font-semibold text-[#1F3D36] mb-3">
-                      Product Video
-                    </h3>
-                    <video
-                      src={product.video_url}
-                      controls
-                      className="w-full rounded-xl bg-black"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                )}
+                <a href="#product-details" className="inline-flex text-sm font-bold text-[#B8872F] hover:text-[#1F3D36]">
+                  View product details and features ↓
+                </a>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Product Details Section */}
+        <section id="product-details" className="py-12 bg-white scroll-mt-28 border-t border-[#E8D9C5]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-6 lg:grid-cols-[1fr_0.85fr]">
+              <div className="rounded-[2rem] border border-[#E8D9C5] bg-white p-6 shadow-sm sm:p-8">
+                <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.25em] mb-3">Product details</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mb-4">About this piece</h2>
+                <p className="text-slate-600 leading-relaxed text-lg">
+                  {product.description || "Contact us for material, sizing, finish and customization guidance for this product."}
+                </p>
+              </div>
+
+              {product.features?.length > 0 && (
+                <div className="rounded-[2rem] border border-[#E8D9C5] bg-[#F8FBF9] p-6 shadow-sm sm:p-8">
+                  <h3 className="font-semibold text-[#1F3D36] mb-4">Features</h3>
+                  <ul className="space-y-3">
+                    {product.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3 text-slate-600">
+                        <Check className="mt-0.5 w-5 h-5 shrink-0 text-[#B8872F]" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-6 bg-[#F8F1E8] rounded-[2rem] p-6 border border-[#E8D9C5] sm:p-8">
+              <h3 className="font-semibold text-[#1F3D36] mb-2">Custom Orders Welcome</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                We can create custom sizes and designs based on your requirements. Contact us to discuss your specifications and get a personalized quote.
+              </p>
+            </div>
+
+            {product.video_url && (
+              <div className="mt-6 bg-white rounded-[2rem] p-5 border border-[#E8D9C5]">
+                <h3 className="font-semibold text-[#1F3D36] mb-3">Product Video</h3>
+                <video src={product.video_url} controls className="w-full rounded-xl bg-black">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            )}
           </div>
         </section>
 
@@ -246,7 +284,7 @@ const ProductDetailPage = () => {
               You May Also Like
             </h2>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
               {related.map((item) => (
                 <Link
                   key={item.id}
@@ -275,6 +313,16 @@ const ProductDetailPage = () => {
         </section>
       </main>
 
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#E8D9C5] bg-white/95 p-3 shadow-2xl backdrop-blur sm:hidden">
+        <div className="grid grid-cols-2 gap-3">
+          <a href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I'm interested in ${product.name}`} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[#25D366] px-4 py-3 text-center text-sm font-bold text-white">
+            WhatsApp
+          </a>
+          <a href={`tel:${siteConfig.phone}`} className="rounded-full bg-[#1F3D36] px-4 py-3 text-center text-sm font-bold text-white">
+            Call Now
+          </a>
+        </div>
+      </div>
       <Footer />
       <FloatingButtons />
     </div>

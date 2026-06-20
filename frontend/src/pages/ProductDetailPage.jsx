@@ -94,6 +94,19 @@ const ProductDetailPage = () => {
 
   const availabilityStatus = product.availability_status || ((product.in_stock ?? product.inStock ?? true) ? "stock_available" : "available_on_order");
   const isProductAvailable = availabilityStatus === "stock_available";
+  const availabilityLabel = isProductAvailable ? "Stock available" : "Available on order";
+  const productUrl = typeof window !== "undefined"
+    ? `${window.location.origin}/product/${product.slug}`
+    : `/product/${product.slug}`;
+  const whatsappMessage = encodeURIComponent([
+    "Hi, I'm interested in this product:",
+    `Product: ${product.name}`,
+    `Price: ₹${Number(product.price || 0).toLocaleString()}`,
+    `Availability: ${availabilityLabel}`,
+    category?.name ? `Category: ${category.name}` : null,
+    product.description ? `Details: ${product.description}` : null,
+    `Product link: ${productUrl}`,
+  ].filter(Boolean).join("\n"));
 
   return (
     <div className="min-h-screen">
@@ -164,14 +177,14 @@ const ProductDetailPage = () => {
                     }`}
                   />
                   <span className="text-[#1F3D36] font-semibold">
-                    {isProductAvailable ? "Stock available" : "Available on order"}
+                    {availabilityLabel}
                   </span>
                 </div>
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <a
-                    href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I'm interested in ${product.name}`}
+                    href={`https://wa.me/${siteConfig.whatsapp}?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1"
@@ -313,16 +326,6 @@ const ProductDetailPage = () => {
         </section>
       </main>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#E8D9C5] bg-white/95 p-3 shadow-2xl backdrop-blur sm:hidden">
-        <div className="grid grid-cols-2 gap-3">
-          <a href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I'm interested in ${product.name}`} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[#25D366] px-4 py-3 text-center text-sm font-bold text-white">
-            WhatsApp
-          </a>
-          <a href={`tel:${siteConfig.phone}`} className="rounded-full bg-[#1F3D36] px-4 py-3 text-center text-sm font-bold text-white">
-            Call Now
-          </a>
-        </div>
-      </div>
       <Footer />
       <FloatingButtons />
     </div>

@@ -81,6 +81,7 @@ export async function addProduct(product) {
       video_url: product.video_url,
       features: product.features,
       in_stock: product.in_stock,
+      availability_status: product.availability_status,
       slug: product.slug || product.name.toLowerCase().replace(/\s+/g, "-")
     }
   ]);

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/data/mock';
 
-const heroIdolImage = "/images/products/Screenshot_20240212-184133_Facebook.jpg";
+const heroIdolImage = "/images/products/ganesh_ji_hero.png";
 
 const HeroSection = () => {
   const assurances = [

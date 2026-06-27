@@ -169,7 +169,6 @@
 }
 
 .luxury-idol-image {
-    clip-path: inset(0 6% 0 0);
     transform: translateZ(0);
 }
 

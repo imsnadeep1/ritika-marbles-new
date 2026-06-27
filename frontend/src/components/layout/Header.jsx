@@ -67,7 +67,7 @@ const Header = () => {
   return (
     <header className={`${isHome ? 'fixed' : 'sticky'} top-0 z-50 w-full transition-all duration-500 ${
       isHome && !scrolled && !mobileMenuOpen
-        ? 'border-b border-[#D4AF37]/10 bg-[#090909]/45 backdrop-blur-md'
+        ? 'border-b border-[#D4AF37]/15 bg-[#090909]/72 shadow-[0_14px_42px_rgba(0,0,0,0.28)] backdrop-blur-xl'
         : 'border-b border-[#D4AF37]/20 bg-[#090909]/88 shadow-[0_18px_50px_rgba(0,0,0,0.45)] backdrop-blur-2xl'
     }`}>
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">

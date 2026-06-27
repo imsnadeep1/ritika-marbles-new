@@ -1,147 +1,163 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowDown, ChevronRight, MessageCircle, ShieldCheck, Sparkles, Star, Truck } from 'lucide-react';
+import { ArrowRight, Diamond, Flower2, HeartHandshake, MessageCircle, Truck } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/data/mock';
-import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
+
+const heroIdolImage = "/images/products/ganesh_ji_hero.png";
 
 const HeroSection = () => {
-  const [bestseller, setBestseller] = useState(defaultStorefrontContent.bestseller);
-
-  useEffect(() => {
-    getStorefrontContent().then((content) => setBestseller(content.bestseller));
-  }, []);
+  const assurances = [
+    { icon: HeartHandshake, title: "Handcrafted", text: "By skilled artisans" },
+    { icon: Diamond, title: "Premium quality", text: "Finest marble with lasting beauty" },
+    { icon: Truck, title: "Safe delivery", text: "Secure packaging, pan India delivery" },
+    { icon: Flower2, title: "Divine touch", text: "Bringing peace, prosperity and positivity" },
+  ];
+  const particles = Array.from({ length: 18 }, (_, index) => index);
 
   return (
-    <section className="relative bg-[radial-gradient(circle_at_top_left,#FFF7E8,transparent_35%),linear-gradient(135deg,#F9F3EA_0%,#FFFFFF_45%,#EAF3EF_100%)] min-h-[82vh] flex items-center overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-[#1F3D36]/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-20 w-56 h-56 bg-[#D4A853]/20 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-[#1F3D36]/10 rounded-full blur-2xl" />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 lg:py-16 w-full">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Product-first mobile layout keeps the first viewport visual and inviting. */}
-          <div className="order-2 lg:order-1 space-y-5 sm:space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#D4A853]/40 bg-white/80 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-[#1F3D36] shadow-sm">
-              <Sparkles className="w-4 h-4 text-[#B8872F]" />
-              Premium handcrafted marble store
-            </div>
-            <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#1F3D36] leading-[1.05]">
-                Shop marble idols, temples and decor
-              </h1>
-              <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
-                Discover handcrafted Makrana marble pieces, compare collections, and request a custom quote directly from our Jaipur workshop.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:flex sm:flex-row gap-3 sm:gap-4">
-              <Link to="/god-statue" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-[#1F3D36] hover:bg-[#152C27] text-white px-7 py-5 sm:px-8 sm:py-6 text-base sm:text-lg rounded-full flex items-center justify-center gap-2 transition-all hover:gap-4 shadow-lg">
-                  Shop bestsellers
-                  <ChevronRight className="w-5 h-5" />
-                </Button>
-              </Link>
-              <a
-                href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I want help choosing a marble product`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto"
-              >
-                <Button variant="outline" className="w-full sm:w-auto border-[#D4A853] bg-white/80 text-[#1F3D36] hover:bg-[#FFF7E8] px-7 py-5 sm:px-8 sm:py-6 text-base sm:text-lg rounded-full flex items-center justify-center gap-2 shadow-sm">
-                  <MessageCircle className="w-5 h-5" />
-                  Ask on WhatsApp
-                </Button>
-              </a>
-            </div>
-            <a href="#collections" className="inline-flex items-center gap-2 text-sm font-bold text-[#1F3D36] hover:text-[#B8872F] transition-colors">
-              Explore collections below
-              <ArrowDown className="w-4 h-4 animate-bounce" />
-            </a>
-            <div className="grid grid-cols-3 gap-2 sm:gap-3 max-w-2xl">
-              {[
-                { icon: ShieldCheck, title: "Quality checked", text: "Premium marble" },
-                { icon: Truck, title: "Safe shipping", text: "Packed with care" },
-                { icon: Sparkles, title: "Custom made", text: "Size and finish" },
-              ].map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} className="rounded-2xl border border-[#E8D9C5] bg-white/80 p-3 sm:p-4 shadow-sm">
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-[#B8872F] mb-2" />
-                    <p className="font-semibold text-[#1F3D36] text-xs sm:text-sm leading-tight">{item.title}</p>
-                    <p className="hidden sm:block text-slate-500 text-xs">{item.text}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Right Content - Ecommerce product preview */}
-          <div className="order-1 lg:order-2 relative flex justify-center">
-            <div className="relative w-full max-w-xl">
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#D4A853]/30 to-[#1F3D36]/10 rounded-full blur-3xl scale-125" />
-              
-              {/* Main Image Container */}
-              <div className="relative rounded-[1.5rem] sm:rounded-[2rem] border border-white/80 bg-white/70 p-3 sm:p-6 shadow-2xl backdrop-blur">
-                <div className="absolute left-4 top-4 sm:left-6 sm:top-6 z-20 rounded-full bg-[#1F3D36] px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wide text-white">
-                  Best seller
-                </div>
-                <img
-                  src={bestseller.imageUrl}
-                  alt={bestseller.title}
-                  className="relative z-10 w-full h-[300px] sm:h-[430px] lg:h-auto lg:max-h-[550px] object-contain drop-shadow-2xl rounded-2xl"
-                />
-                <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 z-20 rounded-2xl sm:rounded-3xl bg-white/95 p-3 sm:p-4 shadow-xl border border-[#E8D9C5]">
-                  <div className="flex items-center justify-between gap-2 sm:gap-4">
-                    <div>
-                      <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-[#B8872F]">
-                        {bestseller.subtitle}
-                      </p>
-                      <h3 className="text-base sm:text-lg font-semibold leading-tight text-[#1F3D36]">{bestseller.title}</h3>
-                    </div>
-                    <Link to={bestseller.ctaHref || "/god-statue"}>
-                      <Button className="h-9 rounded-full bg-[#D4A853] hover:bg-[#B8872F] px-4 text-sm text-white">
-                        {bestseller.ctaLabel || "View"}
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="absolute -right-2 top-4 z-30 flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#1F3D36] shadow-lg sm:right-4 sm:top-4 sm:text-xs">
-                <Star className="w-3 h-3 fill-[#D4A853] text-[#D4A853]" />
-                Jaipur handcrafted
-              </div>
-
-              {/* Decorative Lotus Flowers */}
-              <div className="absolute -left-4 top-1/3 w-16 h-16 opacity-70">
-                <svg viewBox="0 0 100 100" className="w-full h-full fill-[#D4A853]">
-                  <ellipse cx="50" cy="50" rx="20" ry="40" />
-                  <ellipse cx="50" cy="50" rx="20" ry="40" transform="rotate(60 50 50)" />
-                  <ellipse cx="50" cy="50" rx="20" ry="40" transform="rotate(120 50 50)" />
-                </svg>
-              </div>
-              <div className="absolute -right-8 bottom-1/4 w-20 h-20 opacity-50">
-                <svg viewBox="0 0 100 100" className="w-full h-full fill-[#1F3D36]">
-                  <ellipse cx="50" cy="50" rx="20" ry="40" />
-                  <ellipse cx="50" cy="50" rx="20" ry="40" transform="rotate(60 50 50)" />
-                  <ellipse cx="50" cy="50" rx="20" ry="40" transform="rotate(120 50 50)" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
+    <section className="luxury-hero relative isolate min-h-screen overflow-hidden bg-[#090909] text-white">
+      <div className="luxury-temple-architecture absolute inset-0" />
+      <div className="luxury-volumetric-rays absolute inset-0" />
+      <div className="luxury-vignette absolute inset-0" />
+      <div className="hero-mandala absolute -left-28 top-10 hidden h-[34rem] w-[34rem] opacity-[0.05] lg:block" />
+      <div className="absolute right-[16%] top-[10%] h-64 w-64 rounded-full bg-[#F5D77A]/24 blur-[90px] lg:h-96 lg:w-96" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {particles.map((particle) => (
+          <span
+            key={particle}
+            className="gold-dust-particle"
+            style={{
+              "--x": `${8 + ((particle * 17) % 86)}%`,
+              "--delay": `${particle * 0.28}s`,
+              "--duration": `${7 + (particle % 6)}s`,
+              "--size": `${2 + (particle % 4)}px`,
+            }}
+          />
+        ))}
       </div>
 
-      {/* Welcome Popup */}
-      <div className="hidden lg:block absolute left-4 bottom-20 bg-white rounded-2xl shadow-xl p-4 max-w-xs border-l-4 border-[#D4A853] animate-fade-in-up">
-        <p className="text-[#1F3D36] text-sm font-semibold mb-2">
-          Need help selecting the right idol size?
-        </p>
-        <p className="text-slate-500 text-xs">
-          Share your space details and we will recommend the right marble product.
-        </p>
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-8 px-5 pb-20 pt-28 sm:px-8 xl:grid-cols-[0.9fr_1.1fr] xl:px-10 xl:pb-0 xl:pt-20">
+        <motion.div
+          initial={{ opacity: 0, y: 36 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-20 order-2 max-w-2xl xl:order-1"
+        >
+          <div className="mb-8 hidden items-center gap-5 text-xs font-semibold text-white/70 sm:flex">
+            <span className="text-[#D4AF37]">01</span>
+            <span className="h-20 w-px bg-gradient-to-b from-[#D4AF37] to-transparent" />
+            <span>02</span>
+            <span>03</span>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.7 }}
+            className="mb-5 flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.34em] text-[#D4AF37]"
+          >
+            <span className="h-px w-14 bg-[#D4AF37]" />
+            Handcrafted With Devotion
+          </motion.p>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            className="font-playfair text-[3.35rem] font-medium leading-[0.94] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl xl:text-[5.7rem]"
+          >
+            Timeless Marble Art,
+            <span className="gold-headline-gradient block">Crafted to Inspire</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.75 }}
+            className="mt-7 max-w-xl font-inter text-sm leading-7 text-white/72 sm:text-base"
+          >
+            Exquisite marble idols, temples, sculptures, and decor handcrafted by skilled artisans from Rajasthan. Bringing divinity, elegance, and timeless craftsmanship into every space.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.42, duration: 0.7 }}
+            className="mt-9 grid gap-3 sm:flex sm:flex-wrap"
+          >
+            <Link to="/god-statue" className="w-full sm:w-auto">
+              <Button className="premium-gold-button h-12 w-full rounded-none px-8 py-6 font-inter text-xs font-bold uppercase tracking-[0.12em] text-black sm:w-auto">
+                Explore Collection
+                <ArrowRight className="ml-3 h-4 w-4" />
+              </Button>
+            </Link>
+            <a
+              href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I want help choosing a marble product`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto"
+            >
+              <Button variant="outline" className="h-12 w-full rounded-none border-[#D4AF37]/70 bg-black/20 px-8 py-6 font-inter text-xs font-bold uppercase tracking-[0.12em] text-white backdrop-blur-md transition-all hover:border-[#F5D77A] hover:bg-[#D4AF37]/12 hover:text-[#F5D77A] sm:w-auto">
+                <MessageCircle className="mr-3 h-4 w-4" />
+                WhatsApp Inquiry
+              </Button>
+            </a>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55, duration: 0.8 }}
+            className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4"
+          >
+            {assurances.map((item) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  whileHover={{ y: -6, borderColor: "rgba(245,215,122,0.5)" }}
+                  className="premium-feature-card group min-h-28 p-4"
+                >
+                  <Icon className="mb-4 h-6 w-6 text-[#D4AF37] transition-transform duration-300 group-hover:scale-110" />
+                  <p className="font-inter text-[10px] font-bold uppercase leading-tight tracking-[0.16em] text-[#F5D77A]">{item.title}</p>
+                  <p className="mt-2 font-inter text-[10px] leading-4 text-white/58">{item.text}</p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 70, scale: 0.98 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ delay: 0.2, duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
+          className="relative order-1 flex min-h-[44vh] items-end justify-center xl:order-2 xl:min-h-screen xl:justify-end"
+        >
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="relative z-20 -mb-8 w-full max-w-[440px] sm:max-w-[560px] xl:-mb-12 xl:w-[55vw] xl:max-w-[780px]"
+          >
+            <div className="absolute inset-x-10 bottom-8 h-32 rounded-full bg-black/70 blur-3xl" />
+            <img
+              src={heroIdolImage}
+              alt="White marble Ganesha idol with gold ornamentation"
+              className="luxury-idol-image relative z-10 h-[45vh] min-h-[360px] w-full object-contain object-bottom drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[56vh] xl:h-[88vh]"
+            />
+          </motion.div>
+        </motion.div>
+      </div>
+
+      <div className="absolute bottom-[-1px] left-0 right-0 z-20 overflow-hidden">
+        <div className="relative flex min-h-20 w-full items-end justify-center overflow-hidden rounded-t-[48%] bg-[#f7f1e7] px-4 pt-6 text-center shadow-[0_-18px_55px_rgba(0,0,0,0.35)] sm:min-h-24">
+          <div className="pb-3">
+            <p className="font-inter text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4AF37] sm:text-xs">Explore our collection</p>
+            <h2 className="font-playfair text-2xl font-semibold leading-none text-[#1d1712] sm:text-3xl">Marble Creations for Every Space</h2>
+            <div className="mx-auto mt-3 h-px w-32 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
+          </div>
+        </div>
       </div>
     </section>
   );

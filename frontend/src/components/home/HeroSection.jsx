@@ -38,12 +38,12 @@ const HeroSection = () => {
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-20 pt-20 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:px-8 lg:pb-10 lg:pt-20 xl:px-10">
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-20 pt-20 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-stretch lg:px-8 lg:pb-10 lg:pt-20 xl:px-10">
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-20 order-2 max-w-lg lg:order-1 xl:max-w-xl"
+          className="relative z-20 order-2 max-w-lg lg:order-1 lg:self-center xl:max-w-xl"
         >
           <motion.p
             initial={{ opacity: 0, y: 18 }}
@@ -126,18 +126,18 @@ const HeroSection = () => {
           initial={{ opacity: 0, x: 70, scale: 0.98 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ delay: 0.2, duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
-          className="relative order-1 flex min-h-[42vh] items-start justify-center lg:order-2 lg:min-h-[calc(100vh-5rem)] lg:justify-end"
+          className="relative order-1 flex min-h-[42vh] items-start justify-center lg:order-2 lg:min-h-[calc(100vh-5rem)] lg:justify-end lg:self-stretch"
         >
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="relative z-20 w-full max-w-[470px] sm:max-w-[610px] lg:ml-auto lg:w-[60vw] lg:max-w-[860px] xl:w-[62vw] xl:max-w-[940px]"
+            className="relative z-20 flex w-full max-w-[470px] items-start justify-center sm:max-w-[610px] lg:ml-auto lg:h-full lg:w-[60vw] lg:max-w-[860px] lg:justify-end"
           >
-            <div className="absolute inset-x-10 bottom-8 h-32 rounded-full bg-black/70 blur-3xl" />
+            <div className="absolute inset-x-10 top-[55%] h-32 rounded-full bg-black/70 blur-3xl lg:top-auto lg:bottom-10" />
             <img
               src={heroIdolImage}
               alt="White marble Ganesha idol with gold ornamentation"
-              className="luxury-idol-image relative z-10 h-[45vh] min-h-[330px] w-full object-contain object-top drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[58vh] lg:h-[calc(100vh-5rem)] xl:h-[calc(100vh-4rem)]"
+              className="luxury-idol-image relative z-10 h-[45vh] min-h-[330px] w-full object-contain object-top drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[58vh] lg:h-full lg:max-h-[calc(100vh-4.5rem)] lg:min-h-[28rem] lg:object-[right_top]"
             />
           </motion.div>
         </motion.div>

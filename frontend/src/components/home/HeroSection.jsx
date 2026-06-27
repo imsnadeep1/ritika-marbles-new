@@ -38,7 +38,7 @@ const HeroSection = () => {
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-20 pt-20 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-stretch lg:px-8 lg:pb-10 lg:pt-20 xl:px-10">
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-20 pt-20 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-stretch lg:gap-8 lg:px-8 lg:pb-10 lg:pt-20 xl:px-10">
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
@@ -131,13 +131,13 @@ const HeroSection = () => {
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="relative z-20 flex w-full max-w-[470px] items-start justify-center sm:max-w-[610px] lg:ml-auto lg:h-full lg:w-[60vw] lg:max-w-[860px] lg:justify-end"
+            className="relative z-20 flex w-full max-w-[470px] items-start justify-center sm:max-w-[610px] lg:ml-auto lg:h-full lg:w-auto lg:max-w-none lg:justify-end"
           >
-            <div className="absolute inset-x-10 top-[55%] h-32 rounded-full bg-black/70 blur-3xl lg:top-auto lg:bottom-10" />
+            <div className="absolute inset-x-10 top-[55%] h-32 rounded-full bg-black/70 blur-3xl lg:inset-x-4 lg:top-auto lg:bottom-10" />
             <img
               src={heroIdolImage}
               alt="White marble Ganesha idol with gold ornamentation"
-              className="luxury-idol-image relative z-10 h-[45vh] min-h-[330px] w-full object-contain object-top drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[58vh] lg:h-full lg:max-h-[calc(100vh-4.5rem)] lg:min-h-[28rem] lg:object-[right_top]"
+              className="luxury-idol-image relative z-10 h-[45vh] min-h-[330px] w-full object-contain object-top drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[58vh] lg:h-full lg:max-h-[calc(100vh-4.5rem)] lg:min-h-[28rem] lg:w-auto"
             />
           </motion.div>
         </motion.div>

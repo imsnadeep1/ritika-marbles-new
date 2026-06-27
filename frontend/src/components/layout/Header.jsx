@@ -84,11 +84,11 @@ const Header = () => {
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/35 px-2 py-1 shadow-[0_12px_36px_rgba(0,0,0,0.28)] backdrop-blur-md md:flex">
             {menuItems.map((item) => (
               item.dropdown ? (
                 <DropdownMenu key={item.label}>
-                  <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-2 text-[11px] font-bold text-white/78 transition-colors hover:text-[#F5D77A] xl:px-4">
+                  <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-2 text-[11px] font-bold text-white transition-colors [text-shadow:0_1px_8px_rgba(0,0,0,0.75)] hover:text-[#F5D77A] xl:px-4">
                     {item.label}
                     <ChevronDown className="h-3.5 w-3.5" />
                   </DropdownMenuTrigger>
@@ -103,7 +103,7 @@ const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Link key={item.label} to={item.href} className="px-3 py-2 text-[11px] font-bold text-white/78 transition-colors hover:text-[#F5D77A] xl:px-4">
+                <Link key={item.label} to={item.href} className="px-3 py-2 text-[11px] font-bold text-white transition-colors [text-shadow:0_1px_8px_rgba(0,0,0,0.75)] hover:text-[#F5D77A] xl:px-4">
                   {item.label}
                 </Link>
               )

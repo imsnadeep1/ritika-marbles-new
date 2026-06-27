@@ -38,18 +38,18 @@ const HeroSection = () => {
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-5 px-5 pb-20 pt-24 sm:px-8 xl:grid-cols-[0.84fr_1.16fr] xl:px-10 xl:pb-0 xl:pt-20">
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-20 pt-20 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:px-8 lg:pb-10 lg:pt-20 xl:px-10">
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-20 order-2 max-w-xl xl:order-1"
+          className="relative z-20 order-2 max-w-lg lg:order-1 xl:max-w-xl"
         >
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.7 }}
-            className="mb-4 flex items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-[#D4AF37]"
+            className="mb-3 flex items-center gap-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4AF37]"
           >
             <span className="h-px w-12 bg-[#D4AF37]" />
             Handcrafted With Devotion
@@ -59,7 +59,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.18, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-            className="font-playfair text-[2.8rem] font-medium leading-[0.96] tracking-[-0.04em] text-white sm:text-5xl md:text-6xl xl:text-[4.9rem]"
+            className="font-playfair text-[2.65rem] font-medium leading-[0.95] tracking-[-0.04em] text-white sm:text-5xl lg:text-[4.2rem] xl:text-[4.65rem]"
           >
             Timeless Marble Art,
             <span className="gold-headline-gradient block">Crafted to Inspire</span>
@@ -69,7 +69,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.75 }}
-            className="mt-5 max-w-lg font-inter text-sm leading-6 text-white/72 sm:text-[15px]"
+            className="mt-4 max-w-md font-inter text-[13px] leading-6 text-white/72 sm:text-sm xl:max-w-lg"
           >
             Exquisite marble idols, temples, sculptures, and decor handcrafted by skilled artisans from Rajasthan. Bringing divinity, elegance, and timeless craftsmanship into every space.
           </motion.p>
@@ -78,7 +78,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.42, duration: 0.7 }}
-            className="mt-7 grid gap-3 sm:flex sm:flex-wrap"
+            className="mt-6 grid gap-3 sm:flex sm:flex-wrap"
           >
             <Link to="/god-statue" className="w-full sm:w-auto">
               <Button className="premium-gold-button h-12 w-full rounded-none px-8 py-6 font-inter text-xs font-bold uppercase tracking-[0.12em] text-black sm:w-auto">
@@ -103,7 +103,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.8 }}
-            className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-4"
+            className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-4"
           >
             {assurances.map((item) => {
               const Icon = item.icon;
@@ -111,7 +111,7 @@ const HeroSection = () => {
                 <motion.div
                   key={item.title}
                   whileHover={{ y: -6, borderColor: "rgba(245,215,122,0.5)" }}
-                  className="premium-feature-card group min-h-24 p-3"
+                  className="premium-feature-card group min-h-20 p-3"
                 >
                   <Icon className="mb-3 h-5 w-5 text-[#D4AF37] transition-transform duration-300 group-hover:scale-110" />
                   <p className="font-inter text-[10px] font-bold uppercase leading-tight tracking-[0.16em] text-[#F5D77A]">{item.title}</p>
@@ -126,18 +126,18 @@ const HeroSection = () => {
           initial={{ opacity: 0, x: 70, scale: 0.98 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ delay: 0.2, duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
-          className="relative order-1 flex min-h-[42vh] items-end justify-center xl:order-2 xl:min-h-screen xl:justify-end"
+          className="relative order-1 flex min-h-[42vh] items-center justify-center lg:order-2 lg:min-h-[calc(100vh-5rem)] lg:justify-end"
         >
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="relative z-20 -mb-8 w-full max-w-[470px] sm:max-w-[610px] xl:-mb-14 xl:w-[60vw] xl:max-w-[900px]"
+            className="relative z-20 w-full max-w-[470px] sm:max-w-[610px] lg:w-[58vw] lg:max-w-[820px] xl:w-[62vw] xl:max-w-[940px]"
           >
             <div className="absolute inset-x-10 bottom-8 h-32 rounded-full bg-black/70 blur-3xl" />
             <img
               src={heroIdolImage}
               alt="White marble Ganesha idol with gold ornamentation"
-              className="luxury-idol-image relative z-10 h-[45vh] min-h-[350px] w-full object-contain object-bottom drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[60vh] xl:h-[92vh]"
+              className="luxury-idol-image relative z-10 h-[45vh] min-h-[330px] w-full object-contain object-center drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[58vh] lg:h-[calc(100vh-8rem)] xl:h-[calc(100vh-6rem)]"
             />
           </motion.div>
         </motion.div>

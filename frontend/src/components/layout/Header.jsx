@@ -21,7 +21,6 @@ const fallbackMenuCategories = fallbackCategories.map((category, index) => ({
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categories, setCategories] = useState(fallbackMenuCategories);
-  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -32,13 +31,6 @@ const Header = () => {
         if (data?.length) setCategories(data);
       })
       .catch((error) => console.error('Failed to load navigation collections:', error));
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 16);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const menuItems = [
@@ -65,11 +57,7 @@ const Header = () => {
   ];
 
   return (
-    <header className={`${isHome ? 'fixed' : 'sticky'} top-0 z-50 w-full transition-all duration-500 ${
-      isHome && !scrolled && !mobileMenuOpen
-        ? 'border-b border-[#D4AF37]/15 bg-[#090909]/72 shadow-[0_14px_42px_rgba(0,0,0,0.28)] backdrop-blur-xl'
-        : 'border-b border-[#D4AF37]/20 bg-[#090909]/88 shadow-[0_18px_50px_rgba(0,0,0,0.45)] backdrop-blur-2xl'
-    }`}>
+    <header className={`${isHome ? 'fixed' : 'sticky'} top-0 z-50 w-full border-b border-[#D4AF37]/20 bg-[#090909] shadow-[0_18px_50px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-500`}>
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
         <div className="flex h-[68px] items-center justify-between gap-4 md:h-[78px]">
           <Link to="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3">

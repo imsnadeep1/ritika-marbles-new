@@ -18,6 +18,8 @@ body {
 html,
 #root {
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 /* Elegant heading font */

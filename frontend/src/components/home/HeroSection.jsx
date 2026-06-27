@@ -151,7 +151,7 @@ const HeroSection = () => {
       </div>
 
       <div className="absolute bottom-[-1px] left-0 right-0 z-20 overflow-hidden">
-        <div className="relative flex min-h-20 w-full scale-x-150 items-end justify-center overflow-hidden rounded-t-[50%] bg-[#f7f1e7] px-4 pt-6 text-center shadow-[0_-18px_55px_rgba(0,0,0,0.35)] sm:min-h-24">
+        <div className="relative flex min-h-20 w-full items-end justify-center overflow-hidden rounded-t-[48%] bg-[#f7f1e7] px-4 pt-6 text-center shadow-[0_-18px_55px_rgba(0,0,0,0.35)] sm:min-h-24">
           <div className="pb-3">
             <p className="font-inter text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4AF37] sm:text-xs">Explore our collection</p>
             <h2 className="font-playfair text-2xl font-semibold leading-none text-[#1d1712] sm:text-3xl">Marble Creations for Every Space</h2>

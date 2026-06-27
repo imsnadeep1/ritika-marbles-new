@@ -24,6 +24,12 @@
     color: #61dafb;
 }
 
+.App {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+}
+
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);

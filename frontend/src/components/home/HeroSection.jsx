@@ -103,7 +103,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.8 }}
-            className="mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-4"
+            className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-4"
           >
             {assurances.map((item) => {
               const Icon = item.icon;

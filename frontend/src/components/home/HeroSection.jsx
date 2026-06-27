@@ -126,18 +126,18 @@ const HeroSection = () => {
           initial={{ opacity: 0, x: 70, scale: 0.98 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ delay: 0.2, duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
-          className="relative order-1 flex min-h-[42vh] items-center justify-center lg:order-2 lg:min-h-[calc(100vh-5rem)] lg:justify-end"
+          className="relative order-1 flex min-h-[42vh] items-start justify-center lg:order-2 lg:min-h-[calc(100vh-5rem)] lg:justify-end"
         >
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -8, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="relative z-20 w-full max-w-[470px] sm:max-w-[610px] lg:w-[58vw] lg:max-w-[820px] xl:w-[62vw] xl:max-w-[940px]"
+            className="relative z-20 w-full max-w-[470px] sm:max-w-[610px] lg:ml-auto lg:w-[60vw] lg:max-w-[860px] xl:w-[62vw] xl:max-w-[940px]"
           >
             <div className="absolute inset-x-10 bottom-8 h-32 rounded-full bg-black/70 blur-3xl" />
             <img
               src={heroIdolImage}
               alt="White marble Ganesha idol with gold ornamentation"
-              className="luxury-idol-image relative z-10 h-[45vh] min-h-[330px] w-full object-contain object-center drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[58vh] lg:h-[calc(100vh-8rem)] xl:h-[calc(100vh-6rem)]"
+              className="luxury-idol-image relative z-10 h-[45vh] min-h-[330px] w-full object-contain object-top drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[58vh] lg:h-[calc(100vh-5rem)] xl:h-[calc(100vh-4rem)]"
             />
           </motion.div>
         </motion.div>

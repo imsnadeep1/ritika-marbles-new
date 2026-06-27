@@ -124,8 +124,8 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-[-1px] left-0 right-0 z-20">
-        <div className="mx-auto flex min-h-20 max-w-[1440px] items-end justify-center overflow-hidden rounded-t-[55%] bg-[#f7f1e7] px-4 pt-6 text-center shadow-[0_-12px_30px_rgba(0,0,0,0.25)] sm:min-h-24">
+      <div className="absolute bottom-[-1px] left-0 right-0 z-20 overflow-hidden">
+        <div className="relative left-1/2 flex min-h-20 w-[140vw] -translate-x-1/2 items-end justify-center overflow-hidden rounded-t-[50%] bg-[#f7f1e7] px-4 pt-6 text-center shadow-[0_-12px_30px_rgba(0,0,0,0.25)] sm:min-h-24">
           <div className="pb-3">
             <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#d8a642] sm:text-xs">Explore our collection</p>
             <h2 className="text-2xl font-semibold leading-none text-[#1d1712] sm:text-3xl">Marble Creations for Every Space</h2>

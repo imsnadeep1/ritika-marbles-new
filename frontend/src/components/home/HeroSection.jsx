@@ -24,7 +24,7 @@ const HeroSection = () => {
       <div className="absolute right-0 top-0 hidden h-full w-[36%] bg-[linear-gradient(90deg,transparent,rgba(255,227,164,0.13))] lg:block" />
 
       <div className="relative mx-auto grid min-h-[calc(100vh-5.5rem)] max-w-[1440px] items-center gap-0 px-4 pb-28 pt-6 sm:px-6 md:pb-32 lg:grid-cols-[45%_55%] lg:px-8 lg:pb-36 lg:pt-0 xl:min-h-[860px]">
-        <div className="order-2 z-20 lg:order-1 lg:pl-16 xl:pl-20">
+        <div className="order-2 z-20 animate-fade-up-premium lg:order-1 lg:pl-16 xl:pl-20">
           <div className="mb-6 flex max-w-md items-center gap-4 sm:mb-8">
             <p className="shrink-0 text-sm font-medium uppercase tracking-[0.22em] text-[#F4C967] sm:text-lg">
               Handcrafted with Devotion
@@ -41,7 +41,7 @@ const HeroSection = () => {
             </div>
 
             <div className="max-w-[650px]">
-              <h1 className="font-['Cormorant_Garamond',Georgia,serif] text-[3.45rem] font-medium leading-[0.93] tracking-[-0.045em] text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.55)] sm:text-[5rem] lg:text-[5.7rem] xl:text-[6.65rem]">
+              <h1 className="font-['Playfair_Display',Georgia,serif] text-[3.45rem] font-medium leading-[0.93] tracking-[-0.045em] text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.55)] sm:text-[5rem] lg:text-[5.7rem] xl:text-[6.65rem]">
                 Timeless Marble Art,
                 <span className="block bg-gradient-to-r from-[#FBE59C] via-[#D4A853] to-[#B9822D] bg-clip-text text-transparent">
                   Crafted to Inspire
@@ -94,8 +94,8 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <div className="order-1 relative z-10 flex min-h-[420px] items-end justify-center overflow-visible lg:order-2 lg:min-h-[790px] lg:justify-end">
-          <div className="absolute bottom-5 left-1/2 h-[70%] w-[76%] -translate-x-1/2 rounded-full bg-[#D4A853]/25 blur-3xl lg:bottom-20" />
+        <div className="order-1 relative z-10 flex min-h-[420px] animate-premium-float items-end justify-center overflow-visible lg:order-2 lg:min-h-[790px] lg:justify-end">
+          <div className="absolute bottom-5 left-1/2 h-[70%] w-[76%] -translate-x-1/2 rounded-full bg-[#D4A853]/25 blur-3xl animate-gold-glow lg:bottom-20" />
           <div className="absolute bottom-0 right-[3%] h-[82%] w-[62%] rounded-l-full bg-[linear-gradient(118deg,rgba(255,255,255,0.16),rgba(212,168,83,0.06)_58%,transparent)] blur-[2px]" />
           <img
             src={heroImage}
@@ -117,7 +117,7 @@ const HeroSection = () => {
         <div className="mx-auto h-[92px] w-[118%] -translate-x-[9%] rounded-t-[50%] border-t-2 border-[#D4A853] bg-[linear-gradient(135deg,#fbfaf6,#eee6d8)] shadow-[0_-16px_50px_rgba(0,0,0,0.28)] sm:h-32 lg:h-[150px]" />
         <div className="absolute inset-x-0 bottom-6 text-center sm:bottom-9 lg:bottom-12">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#B8872F] sm:text-sm">Explore our collection</p>
-          <h2 className="mt-2 font-['Cormorant_Garamond',Georgia,serif] text-3xl font-medium tracking-[-0.035em] text-[#111] sm:text-4xl lg:text-5xl">Marble Creations for Every Space</h2>
+          <h2 className="mt-2 font-['Playfair_Display',Georgia,serif] text-3xl font-medium tracking-[-0.035em] text-[#111] sm:text-4xl lg:text-5xl">Marble Creations for Every Space</h2>
         </div>
       </div>
     </section>

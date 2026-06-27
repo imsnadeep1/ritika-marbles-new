@@ -4,7 +4,7 @@ import { siteConfig } from '@/data/mock';
 
 const FloatingButtons = () => {
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+    <div className="fixed bottom-8 right-6 z-50 hidden flex-col gap-4 sm:flex">
       {/* WhatsApp Button */}
       <a
         href={`https://wa.me/${siteConfig.whatsapp}`}

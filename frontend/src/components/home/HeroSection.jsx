@@ -38,27 +38,20 @@ const HeroSection = () => {
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-8 px-5 pb-20 pt-28 sm:px-8 xl:grid-cols-[0.9fr_1.1fr] xl:px-10 xl:pb-0 xl:pt-20">
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-20 pt-20 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-stretch lg:px-8 lg:pb-10 lg:pt-20 xl:px-10">
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-20 order-2 max-w-2xl xl:order-1"
+          className="relative z-20 order-2 max-w-lg lg:order-1 lg:self-center xl:max-w-xl"
         >
-          <div className="mb-8 hidden items-center gap-5 text-xs font-semibold text-white/70 sm:flex">
-            <span className="text-[#D4AF37]">01</span>
-            <span className="h-20 w-px bg-gradient-to-b from-[#D4AF37] to-transparent" />
-            <span>02</span>
-            <span>03</span>
-          </div>
-
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.7 }}
-            className="mb-5 flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.34em] text-[#D4AF37]"
+            className="mb-3 flex items-center gap-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4AF37]"
           >
-            <span className="h-px w-14 bg-[#D4AF37]" />
+            <span className="h-px w-12 bg-[#D4AF37]" />
             Handcrafted With Devotion
           </motion.p>
 
@@ -66,7 +59,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.18, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-            className="font-playfair text-[3.35rem] font-medium leading-[0.94] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl xl:text-[5.7rem]"
+            className="font-playfair text-[2.65rem] font-medium leading-[0.95] tracking-[-0.04em] text-white sm:text-5xl lg:text-[4.2rem] xl:text-[4.65rem]"
           >
             Timeless Marble Art,
             <span className="gold-headline-gradient block">Crafted to Inspire</span>
@@ -76,7 +69,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.75 }}
-            className="mt-7 max-w-xl font-inter text-sm leading-7 text-white/72 sm:text-base"
+            className="mt-4 max-w-md font-inter text-[13px] leading-6 text-white/72 sm:text-sm xl:max-w-lg"
           >
             Exquisite marble idols, temples, sculptures, and decor handcrafted by skilled artisans from Rajasthan. Bringing divinity, elegance, and timeless craftsmanship into every space.
           </motion.p>
@@ -85,7 +78,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.42, duration: 0.7 }}
-            className="mt-9 grid gap-3 sm:flex sm:flex-wrap"
+            className="mt-6 grid gap-3 sm:flex sm:flex-wrap"
           >
             <Link to="/god-statue" className="w-full sm:w-auto">
               <Button className="premium-gold-button h-12 w-full rounded-none px-8 py-6 font-inter text-xs font-bold uppercase tracking-[0.12em] text-black sm:w-auto">
@@ -110,7 +103,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.8 }}
-            className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4"
+            className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-4"
           >
             {assurances.map((item) => {
               const Icon = item.icon;
@@ -118,9 +111,9 @@ const HeroSection = () => {
                 <motion.div
                   key={item.title}
                   whileHover={{ y: -6, borderColor: "rgba(245,215,122,0.5)" }}
-                  className="premium-feature-card group min-h-28 p-4"
+                  className="premium-feature-card group min-h-20 p-3"
                 >
-                  <Icon className="mb-4 h-6 w-6 text-[#D4AF37] transition-transform duration-300 group-hover:scale-110" />
+                  <Icon className="mb-3 h-5 w-5 text-[#D4AF37] transition-transform duration-300 group-hover:scale-110" />
                   <p className="font-inter text-[10px] font-bold uppercase leading-tight tracking-[0.16em] text-[#F5D77A]">{item.title}</p>
                   <p className="mt-2 font-inter text-[10px] leading-4 text-white/58">{item.text}</p>
                 </motion.div>
@@ -133,18 +126,18 @@ const HeroSection = () => {
           initial={{ opacity: 0, x: 70, scale: 0.98 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ delay: 0.2, duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
-          className="relative order-1 flex min-h-[44vh] items-end justify-center xl:order-2 xl:min-h-screen xl:justify-end"
+          className="relative order-1 flex min-h-[42vh] items-start justify-center lg:order-2 lg:min-h-[calc(100vh-5rem)] lg:justify-end lg:self-stretch"
         >
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -8, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="relative z-20 -mb-8 w-full max-w-[440px] sm:max-w-[560px] xl:-mb-12 xl:w-[55vw] xl:max-w-[780px]"
+            className="relative z-20 flex w-full max-w-[470px] items-start justify-center sm:max-w-[610px] lg:ml-auto lg:h-full lg:w-[60vw] lg:max-w-[860px] lg:justify-end"
           >
-            <div className="absolute inset-x-10 bottom-8 h-32 rounded-full bg-black/70 blur-3xl" />
+            <div className="absolute inset-x-10 top-[55%] h-32 rounded-full bg-black/70 blur-3xl lg:top-auto lg:bottom-10" />
             <img
               src={heroIdolImage}
               alt="White marble Ganesha idol with gold ornamentation"
-              className="luxury-idol-image relative z-10 h-[45vh] min-h-[360px] w-full object-contain object-bottom drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[56vh] xl:h-[88vh]"
+              className="luxury-idol-image relative z-10 h-[45vh] min-h-[330px] w-full object-contain object-top drop-shadow-[0_40px_70px_rgba(0,0,0,0.9)] sm:h-[58vh] lg:h-full lg:max-h-[calc(100vh-4.5rem)] lg:min-h-[28rem] lg:object-[right_top]"
             />
           </motion.div>
         </motion.div>

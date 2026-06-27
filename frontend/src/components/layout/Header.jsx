@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ChevronDown, Menu, X, ShoppingBag, ShieldCheck, Truck, ReceiptText } from 'lucide-react';
+import { Search, ChevronDown, Menu, X, User, ShoppingBag as BagIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { categories as fallbackCategories, siteConfig, navItems } from '@/data/mock';
 import { getCategories } from '@/services/categories';
@@ -51,52 +51,29 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white/95 backdrop-blur-xl shadow-sm sticky top-0 z-50 border-b border-[#E8D9C5]">
-      <div className="bg-[#1F3D36] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-9 py-2 md:py-0 flex items-center justify-between gap-4 text-xs">
-          <div className="hidden md:flex items-center gap-5">
-            <span className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#D4A853]" />
-              Secure custom orders
-            </span>
-            <span className="flex items-center gap-2">
-              <Truck className="w-4 h-4 text-[#D4A853]" />
-              Safe pan-India delivery
-            </span>
-          </div>
-          <div className="flex w-full md:w-auto items-center justify-between md:justify-end gap-4">
-            <span className="flex items-center gap-2 text-[#F8E7C8]">
-              <ReceiptText className="w-4 h-4 text-[#D4A853]" />
-              GSTIN: {siteConfig.gstNumber}
-            </span>
-            <a href={`tel:${siteConfig.phone}`} className="hidden sm:inline text-[#F8E7C8] hover:text-white transition-colors">
-              Talk to a marble expert: {siteConfig.phone}
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center gap-3">
-            <img src="/logo.svg" alt="Ritika Marbles Logo" className="w-14 h-14 rounded-2xl shadow-sm" />
-            <div className="flex flex-col">
-              <span className="text-xl font-semibold text-[#1F3D36]">{siteConfig.name}</span>
-              <span className="text-sm text-[#B8872F]">{siteConfig.tagline}</span>
+    <header className="sticky top-0 z-50 border-b border-[#D4A853]/10 bg-black/90 text-white shadow-[0_12px_35px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+        <div className="flex h-20 items-center justify-between gap-4 lg:h-24">
+          <Link to="/" className="flex shrink-0 items-center gap-3">
+            <img src="/logo.svg" alt="Ritika Marbles Logo" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
+            <div className="hidden flex-col sm:flex">
+              <span className="text-lg font-medium uppercase tracking-[0.18em] text-[#F7CE75] lg:text-xl">{siteConfig.name}</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A853]">{siteConfig.tagline}</span>
             </div>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden items-center gap-1 lg:flex">
             {menuItems.map((item) => (
               item.dropdown ? (
                 <DropdownMenu key={item.label}>
-                  <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-2 text-sm font-semibold text-slate-700 hover:text-[#1F3D36] transition-colors">
+                  <DropdownMenuTrigger className="group flex items-center gap-1 px-3 py-2 text-xs font-bold uppercase tracking-wide text-white/86 transition-colors hover:text-[#F2C66B]">
                     {item.label}
-                    <ChevronDown className="w-4 h-4" />
+                    <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white border border-[#E8D9C5] shadow-xl rounded-2xl">
+                  <DropdownMenuContent className="rounded-xl border border-[#D4A853]/30 bg-[#080808] p-2 text-white shadow-2xl">
                     {item.dropdown.map((subItem) => (
                       <DropdownMenuItem key={`${item.label}-${subItem.label}`} asChild>
-                        <Link to={subItem.href} className="cursor-pointer hover:bg-[#F8F1E8] hover:text-[#1F3D36] px-4 py-2 rounded-lg">
+                        <Link to={subItem.href} className="cursor-pointer rounded-lg px-4 py-2 text-sm text-white/84 hover:bg-[#D4A853]/12 hover:text-[#F2C66B]">
                           {subItem.label}
                         </Link>
                       </DropdownMenuItem>
@@ -104,56 +81,61 @@ const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Link key={item.label} to={item.href} className="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-[#1F3D36] transition-colors">
+                <Link key={item.label} to={item.href} className="relative px-3 py-2 text-xs font-bold uppercase tracking-wide text-white/86 transition-colors after:absolute after:bottom-0 after:left-3 after:h-px after:w-0 after:bg-[#D4A853] after:transition-all hover:text-[#F2C66B] hover:after:w-[calc(100%-1.5rem)]">
                   {item.label}
                 </Link>
               )
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
-            <button onClick={() => navigate('/god-statue')} className="hidden md:flex items-center gap-2 text-slate-600 hover:text-[#1F3D36] transition-colors">
-              <Search className="w-5 h-5" />
-              <span className="hidden xl:inline text-sm font-medium">Search catalog</span>
+          <div className="flex items-center gap-3 sm:gap-5">
+            <button onClick={() => navigate('/god-statue')} className="hidden text-[#F2C66B] transition-transform hover:scale-110 md:inline-flex" aria-label="Search catalog">
+              <Search className="h-6 w-6" />
             </button>
-            <Button onClick={() => navigate('/god-statue')} className="hidden sm:flex bg-[#1F3D36] hover:bg-[#152C27] text-white px-6 py-2 rounded-full font-semibold transition-all shadow-md items-center gap-2">
-              <ShoppingBag className="w-4 h-4" />
-              Shop collections
+            <button onClick={() => navigate('/contact')} className="hidden text-[#F2C66B] transition-transform hover:scale-110 md:inline-flex" aria-label="Contact account team">
+              <User className="h-6 w-6" />
+            </button>
+            <button onClick={() => navigate('/god-statue')} className="relative hidden text-[#F2C66B] transition-transform hover:scale-110 md:inline-flex" aria-label="Shopping inquiry bag">
+              <BagIcon className="h-6 w-6" />
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#D4A853] text-[10px] font-bold text-black">0</span>
+            </button>
+            <Button onClick={() => navigate('/contact')} className="hidden rounded-md border border-[#D4A853] bg-transparent px-6 py-5 text-xs font-bold uppercase tracking-wide text-[#F2C66B] hover:bg-[#D4A853] hover:text-black xl:inline-flex">
+              Enquire Now
             </Button>
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden text-[#1F3D36]">
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden text-[#F2C66B]" aria-label="Toggle navigation menu">
+              {mobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
             </button>
           </div>
         </div>
 
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-[#E8D9C5]">
+          <div className="lg:hidden border-t border-[#D4A853]/20 py-4">
             <nav className="flex flex-col gap-2">
               {menuItems.map((item) => (
                 <div key={item.label}>
                   {item.dropdown ? (
                     <details className="group">
-                      <summary className="flex items-center justify-between px-4 py-2 text-slate-700 cursor-pointer hover:bg-[#F8F1E8] rounded-xl">
+                      <summary className="flex cursor-pointer items-center justify-between rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-wide text-white/88 hover:bg-[#D4A853]/10">
                         {item.label}
-                        <ChevronDown className="w-4 h-4 group-open:rotate-180 transition-transform" />
+                        <ChevronDown className="h-4 w-4 group-open:rotate-180 transition-transform" />
                       </summary>
-                      <div className="pl-6 py-2 space-y-2">
+                      <div className="space-y-2 py-2 pl-6">
                         {item.dropdown.map((subItem) => (
-                          <Link key={`${item.label}-${subItem.label}`} to={subItem.href} className="block px-4 py-2 text-sm text-slate-600 hover:text-[#1F3D36]" onClick={() => setMobileMenuOpen(false)}>
+                          <Link key={`${item.label}-${subItem.label}`} to={subItem.href} className="block px-4 py-2 text-sm text-white/70 hover:text-[#F2C66B]" onClick={() => setMobileMenuOpen(false)}>
                             {subItem.label}
                           </Link>
                         ))}
                       </div>
                     </details>
                   ) : (
-                    <Link to={item.href} className="block px-4 py-2 text-slate-700 hover:bg-[#F8F1E8] rounded-xl" onClick={() => setMobileMenuOpen(false)}>
+                    <Link to={item.href} className="block rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-wide text-white/88 hover:bg-[#D4A853]/10" onClick={() => setMobileMenuOpen(false)}>
                       {item.label}
                     </Link>
                   )}
                 </div>
               ))}
-              <Button onClick={() => { navigate('/contact'); setMobileMenuOpen(false); }} className="mx-4 mt-4 bg-[#1F3D36] hover:bg-[#152C27] text-white rounded-full">
-                Request a quote
+              <Button onClick={() => { navigate('/contact'); setMobileMenuOpen(false); }} className="mx-4 mt-3 rounded-md bg-[#D4A853] text-black hover:bg-[#F2C66B]">
+                Enquire Now
               </Button>
             </nav>
           </div>

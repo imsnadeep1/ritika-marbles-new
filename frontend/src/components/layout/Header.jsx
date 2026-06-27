@@ -65,7 +65,7 @@ const Header = () => {
   ];
 
   return (
-    <header className={`fixed top-0 z-50 w-full transition-all duration-500 ${
+    <header className={`${isHome ? 'fixed' : 'sticky'} top-0 z-50 w-full transition-all duration-500 ${
       isHome && !scrolled && !mobileMenuOpen
         ? 'border-b border-[#D4AF37]/10 bg-transparent'
         : 'border-b border-[#D4AF37]/20 bg-[#090909]/88 shadow-[0_18px_50px_rgba(0,0,0,0.45)] backdrop-blur-2xl'
@@ -84,7 +84,7 @@ const Header = () => {
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-1 md:flex">
             {menuItems.map((item) => (
               item.dropdown ? (
                 <DropdownMenu key={item.label}>

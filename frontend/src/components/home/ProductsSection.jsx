@@ -8,7 +8,7 @@ import ComingSoon from "@/components/ComingSoon";
 import { getVisibleCategories } from "@/lib/categories";
 
 const premiumFallbackCollections = [
-  { name: "God Statues", slug: "ganesh", image_url: "/images/products/ganesh-new-top.png", description: "Sacred marble idols with hand-finished ornamentation.", icon: Sparkles },
+  { name: "God Statues", slug: "ganesh", image_url: "/images/products/gallery1.png", description: "Sacred marble idols with hand-finished ornamentation.", icon: Sparkles },
   { name: "Marble Temples", slug: "temples", image_url: "/images/products/mander-marble1.png", description: "Architectural mandirs for serene devotional spaces.", icon: Landmark },
   { name: "Home Decor", slug: "marble-handicrafts-home-decor", image_url: "/images/products/decor.png", description: "Elegant décor and pooja accents for refined interiors.", icon: Gem },
   { name: "Custom Sculptures", slug: "custom-marble-projects", image_url: "/images/products/gallery3.png", description: "Commissioned marble pieces shaped around your vision.", icon: PackageCheck },
@@ -129,7 +129,7 @@ const ProductsSection = () => {
                 >
                   <article className="relative h-[430px] overflow-hidden rounded-[2rem] border border-[#D4AF37]/25 bg-[#090909] shadow-[0_24px_70px_rgba(30,24,12,0.18)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_32px_90px_rgba(30,24,12,0.28)]">
                     <img
-                      src={category.image_url || "/images/products/ganesh-new-top.png"}
+                      src={category.image_url || "/images/products/gallery1.png"}
                       alt={category.name}
                       loading="lazy"
                       className="absolute inset-0 h-full w-full object-cover opacity-85 transition-transform duration-700 group-hover:scale-110"

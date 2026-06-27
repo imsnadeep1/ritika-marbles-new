@@ -4,7 +4,7 @@ import { ArrowRight, Gem, HandHeart, MessageCircle, PackageCheck, ShieldCheck, S
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/data/mock';
 
-const heroImage = '/images/products/ganesh-new-top.png';
+const heroImage = '/images/products/gallery1.png';
 
 const trustHighlights = [
   { icon: HandHeart, title: 'Handcrafted', text: 'By skilled artisans' },
@@ -99,7 +99,7 @@ const HeroSection = () => {
           <div className="absolute bottom-0 right-[3%] h-[82%] w-[62%] rounded-l-full bg-[linear-gradient(118deg,rgba(255,255,255,0.16),rgba(212,168,83,0.06)_58%,transparent)] blur-[2px]" />
           <img
             src={heroImage}
-            alt="White and gold handcrafted marble Ganesh idol"
+            alt="White and gold handcrafted marble Ganesh idol with gold crown"
             className="relative z-10 w-[112%] max-w-[610px] translate-y-5 object-contain object-bottom drop-shadow-[0_38px_36px_rgba(0,0,0,0.82)] sm:max-w-[680px] md:w-full lg:max-w-[790px] lg:translate-x-16 lg:translate-y-14 xl:max-w-[900px] xl:translate-x-20"
           />
           <div className="absolute right-2 top-4 z-20 rounded-full border border-[#D4A853]/50 bg-black/55 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#F2C66B] backdrop-blur sm:right-10 sm:top-10 lg:right-3 lg:top-20">

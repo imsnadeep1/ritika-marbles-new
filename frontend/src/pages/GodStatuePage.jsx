@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/layout/FloatingButtons';
 import ComingSoon from '@/components/ComingSoon';
 import { getCategories } from '@/services/categories';
+import { getProducts } from '@/services/products';
 import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
 import { CATEGORY_GROUPS, getCategoryHref, getVisibleCategories } from '@/lib/categories';
 
@@ -28,6 +29,11 @@ const GodStatuePage = ({ group = CATEGORY_GROUPS.GOD_STATUES }) => {
   const [content, setContent] = useState(defaultStorefrontContent.godStatues);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const searchQuery = (searchParams.get('q') || '').trim();
+
+  const [products, setProducts] = useState([]);
+  const [productsLoading, setProductsLoading] = useState(false);
 
   useEffect(() => {
     getStorefrontContent().then((data) => setContent(data.godStatues));
@@ -37,8 +43,80 @@ const GodStatuePage = ({ group = CATEGORY_GROUPS.GOD_STATUES }) => {
       .finally(() => setLoading(false));
   }, [group]);
 
+  useEffect(() => {
+    if (!searchQuery) return;
+    setProductsLoading(true);
+    getProducts()
+      .then((data) => setProducts(data || []))
+      .catch((error) => console.error('Failed to load products:', error))
+      .finally(() => setProductsLoading(false));
+  }, [searchQuery]);
+
   const title = pageContent.title || content.title;
   const description = pageContent.description || content.description;
+
+  const term = searchQuery.toLowerCase();
+  const searchResults = searchQuery
+    ? products.filter((product) =>
+        [product.name, product.description, product.categories?.name]
+          .filter(Boolean)
+          .some((field) => String(field).toLowerCase().includes(term)),
+      )
+    : [];
+
+  if (searchQuery) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <main>
+          <section className="bg-[#1F3D36] py-16 sm:py-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <p className="text-[#F8D98E] text-sm font-bold uppercase tracking-[0.25em] mb-3">Search results</p>
+              <h1 className="text-3xl md:text-5xl font-bold text-[#D4A853] mb-4 break-words">“{searchQuery}”</h1>
+              <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">
+                {productsLoading ? 'Searching our catalog…' : `${searchResults.length} product${searchResults.length === 1 ? '' : 's'} found`}
+              </p>
+            </div>
+          </section>
+
+          <section className="py-14 sm:py-20 bg-[#FDF8F3]">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {productsLoading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+                  {[1, 2, 3, 4].map((item) => <div key={item} className="aspect-square rounded-xl bg-[#F8F1E8] animate-pulse" />)}
+                </div>
+              ) : searchResults.length === 0 ? (
+                <ComingSoon
+                  title="No matching products"
+                  description="Try a different keyword, or browse our collections from the menu."
+                />
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+                  {searchResults.map((product) => (
+                    <Link key={product.id} to={product.slug ? `/product/${product.slug}` : '/god-statue'} className="group">
+                      <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                        <div className="aspect-square overflow-hidden bg-[#F8F1E8]">
+                          <img src={product.image_url || '/images/placeholder.jpg'} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        </div>
+                        <div className="p-4">
+                          <h3 className="text-[#1F3D36] font-semibold line-clamp-2 min-h-[3rem]">{product.name}</h3>
+                          {product.price ? (
+                            <p className="mt-2 font-bold text-[#B8872F]">₹{Number(product.price).toLocaleString()}</p>
+                          ) : null}
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        </main>
+        <Footer />
+        <FloatingButtons />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">

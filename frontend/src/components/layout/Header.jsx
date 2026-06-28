@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, ChevronDown, Menu, X, User, ShoppingCart } from 'lucide-react';
+import { Search, ChevronDown, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { categories as fallbackCategories, siteConfig, navItems } from '@/data/mock';
 import { getCategories } from '@/services/categories';
@@ -21,6 +21,8 @@ const fallbackMenuCategories = fallbackCategories.map((category, index) => ({
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categories, setCategories] = useState(fallbackMenuCategories);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -52,9 +54,22 @@ const Header = () => {
     },
     { label: 'CUSTOM ORDER', href: '/contact' },
     { label: 'ABOUT US', href: '/about' },
-    { label: 'GALLERY', href: '/testimonials' },
+    { label: 'CLIENTS', href: '/testimonials' },
     { label: 'CONTACT US', href: '/contact' },
   ];
+
+  const submitSearch = (event) => {
+    event?.preventDefault();
+    const query = searchTerm.trim();
+    if (!query) {
+      setSearchOpen(true);
+      return;
+    }
+    navigate(`/god-statue?q=${encodeURIComponent(query)}`);
+    setSearchTerm('');
+    setSearchOpen(false);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className={`${isHome ? 'fixed' : 'sticky'} top-0 z-50 w-full border-b border-[#D4AF37]/20 bg-[#090909] shadow-[0_18px_50px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-500`}>
@@ -98,19 +113,22 @@ const Header = () => {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-4">
-            <button onClick={() => navigate('/god-statue')} className="hidden text-[#D4AF37] transition-colors hover:text-white sm:inline-flex" aria-label="Search catalog">
-              <Search className="h-5 w-5" />
-            </button>
-            <button onClick={() => navigate('/contact')} className="hidden text-[#D4AF37] transition-colors hover:text-white md:inline-flex" aria-label="Account">
-              <User className="h-5 w-5" />
-            </button>
-            <button onClick={() => navigate('/god-statue')} className="relative hidden text-[#D4AF37] transition-colors hover:text-white md:inline-flex" aria-label="Cart">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#D4AF37] text-[10px] font-bold text-black">
-                0
-              </span>
-            </button>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <form onSubmit={submitSearch} className="hidden items-center sm:flex">
+              <div className={`flex items-center overflow-hidden rounded-full border border-[#D4AF37]/40 bg-black/30 transition-all duration-300 ${searchOpen ? 'w-44 px-3 lg:w-56' : 'w-9'}`}>
+                <button type="submit" className="flex h-9 w-9 flex-shrink-0 items-center justify-center text-[#D4AF37] transition-colors hover:text-white" aria-label="Search products" onClick={() => !searchOpen && setSearchOpen(true)}>
+                  <Search className="h-5 w-5" />
+                </button>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                  onBlur={() => !searchTerm && setSearchOpen(false)}
+                  placeholder="Search products"
+                  className={`w-full bg-transparent text-sm text-white placeholder:text-white/40 focus:outline-none ${searchOpen ? 'block' : 'hidden'}`}
+                />
+              </div>
+            </form>
             <Button onClick={() => navigate('/contact')} className="hidden rounded border border-[#D4AF37]/70 bg-transparent px-5 py-2 text-[11px] font-bold uppercase tracking-wide text-[#F5D77A] shadow-[0_0_18px_rgba(212,175,55,0.14)] transition-all hover:bg-[#D4AF37] hover:text-black sm:flex">
               Enquire Now
             </Button>
@@ -122,6 +140,16 @@ const Header = () => {
 
         {mobileMenuOpen && (
           <div className="border-t border-[#D4AF37]/20 py-4 lg:hidden">
+            <form onSubmit={submitSearch} className="mb-3 flex items-center gap-2 rounded-full border border-[#D4AF37]/40 bg-black/30 px-3">
+              <Search className="h-5 w-5 flex-shrink-0 text-[#D4AF37]" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Search products"
+                className="w-full bg-transparent py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none"
+              />
+            </form>
             <nav className="flex flex-col gap-2 rounded-2xl bg-white/[0.03] p-2">
               {menuItems.map((item) => (
                 <div key={item.label}>

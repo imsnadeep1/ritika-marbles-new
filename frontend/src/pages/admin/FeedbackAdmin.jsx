@@ -109,7 +109,7 @@ const FeedbackAdmin = () => {
               Track product feedback, customer messages, approvals and follow-up activity.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-3 min-w-[320px]">
+          <div className="grid grid-cols-3 gap-3 w-full lg:min-w-[320px]">
             <div className="rounded-2xl bg-[#F8F1E8] p-4 text-center">
               <p className="text-2xl font-bold text-[#1F3D36]">{feedbacks.length}</p>
               <p className="text-xs text-slate-500">Total</p>

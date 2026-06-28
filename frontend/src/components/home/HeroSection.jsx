@@ -18,8 +18,9 @@ const HeroSection = () => {
 
   return (
     <section className="luxury-hero relative isolate min-h-screen overflow-hidden bg-[#090909] text-white">
-      <div className="luxury-temple-architecture absolute inset-0" />
-      <div className="luxury-volumetric-rays absolute inset-0" />
+      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/images/products/bgcover.png')" }} />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,9,9,0.94)_0%,rgba(9,9,9,0.74)_45%,rgba(9,9,9,0.4)_100%)]" />
+      <div className="luxury-volumetric-rays absolute inset-0 opacity-50" />
       <div className="luxury-vignette absolute inset-0" />
       <div className="hero-mandala absolute -left-28 top-10 hidden h-[34rem] w-[34rem] opacity-[0.05] lg:block" />
       <div className="absolute right-[16%] top-[10%] h-64 w-64 rounded-full bg-[#F5D77A]/24 blur-[90px] lg:h-96 lg:w-96" />
@@ -38,12 +39,12 @@ const HeroSection = () => {
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-20 pt-20 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-stretch lg:gap-8 lg:px-8 lg:pb-10 lg:pt-20 xl:px-10">
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-28 pt-20 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-stretch lg:gap-8 lg:px-8 lg:pb-32 lg:pt-20 xl:px-10">
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-20 order-2 max-w-lg lg:order-1 lg:self-center xl:max-w-xl"
+          className="relative z-20 order-2 max-w-lg lg:order-1 lg:max-w-2xl lg:self-center xl:max-w-3xl"
         >
           <motion.p
             initial={{ opacity: 0, y: 18 }}
@@ -69,7 +70,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.75 }}
-            className="mt-4 max-w-md font-inter text-[13px] leading-6 text-white/72 sm:text-sm xl:max-w-lg"
+            className="mt-4 max-w-md font-inter text-[13px] leading-6 text-white/72 sm:text-sm lg:max-w-xl xl:max-w-2xl"
           >
             Exquisite marble idols, temples, sculptures, and decor handcrafted by skilled artisans from Rajasthan. Bringing divinity, elegance, and timeless craftsmanship into every space.
           </motion.p>
@@ -103,7 +104,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.8 }}
-            className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-4"
+            className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4"
           >
             {assurances.map((item) => {
               const Icon = item.icon;

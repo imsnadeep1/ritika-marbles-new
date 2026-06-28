@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/layout/FloatingButtons';
 import ComingSoon from '@/components/ComingSoon';
+import { ArrowRight } from 'lucide-react';
 import { getCategories } from '@/services/categories';
 import { getProducts } from '@/services/products';
 import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
@@ -122,34 +123,55 @@ const GodStatuePage = ({ group = CATEGORY_GROUPS.GOD_STATUES }) => {
     <div className="min-h-screen">
       <Header />
       <main>
-        <section className="bg-[#1F3D36] py-20">
+        <section className="bg-[#1F3D36] py-14 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-[#F8D98E] text-sm font-bold uppercase tracking-[0.25em] mb-3">{pageContent.eyebrow}</p>
-            <h1 className="text-4xl md:text-5xl font-bold text-[#D4A853] mb-4">{title}</h1>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">{description}</p>
+            <p className="text-[#F8D98E] text-xs sm:text-sm font-bold uppercase tracking-[0.25em] mb-3">{pageContent.eyebrow}</p>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#D4A853] mb-4">{title}</h1>
+            <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">{description}</p>
+            {!loading && categories.length > 0 && (
+              <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+                <span className="w-2 h-2 rounded-full bg-[#D4A853] animate-pulse" />
+                {categories.length} collection{categories.length === 1 ? '' : 's'} to explore
+              </p>
+            )}
           </div>
         </section>
 
-        <section className="py-20 bg-[#FDF8F3]">
+        <section className="py-12 sm:py-20 bg-[#FDF8F3]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {[1, 2, 3, 4].map((item) => <div key={item} className="aspect-square rounded-xl bg-[#F8F1E8] animate-pulse" />)}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+                {[1, 2, 3, 4].map((item) => <div key={item} className="aspect-[3/4] rounded-xl bg-[#F8F1E8] animate-pulse" />)}
               </div>
             ) : categories.length === 0 ? (
               <ComingSoon title={pageContent.emptyTitle} description={pageContent.emptyDescription} />
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
                 {categories.map((category) => (
                   <Link key={category.id} to={getCategoryHref(category)} className="group">
-                    <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-                      <div className="aspect-square overflow-hidden bg-[#F8F1E8]">
+                    <article className="bg-white rounded-[1.25rem] sm:rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col">
+                      <div className="aspect-square overflow-hidden bg-[#F8F1E8] relative">
                         <img src={category.image_url || '/images/placeholder.jpg'} alt={category.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#10221E]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-[#1F3D36] shadow-sm">
+                          Collection
+                        </span>
                       </div>
-                      <div className="p-4 bg-[#1F3D36]">
-                        <h3 className="text-white font-medium text-center">{category.name}</h3>
+                      <div className="p-4 sm:p-5 bg-white flex-1 flex flex-col">
+                        <h3 className="text-[#1F3D36] font-semibold text-base sm:text-lg group-hover:text-[#B8872F] transition-colors">
+                          {category.name}
+                        </h3>
+                        {category.description && (
+                          <p className="mt-2 text-sm text-slate-500 line-clamp-2 flex-1">
+                            {category.description}
+                          </p>
+                        )}
+                        <p className="mt-4 text-sm font-semibold text-[#B8872F] inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                          Browse collection
+                          <ArrowRight className="w-4 h-4" />
+                        </p>
                       </div>
-                    </div>
+                    </article>
                   </Link>
                 ))}
               </div>

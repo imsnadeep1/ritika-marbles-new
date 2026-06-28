@@ -57,7 +57,7 @@ const ReviewsAdmin = () => {
 
   return (
     <div className="space-y-8">
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
             <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.2em]">
@@ -70,7 +70,7 @@ const ReviewsAdmin = () => {
               Approve customer stories before they appear on the storefront.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-3 w-full lg:min-w-[320px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full lg:min-w-[320px]">
             <div className="rounded-2xl bg-[#F8F1E8] p-4 text-center">
               <p className="text-2xl font-bold text-[#1F3D36]">{reviews.length}</p>
               <p className="text-xs text-slate-500">Total</p>
@@ -87,7 +87,7 @@ const ReviewsAdmin = () => {
         </div>
       </section>
 
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
         <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between mb-6">
           <div className="relative flex-1 max-w-xl">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />

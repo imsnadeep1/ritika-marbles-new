@@ -62,24 +62,24 @@ const AdminDashboard = () => {
   const recentRequests = [...feedback].slice(0, 5);
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-[2rem] bg-gradient-to-br from-[#10221E] via-[#1F3D36] to-[#2F5D52] p-6 md:p-8 text-white shadow-xl">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="rounded-[2rem] bg-gradient-to-br from-[#10221E] via-[#1F3D36] to-[#2F5D52] p-4 sm:p-6 md:p-8 text-white shadow-xl">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 sm:gap-6">
           <div>
-            <p className="text-[#F8D98E] text-sm font-bold uppercase tracking-[0.25em] mb-3">
+            <p className="text-[#F8D98E] text-xs sm:text-sm font-bold uppercase tracking-[0.25em] mb-2 sm:mb-3">
               Admin overview
             </p>
-            <h1 className="text-3xl md:text-4xl font-bold">Store management dashboard</h1>
-            <p className="mt-3 max-w-2xl text-white/75">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">Store management dashboard</h1>
+            <p className="mt-2 sm:mt-3 max-w-2xl text-sm sm:text-base text-white/75">
               Track product readiness, customer activity, reviews, and quick catalog tasks from one place.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Link to="/admin/products" className="inline-flex items-center gap-2 rounded-full bg-[#D4A853] px-5 py-3 text-sm font-semibold text-white hover:bg-[#B8872F]">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+            <Link to="/admin/products" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#D4A853] px-5 py-3 text-sm font-semibold text-white hover:bg-[#B8872F]">
               <Plus className="w-4 h-4" />
               Add product
             </Link>
-            <Link to="/admin/feedback" className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20">
+            <Link to="/admin/feedback" className="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20">
               Review requests
               <ArrowRight className="w-4 h-4" />
             </Link>
@@ -87,11 +87,11 @@ const AdminDashboard = () => {
         </div>
       </section>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5">
         {statCards.map((card) => {
           const Icon = card.icon;
           return (
-            <div key={card.key} className="rounded-3xl bg-white p-6 shadow-sm border border-[#DDE8E2]">
+            <div key={card.key} className="rounded-3xl bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm font-medium text-slate-500">{card.label}</p>
@@ -108,14 +108,14 @@ const AdminDashboard = () => {
         })}
       </div>
 
-      <div className="grid xl:grid-cols-3 gap-6">
-        <section className="xl:col-span-2 rounded-3xl bg-white p-6 shadow-sm border border-[#DDE8E2]">
-          <div className="flex items-center justify-between mb-5">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
+        <section className="xl:col-span-2 rounded-3xl bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-5">
             <div>
-              <h2 className="text-xl font-bold text-[#1F3D36]">Recent products</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-[#1F3D36]">Recent products</h2>
               <p className="text-sm text-slate-500">Latest catalog items and prices.</p>
             </div>
-            <Link to="/admin/products" className="text-sm font-semibold text-[#B8872F] hover:text-[#1F3D36]">
+            <Link to="/admin/products" className="text-sm font-semibold text-[#B8872F] hover:text-[#1F3D36] shrink-0">
               Manage
             </Link>
           </div>
@@ -128,24 +128,26 @@ const AdminDashboard = () => {
               />
             ) : (
               recentProducts.map((product) => (
-                <div key={product.id} className="flex items-center gap-4 rounded-2xl border border-[#EEF3EF] p-3">
-                  <img
-                    src={product.image_url || "/images/placeholder.jpg"}
-                    alt={product.name}
-                    className="w-14 h-14 rounded-2xl object-cover bg-slate-100"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-[#1F3D36] truncate">{product.name}</p>
-                    <p className="text-sm text-slate-500">{product.categories?.name || "Uncategorized"}</p>
+                <div key={product.id} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 rounded-2xl border border-[#EEF3EF] p-3">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <img
+                      src={product.image_url || "/images/placeholder.jpg"}
+                      alt={product.name}
+                      className="w-14 h-14 rounded-2xl object-cover bg-slate-100 shrink-0"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="font-semibold text-[#1F3D36] truncate">{product.name}</p>
+                      <p className="text-sm text-slate-500 truncate">{product.categories?.name || "Uncategorized"}</p>
+                    </div>
                   </div>
-                  <p className="font-bold text-[#B8872F]">₹{Number(product.price || 0).toLocaleString()}</p>
+                  <p className="font-bold text-[#B8872F] sm:text-right pl-[4.25rem] sm:pl-0">₹{Number(product.price || 0).toLocaleString()}</p>
                 </div>
               ))
             )}
           </div>
         </section>
 
-        <section className="rounded-3xl bg-white p-6 shadow-sm border border-[#DDE8E2]">
+        <section className="rounded-3xl bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
           <div className="flex items-center gap-2 mb-5">
             <TrendingUp className="w-5 h-5 text-[#B8872F]" />
             <h2 className="text-xl font-bold text-[#1F3D36]">Action queue</h2>

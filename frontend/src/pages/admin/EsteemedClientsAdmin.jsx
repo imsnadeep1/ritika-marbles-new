@@ -51,21 +51,21 @@ const EsteemedClientsAdmin = () => {
   }
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
-        <div className="flex items-start justify-between gap-4 mb-6">
-          <div>
+    <div className="space-y-6 sm:space-y-8">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+          <div className="min-w-0">
             <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.2em]">
               Social proof
             </p>
-            <h1 className="text-3xl font-bold text-[#1F3D36] mt-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mt-2">
               Esteemed clients and testimonials
             </h1>
-            <p className="text-slate-500 mt-2">
+            <p className="text-slate-500 mt-2 text-sm sm:text-base">
               Manage client logos and short testimonials shown in your storefront experience.
             </p>
           </div>
-          <Building2 className="w-10 h-10 text-[#B8872F]" />
+          <Building2 className="w-10 h-10 text-[#B8872F] shrink-0 hidden sm:block" />
         </div>
 
         {status && (
@@ -116,9 +116,9 @@ const EsteemedClientsAdmin = () => {
         </form>
       </section>
 
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
-        <h2 className="text-2xl font-bold text-[#1F3D36] mb-5">Client entries</h2>
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#1F3D36] mb-5">Client entries</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
           {clients.length === 0 ? (
             <p className="text-slate-500">No clients added yet.</p>
           ) : (

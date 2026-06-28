@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ScrollToTop from "@/components/ScrollToTop";
 
 /* ================= PUBLIC PAGES ================= */
 import HomePage from "@/pages/HomePage";
@@ -30,6 +31,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* ================= PUBLIC ROUTES ================= */}
           <Route path="/" element={<HomePage />} />

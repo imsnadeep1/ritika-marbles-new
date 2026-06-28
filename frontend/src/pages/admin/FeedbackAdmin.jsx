@@ -95,17 +95,17 @@ const FeedbackAdmin = () => {
   const pendingCount = feedbacks.length - approvedCount;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6">
           <div>
             <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.2em]">
               Customer activity
             </p>
-            <h1 className="text-3xl font-bold text-[#1F3D36] mt-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mt-2">
               Requests, feedback and moderation
             </h1>
-            <p className="text-slate-500 mt-2">
+            <p className="text-slate-500 mt-2 text-sm sm:text-base">
               Track product feedback, customer messages, approvals and follow-up activity.
             </p>
           </div>
@@ -140,7 +140,7 @@ const FeedbackAdmin = () => {
           <select
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
-            className="rounded-full border border-[#DDE8E2] px-4 py-2.5 outline-none focus:border-[#1F3D36]"
+            className="w-full sm:w-auto rounded-full border border-[#DDE8E2] px-4 py-2.5 outline-none focus:border-[#1F3D36]"
           >
             <option value="all">All requests</option>
             <option value="pending">Pending only</option>

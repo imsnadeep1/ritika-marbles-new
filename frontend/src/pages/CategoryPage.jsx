@@ -29,6 +29,12 @@ const CategoryPage = () => {
   const [sortBy, setSortBy] = useState("featured");
 
   useEffect(() => {
+    setSearch("");
+    setSortBy("featured");
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [slug]);
+
+  useEffect(() => {
     async function loadData() {
       setLoading(true);
       const categories = getVisibleCategories(await getCategories());

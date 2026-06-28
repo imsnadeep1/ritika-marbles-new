@@ -26,6 +26,10 @@ const ProductDetailPage = () => {
   const [imageZoomed, setImageZoomed] = useState(false);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [slug]);
+
+  useEffect(() => {
     async function loadData() {
       setLoading(true);
       const products = await getProducts();

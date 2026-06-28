@@ -43,7 +43,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-20 order-2 max-w-lg lg:order-1 lg:self-center xl:max-w-xl"
+          className="relative z-20 order-2 max-w-lg lg:order-1 lg:max-w-2xl lg:self-center xl:max-w-3xl"
         >
           <motion.p
             initial={{ opacity: 0, y: 18 }}
@@ -69,7 +69,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.75 }}
-            className="mt-4 max-w-md font-inter text-[13px] leading-6 text-white/72 sm:text-sm xl:max-w-lg"
+            className="mt-4 max-w-md font-inter text-[13px] leading-6 text-white/72 sm:text-sm lg:max-w-xl xl:max-w-2xl"
           >
             Exquisite marble idols, temples, sculptures, and decor handcrafted by skilled artisans from Rajasthan. Bringing divinity, elegance, and timeless craftsmanship into every space.
           </motion.p>
@@ -103,7 +103,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.8 }}
-            className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-4"
+            className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4"
           >
             {assurances.map((item) => {
               const Icon = item.icon;

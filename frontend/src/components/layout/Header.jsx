@@ -55,6 +55,7 @@ const Header = () => {
     { label: 'CUSTOM ORDER', href: '/contact' },
     { label: 'ABOUT US', href: '/about' },
     { label: 'CLIENTS', href: '/testimonials' },
+    { label: 'BLOG', href: '/blog' },
     { label: 'CONTACT US', href: '/contact' },
   ];
 

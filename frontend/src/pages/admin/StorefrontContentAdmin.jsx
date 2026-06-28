@@ -64,6 +64,7 @@ const blankPost = () => ({
   title: "",
   excerpt: "",
   imageUrl: "",
+  videoUrl: "",
   href: "/blog/",
   publishedAt: new Date().toISOString().slice(0, 10),
   enabled: true,
@@ -359,6 +360,9 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
               onUpload={(index, file) =>
                 uploadImage((url) => updateListItem("blogPosts", index, { imageUrl: url }), file)
               }
+              onVideoUpload={(index, file) =>
+                uploadImage((url) => updateListItem("blogPosts", index, { videoUrl: url }), file)
+              }
             />
           )}
         </>
@@ -367,7 +371,7 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
   );
 };
 
-const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUpload }) => (
+const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUpload, onVideoUpload }) => (
   <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
       <div className="min-w-0">
@@ -434,12 +438,31 @@ const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUplo
             />
           </div>
           {itemType === "blog" && (
-            <TextField
-              label="Published date"
-              type="date"
-              value={item.publishedAt}
-              onChange={(value) => onUpdate(index, { publishedAt: value })}
-            />
+            <>
+              <TextField
+                label="Published date"
+                type="date"
+                value={item.publishedAt}
+                onChange={(value) => onUpdate(index, { publishedAt: value })}
+              />
+              <TextField
+                label="Video URL (optional)"
+                value={item.videoUrl}
+                onChange={(value) => onUpdate(index, { videoUrl: value })}
+                placeholder="YouTube link or direct .mp4 URL"
+              />
+              {onVideoUpload && (
+                <div className="rounded-2xl border border-dashed border-[#BFD2C8] bg-[#F8FBF9] p-4">
+                  <p className="text-sm font-semibold text-slate-700 mb-2">Upload video (optional)</p>
+                  <input
+                    type="file"
+                    accept="video/*"
+                    onChange={(event) => onVideoUpload(index, event.target.files?.[0])}
+                    className="w-full max-w-full text-sm file:mr-3 file:rounded-full file:border-0 file:bg-[#EAF3EF] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-[#1F3D36]"
+                  />
+                </div>
+              )}
+            </>
           )}
 
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
@@ -447,7 +470,7 @@ const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUplo
               type="file"
               accept="image/*"
               onChange={(event) => onUpload(index, event.target.files?.[0])}
-              className="text-sm"
+              className="w-full max-w-full text-sm file:mr-3 file:rounded-full file:border-0 file:bg-[#EAF3EF] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-[#1F3D36]"
             />
             <button
               type="button"

@@ -18,8 +18,9 @@ const HeroSection = () => {
 
   return (
     <section className="luxury-hero relative isolate min-h-screen overflow-hidden bg-[#090909] text-white">
-      <div className="luxury-temple-architecture absolute inset-0" />
-      <div className="luxury-volumetric-rays absolute inset-0" />
+      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/images/products/bgcover.png')" }} />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,9,9,0.94)_0%,rgba(9,9,9,0.74)_45%,rgba(9,9,9,0.4)_100%)]" />
+      <div className="luxury-volumetric-rays absolute inset-0 opacity-50" />
       <div className="luxury-vignette absolute inset-0" />
       <div className="hero-mandala absolute -left-28 top-10 hidden h-[34rem] w-[34rem] opacity-[0.05] lg:block" />
       <div className="absolute right-[16%] top-[10%] h-64 w-64 rounded-full bg-[#F5D77A]/24 blur-[90px] lg:h-96 lg:w-96" />

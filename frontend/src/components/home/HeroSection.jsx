@@ -38,7 +38,7 @@ const HeroSection = () => {
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-20 pt-20 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-stretch lg:gap-8 lg:px-8 lg:pb-10 lg:pt-20 xl:px-10">
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] items-center gap-4 px-5 pb-28 pt-20 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-stretch lg:gap-8 lg:px-8 lg:pb-32 lg:pt-20 xl:px-10">
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}

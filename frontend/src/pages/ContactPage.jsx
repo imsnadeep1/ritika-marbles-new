@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/layout/FloatingButtons';
@@ -9,43 +10,88 @@ import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { siteConfig } from '@/data/mock';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
+import { submitContactInquiry } from '@/services/contact';
+
+const FORM_DEFAULTS = {
+  quote: {
+    subject: '',
+    message: '',
+  },
+  'custom-order': {
+    subject: 'Custom Marble Order Inquiry',
+    message: 'I would like to discuss a custom marble piece. Please share details about size, design, material, and delivery location.',
+  },
+};
 
 const ContactPage = () => {
   const { toast } = useToast();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get('type') === 'custom-order' ? 'custom-order' : 'quote';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    subject: '',
-    message: ''
+    subject: FORM_DEFAULTS.quote.subject,
+    message: FORM_DEFAULTS.quote.message,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    setFormData((current) => ({
+      ...current,
+      subject: FORM_DEFAULTS[activeTab].subject,
+      message: current.message || FORM_DEFAULTS[activeTab].message,
+    }));
+  }, [activeTab]);
+
+  const handleTabChange = (tab) => {
+    setSearchParams(tab === 'custom-order' ? { type: 'custom-order' } : {});
+    setFormData((current) => ({
+      ...current,
+      subject: FORM_DEFAULTS[tab].subject,
+      message: FORM_DEFAULTS[tab].message,
+    }));
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
-    });
-    
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
-    setIsSubmitting(false);
+
+    try {
+      const result = await submitContactInquiry({
+        ...formData,
+        source: activeTab,
+      });
+
+      toast({
+        title: 'Message sent!',
+        description: result.emailed
+          ? `Thank you for contacting us. Your message has been sent to ${siteConfig.email}.`
+          : 'Your request was received and saved. Our team will contact you shortly.',
+      });
+
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: FORM_DEFAULTS[activeTab].subject,
+        message: FORM_DEFAULTS[activeTab].message,
+      });
+    } catch (error) {
+      toast({
+        title: 'Unable to send message',
+        description: error?.message || 'Please try again or email us directly.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -53,23 +99,20 @@ const ContactPage = () => {
       <Header />
       <Toaster />
       <main>
-        {/* Hero Section */}
-        <section className="bg-[#1F3D36] py-20">
+        <section className="bg-[#1F3D36] py-16 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Reach Us</h1>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">
-              Have questions or want to discuss a custom order? We'd love to hear from you.
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">Reach Us</h1>
+            <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">
+              Have questions or want to discuss a custom order? Send us a message and we will get back to you.
             </p>
           </div>
         </section>
 
-        {/* Contact Info & Form */}
-        <section className="py-20 bg-[#FDF8F3]">
+        <section className="py-12 sm:py-20 bg-[#FDF8F3]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16">
-              {/* Contact Information */}
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
               <div>
-                <h2 className="text-3xl font-bold text-[#1F3D36] mb-8">Contact Information</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mb-8">Contact Information</h2>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-[#1F3D36] rounded-lg flex items-center justify-center flex-shrink-0">
@@ -90,7 +133,7 @@ const ContactPage = () => {
                       <p className="text-gray-600">{siteConfig.address2}</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-[#1F3D36] rounded-lg flex items-center justify-center flex-shrink-0">
                       <Phone className="w-6 h-6 text-[#D4A853]" />
@@ -105,7 +148,7 @@ const ContactPage = () => {
                       </a>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-[#1F3D36] rounded-lg flex items-center justify-center flex-shrink-0">
                       <Mail className="w-6 h-6 text-[#D4A853]" />
@@ -117,7 +160,7 @@ const ContactPage = () => {
                       </a>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-[#1F3D36] rounded-lg flex items-center justify-center flex-shrink-0">
                       <Clock className="w-6 h-6 text-[#D4A853]" />
@@ -130,7 +173,6 @@ const ContactPage = () => {
                   </div>
                 </div>
 
-                {/* Map Placeholder */}
                 <div className="mt-10 h-64 bg-gray-200 rounded-xl overflow-hidden border border-[#D4A853]/20">
                   <iframe
                     title="Location Map"
@@ -145,12 +187,42 @@ const ContactPage = () => {
                 </div>
               </div>
 
-              {/* Contact Form */}
               <div>
-                <div className="bg-white rounded-2xl shadow-xl p-8 border border-[#D4A853]/20">
-                  <h2 className="text-3xl font-bold text-[#1F3D36] mb-2">Get a Quote</h2>
-                  <p className="text-gray-600 mb-8">Fill out the form below and we'll get back to you shortly.</p>
-                  
+                <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-[#D4A853]/20">
+                  <div className="flex flex-col sm:flex-row gap-2 mb-6 p-1 rounded-full bg-[#F8F1E8]">
+                    <button
+                      type="button"
+                      onClick={() => handleTabChange('quote')}
+                      className={`flex-1 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors ${
+                        activeTab === 'quote'
+                          ? 'bg-[#1F3D36] text-white'
+                          : 'text-[#1F3D36] hover:bg-white'
+                      }`}
+                    >
+                      Get a Quote
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleTabChange('custom-order')}
+                      className={`flex-1 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors ${
+                        activeTab === 'custom-order'
+                          ? 'bg-[#1F3D36] text-white'
+                          : 'text-[#1F3D36] hover:bg-white'
+                      }`}
+                    >
+                      Custom Order
+                    </button>
+                  </div>
+
+                  <h2 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mb-2">
+                    {activeTab === 'custom-order' ? 'Request a Custom Order' : 'Get a Quote'}
+                  </h2>
+                  <p className="text-gray-600 mb-8">
+                    {activeTab === 'custom-order'
+                      ? 'Tell us about the custom marble piece you want. Your message will be emailed to our team.'
+                      : 'Fill out the form below and your message will be sent to our team.'}
+                  </p>
+
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
@@ -161,7 +233,7 @@ const ContactPage = () => {
                           value={formData.name}
                           onChange={handleChange}
                           required
-                          placeholder="John Doe"
+                          placeholder="Your full name"
                           className="w-full"
                         />
                       </div>
@@ -173,12 +245,12 @@ const ContactPage = () => {
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          placeholder="john@example.com"
+                          placeholder="you@example.com"
                           className="w-full"
                         />
                       </div>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
@@ -199,12 +271,12 @@ const ContactPage = () => {
                           value={formData.subject}
                           onChange={handleChange}
                           required
-                          placeholder="Custom Ganesh Statue"
+                          placeholder={activeTab === 'custom-order' ? 'Custom Marble Order Inquiry' : 'Product quote request'}
                           className="w-full"
                         />
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Message *</label>
                       <Textarea
@@ -217,7 +289,7 @@ const ContactPage = () => {
                         className="w-full"
                       />
                     </div>
-                    
+
                     <Button
                       type="submit"
                       disabled={isSubmitting}

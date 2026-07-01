@@ -7,6 +7,7 @@ The script creates:
 - `categories`
 - `products`
 - `feedback`
+- `contact_inquiries`
 - `reviews`
 - `esteemed_clients`
 - `storefront_content`

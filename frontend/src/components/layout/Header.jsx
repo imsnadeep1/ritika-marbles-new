@@ -52,7 +52,7 @@ const Header = () => {
         { label: 'View All Collections', href: '/collections' },
       ],
     },
-    { label: 'CUSTOM ORDER', href: '/contact' },
+    { label: 'CUSTOM ORDER', href: '/contact?type=custom-order' },
     { label: 'ABOUT US', href: '/about' },
     { label: 'CLIENTS', href: '/testimonials' },
     { label: 'BLOG', href: '/blog' },

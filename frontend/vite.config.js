@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   build: {
-    sourcemap: true, // Enables source maps
+    sourcemap: process.env.NODE_ENV !== 'production',
     rollupOptions: {
       output: {
         manualChunks(id) {

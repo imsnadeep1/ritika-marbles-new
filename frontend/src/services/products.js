@@ -1,14 +1,8 @@
+
 import { supabase } from "../lib/supabaseClient";
+import { ensureSupabaseAdminSession, requireSupabase, validateUploadFile } from "../lib/supabaseAdmin";
 
 const isSupabaseReady = Boolean(supabase);
-
-function requireSupabase() {
-  if (!supabase) {
-    throw new Error(
-      "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel, then redeploy.",
-    );
-  }
-}
 
 // -------- Get All Products ----------
 export async function getProducts() {
@@ -23,7 +17,9 @@ export async function getProducts() {
 // -------- Create / Upload Product Image ----------
 export async function uploadProductImage(file) {
   requireSupabase();
-  const fileName = `${Date.now()}-${file.name}`;
+  await ensureSupabaseAdminSession();
+  const safeName = validateUploadFile(file, { kind: "image" });
+  const fileName = `${Date.now()}-${safeName}`;
 
   const { error: uploadError } = await supabase.storage
     .from("products")
@@ -67,7 +63,9 @@ function normalizeImageUrls(imageUrls, imageUrl) {
 
 export async function uploadProductVideo(file) {
   requireSupabase();
-  const fileName = `video-${Date.now()}-${file.name}`;
+  await ensureSupabaseAdminSession();
+  const safeName = validateUploadFile(file, { kind: "video" });
+  const fileName = `video-${Date.now()}-${safeName}`;
 
   const { error: uploadError } = await supabase.storage
     .from("products")
@@ -92,6 +90,7 @@ export async function uploadProductVideo(file) {
 // -------- Create Product ----------
 export async function addProduct(product) {
   requireSupabase();
+  await ensureSupabaseAdminSession();
   const images = normalizeImageUrls(product.image_urls, product.image_url);
   const { data, error } = await supabase.from("products").insert([
     {
@@ -116,6 +115,7 @@ export async function addProduct(product) {
 // -------- Update Product ----------
 export async function updateProduct(id, updates) {
   requireSupabase();
+  await ensureSupabaseAdminSession();
   const payload = { ...updates };
 
   if ("image_urls" in updates || "image_url" in updates) {
@@ -136,6 +136,7 @@ export async function updateProduct(id, updates) {
 // -------- Delete ----------
 export async function deleteProduct(id) {
   requireSupabase();
+  await ensureSupabaseAdminSession();
   const { error } = await supabase.from("products").delete().eq("id", id);
   if (error) throw error;
 }

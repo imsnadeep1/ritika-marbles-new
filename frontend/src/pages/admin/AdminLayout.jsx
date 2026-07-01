@@ -18,7 +18,7 @@ import {
   X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
+import { getAdminAccessErrorMessage, signOutAdmin, verifyAdminAccess } from '@/lib/adminAuth';
 
 const AdminLayout = () => {
   const navigate = useNavigate();
@@ -27,56 +27,47 @@ const AdminLayout = () => {
   const [checkingSession, setCheckingSession] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
+
     async function checkSession() {
-      if (!hasSupabaseEnv || !supabase) {
-        localStorage.removeItem('adminToken');
-        navigate('/admin/login');
+      const access = await verifyAdminAccess();
+
+      if (cancelled) return;
+
+      if (!access.ok) {
+        await signOutAdmin();
+        navigate('/admin/login', {
+          replace: true,
+          state: { error: getAdminAccessErrorMessage(access.reason) },
+        });
         return;
       }
 
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      if (!session) {
-        localStorage.removeItem('adminToken');
-        localStorage.removeItem('adminEmail');
-        navigate('/admin/login');
-      } else {
-        localStorage.setItem('adminToken', session.access_token);
-        localStorage.setItem('adminEmail', session.user?.email || '');
-        setCheckingSession(false);
-      }
+      setCheckingSession(false);
     }
 
     checkSession();
+
+    return () => {
+      cancelled = true;
+    };
   }, [navigate]);
 
   useEffect(() => {
-    if (!supabase) return undefined;
+    const handleAuthChange = async () => {
+      const access = await verifyAdminAccess();
+      if (!access.ok) {
+        await signOutAdmin();
+        navigate('/admin/login', { replace: true });
+      }
+    };
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        localStorage.removeItem('adminToken');
-        localStorage.removeItem('adminEmail');
-      navigate('/admin/login');
-      } else {
-        localStorage.setItem('adminToken', session.access_token);
-        localStorage.setItem('adminEmail', session.user?.email || '');
-    }
-    });
-
-    return () => subscription.unsubscribe();
+    window.addEventListener('focus', handleAuthChange);
+    return () => window.removeEventListener('focus', handleAuthChange);
   }, [navigate]);
 
   const handleLogout = async () => {
-    if (supabase) {
-      await supabase.auth.signOut();
-    }
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminEmail');
+    await signOutAdmin();
     navigate('/admin/login');
   };
 
@@ -108,7 +99,6 @@ const AdminLayout = () => {
 
   return (
     <div className="min-h-screen bg-[#F4F7F4] flex overflow-x-hidden">
-      {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
@@ -116,14 +106,12 @@ const AdminLayout = () => {
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={`fixed lg:static inset-y-0 left-0 z-50 w-[min(85vw,280px)] bg-[#10221E]
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
       >
         <div className="flex flex-col h-full">
-          {/* Logo */}
           <div className="p-4 sm:p-6 border-b border-white/10">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 min-w-0">
@@ -155,7 +143,6 @@ const AdminLayout = () => {
             </div>
           </div>
 
-          {/* Menu */}
           <nav className="flex-1 p-3 sm:p-4 space-y-1 overflow-y-auto">
             {menuItems.map((item) => (
               <Link
@@ -179,7 +166,6 @@ const AdminLayout = () => {
             ))}
           </nav>
 
-          {/* Footer */}
           <div className="p-3 sm:p-4 border-t border-white/10 space-y-1">
             <Link
               to="/"
@@ -202,9 +188,7 @@ const AdminLayout = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Bar */}
         <header className="bg-white shadow-sm min-h-16 sm:min-h-20 flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-4 lg:px-8 border-b border-[#DDE8E2] sticky top-0 z-30">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <Button
@@ -236,7 +220,6 @@ const AdminLayout = () => {
           </Link>
         </header>
 
-        {/* Page Content */}
         <main className="flex-1 p-3 sm:p-4 lg:p-8 overflow-auto">
           <Outlet />
         </main>

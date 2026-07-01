@@ -35,6 +35,7 @@ const createFormData = (tab, overrides = {}) => ({
   phone: '',
   subject: getFormDefaults(tab).subject,
   message: getFormDefaults(tab).message,
+  website: '',
   ...overrides,
 });
 
@@ -226,6 +227,16 @@ const ContactPage = () => {
                   </p>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    <input
+                      type="text"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="hidden"
+                    />
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Your Name *</label>

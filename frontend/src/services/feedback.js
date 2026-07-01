@@ -15,7 +15,16 @@ export async function addFeedback(feedback) {
   requireSupabase();
   const { data, error } = await supabase
     .from("feedback")
-    .insert([feedback]);
+    .insert([
+      {
+        name: String(feedback.name || "").trim().slice(0, 100),
+        email: String(feedback.email || "").trim().slice(0, 254),
+        rating: Number(feedback.rating) || 5,
+        message: String(feedback.message || "").trim().slice(0, 2000),
+        product_id: feedback.product_id,
+        approved: false,
+      },
+    ]);
 
   if (error) throw error;
   return data;
@@ -26,8 +35,9 @@ export async function getFeedbackByProduct(productId) {
   if (!isSupabaseReady) return [];
   const { data, error } = await supabase
     .from("feedback")
-    .select("*")
+    .select("id, name, rating, message, created_at, product_id")
     .eq("product_id", productId)
+    .eq("approved", true)
     .order("created_at", { ascending: false });
 
   if (error) throw error;

@@ -87,7 +87,10 @@ export const getApprovedProductReviews = async () => {
 // Add new review (from product / public form)
 export async function addReview(payload) {
   requireSupabase();
-  const { error } = await supabase.from("reviews").insert(payload);
+  const { error } = await supabase.from("reviews").insert({
+    ...payload,
+    approved: false,
+  });
 
   if (error) {
     console.error("addReview error:", error);

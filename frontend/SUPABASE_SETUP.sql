@@ -34,6 +34,8 @@ as $$
   );
 $$;
 
+grant execute on function public.is_admin() to authenticated;
+
 -- =========================
 -- Storefront product catalog
 -- =========================
@@ -453,7 +455,7 @@ drop policy if exists "Public can submit feedback" on public.feedback;
 create policy "Public can submit feedback"
 on public.feedback for insert
 to anon, authenticated
-with check (true);
+with check (coalesce(approved, false) = false);
 
 drop policy if exists "Public can read approved feedback" on public.feedback;
 create policy "Public can read approved feedback"
@@ -473,7 +475,7 @@ drop policy if exists "Public can submit reviews" on public.reviews;
 create policy "Public can submit reviews"
 on public.reviews for insert
 to anon, authenticated
-with check (true);
+with check (coalesce(approved, false) = false);
 
 drop policy if exists "Public can read approved reviews" on public.reviews;
 create policy "Public can read approved reviews"

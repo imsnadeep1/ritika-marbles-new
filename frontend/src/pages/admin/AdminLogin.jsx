@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Lock, Mail } from 'lucide-react';
 import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
-
-const configuredAdminEmail = (import.meta.env.VITE_SUPABASE_ADMIN_EMAIL || '').trim();
+import { getAdminAccessErrorMessage, signOutAdmin, verifyAdminAccess } from '@/lib/adminAuth';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
+  const [error, setError] = useState(location.state?.error || '');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -27,24 +27,20 @@ const AdminLogin = () => {
         return;
       }
 
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) throw error;
+      if (signInError) throw signInError;
 
-      if (
-        configuredAdminEmail &&
-        email.toLowerCase() !== configuredAdminEmail.toLowerCase()
-      ) {
-        await supabase.auth.signOut();
-        setError('This account is not authorized for admin access');
+      const access = await verifyAdminAccess();
+      if (!access.ok) {
+        await signOutAdmin();
+        setError(getAdminAccessErrorMessage(access.reason));
         return;
       }
 
-      localStorage.setItem('adminToken', data.session?.access_token || 'supabase-admin-session');
-      localStorage.setItem('adminEmail', email);
       navigate('/admin/dashboard');
     } catch (loginError) {
       console.error('Admin login failed:', loginError);
@@ -58,14 +54,12 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#F4F7F4] via-white to-[#F8F1E8] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-[2rem] shadow-xl p-8 border border-[#DDE8E2]">
-          {/* Logo */}
           <div className="text-center mb-8">
             <img src="/logo.svg" alt="Ritika Marbles Logo" className="w-20 h-20 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-[#1F3D36]">Admin Panel</h1>
             <p className="text-[#D4A853] mt-1">Ritika Marbles & Handicrafts</p>
           </div>
 
-          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm border border-red-200">
@@ -83,6 +77,7 @@ const AdminLogin = () => {
                   onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                   placeholder="Enter your email address"
                   className="pl-10 border-[#DDE8E2] focus:border-[#1F3D36]"
+                  autoComplete="username"
                   required
                 />
               </div>
@@ -98,6 +93,7 @@ const AdminLogin = () => {
                   onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                   placeholder="Enter your password"
                   className="pl-10 border-[#DDE8E2] focus:border-[#1F3D36]"
+                  autoComplete="current-password"
                   required
                 />
               </div>
@@ -115,7 +111,7 @@ const AdminLogin = () => {
           <div className="mt-6 p-4 bg-[#F8F1E8] rounded-2xl border border-[#E8D9C5]">
             <p className="text-sm text-[#1F3D36] text-center">
               <strong>Admin access:</strong><br />
-              Sign in with your Supabase Auth admin user. Admin writes are protected by Supabase RLS.
+              Only approved admin accounts in Supabase can sign in. Public signups should be disabled in Supabase Auth.
             </p>
           </div>
         </div>

@@ -38,5 +38,6 @@ fi
 mkdir -p "$ROOT_DIR/dist"
 cp -R dist/. "$ROOT_DIR/dist/"
 
-mkdir -p "$ROOT_DIR/api"
+mkdir -p "$ROOT_DIR/api/lib"
 cp api/contact.js "$ROOT_DIR/api/contact.js"
+cp api/lib/contactHandler.js "$ROOT_DIR/api/lib/contactHandler.js"

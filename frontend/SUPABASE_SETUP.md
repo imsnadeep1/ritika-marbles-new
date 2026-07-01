@@ -65,6 +65,16 @@ CONTACT_FROM_EMAIL=Ritika Marbles <noreply@ritikamarbles.com>
 
 Create a free account at [resend.com](https://resend.com) and add your API key in Vercel.
 
+## Security hardening
+
+Run `SUPABASE_SECURITY_MIGRATION.sql` in **Supabase Dashboard > SQL Editor** on existing projects to:
+
+- Allow authenticated admin verification via `is_admin()`
+- Block public users from self-approving feedback/reviews
+- Add database triggers that force pending approval on insert
+
+Also review `SECURITY.md` in the repo root for production checklist items (Vercel env vars, Supabase Auth settings, branch protection).
+
 ## Notes
 
 - Public visitors can read products, categories, approved feedback, approved reviews, clients, and storefront content.

@@ -197,3 +197,23 @@
         transform: translate3d(22px, -105vh, 0) scale(1.35);
     }
 }
+
+.source-protected img,
+.source-protected video {
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.source-protected img {
+    pointer-events: auto;
+}
+
+.source-protected [data-allow-copy="true"],
+.source-protected input,
+.source-protected textarea,
+.source-protected select,
+.source-protected a,
+.source-protected button {
+    user-select: text;
+    -webkit-user-drag: auto;
+}

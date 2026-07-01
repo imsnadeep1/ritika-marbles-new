@@ -55,6 +55,20 @@ on conflict (email) do nothing;
 
 The legacy FastAPI backend in `/backend` has no authentication. Keep it local or behind a private network only.
 
+## Source code protection
+
+The production storefront includes layered source protection:
+
+- Minified and mangled JavaScript bundles with no source maps
+- Content Security Policy headers to restrict script injection
+- Public pages block casual right-click, image drag, and common view-source shortcuts
+- `robots.txt` blocks indexing of `/admin`
+- `.map` files return 404 if requested
+
+Admin routes are excluded from client-side deterrents so your team can still debug the admin panel.
+
+**Note:** Client-side code cannot be fully hidden in a browser. These measures deter casual copying but are not a substitute for legal copyright protection.
+
 ## Security maintenance checklist
 
 - [ ] Run `npm audit` in `frontend/` monthly

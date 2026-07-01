@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "@/components/ScrollToTop";
+import SourceProtection from "@/components/SourceProtection";
 
 /* ================= PUBLIC PAGES ================= */
 import HomePage from "@/pages/HomePage";
@@ -32,6 +33,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <ScrollToTop />
+        <SourceProtection />
         <Routes>
           {/* ================= PUBLIC ROUTES ================= */}
           <Route path="/" element={<HomePage />} />

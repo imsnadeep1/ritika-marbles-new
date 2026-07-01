@@ -129,7 +129,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/60 text-sm">
-              © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+              © {new Date().getFullYear()} {siteConfig.name}. All rights reserved. Source code, images, and designs are protected by copyright law.
             </p>
             <div className="flex gap-6">
               <Link to="/privacy" className="text-white/60 hover:text-[#D4A853] text-sm transition-colors">

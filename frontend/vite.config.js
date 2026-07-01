@@ -11,21 +11,35 @@ export default defineConfig({
     },
   },
   build: {
-    sourcemap: process.env.NODE_ENV !== 'production',
+    sourcemap: false,
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
             return id.split('node_modules/')[1].split('/')[0].toString();
           }
-        }
-      }
+        },
+        chunkFileNames: 'assets/[hash].js',
+        entryFileNames: 'assets/[hash].js',
+        assetFileNames: 'assets/[hash][extname]',
+      },
     },
-    minify: 'terser', // Use Terser for minification with better performance
+    minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: true,
+        drop_debugger: true,
+        passes: 2,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'],
+      },
+      mangle: {
+        safari10: true,
+        toplevel: true,
+      },
+      format: {
+        comments: false,
       },
     },
-  }
+  },
 });

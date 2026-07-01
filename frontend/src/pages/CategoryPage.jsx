@@ -9,7 +9,7 @@ import { getCategories } from "@/services/categories";
 import { getProducts } from "@/services/products";
 import ComingSoon from "@/components/ComingSoon";
 import { getVisibleCategories } from "@/lib/categories";
-import { siteConfig } from "@/data/mock";
+import { getProductCoverImage, getProductWhatsAppUrl } from "@/lib/products";
 
 const SORT_OPTIONS = [
   { value: "featured", label: "Featured" },
@@ -220,11 +220,11 @@ const CategoryPage = () => {
                       className="bg-white rounded-[1.5rem] overflow-hidden shadow-sm ring-1 ring-[#E8D9C5] hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
                     >
                       <Link to={`/product/${product.slug}`} className="block">
-                        <div className="aspect-square overflow-hidden bg-white relative">
+                        <div className="aspect-[4/5] overflow-hidden bg-[#F8F1E8] relative flex items-center justify-center p-3 sm:p-4">
                           <img
-                            src={product.image_url}
+                            src={getProductCoverImage(product)}
                             alt={product.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
                           />
                           <span className="absolute left-3 top-3 rounded-full bg-[#1F3D36] px-3 py-1 text-xs font-bold text-white">
                             Inquire now
@@ -255,7 +255,7 @@ const CategoryPage = () => {
                       </Link>
                       <div className="px-4 pb-4">
                         <a
-                          href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(`Hi, I'm interested in ${product.name}`)}`}
+                          href={getProductWhatsAppUrl(product)}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}

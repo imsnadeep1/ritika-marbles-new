@@ -10,6 +10,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { getProducts } from "@/services/products";
+import { getProductCoverImage } from "@/lib/products";
 import { getCategories } from "@/services/categories";
 import { getAllFeedback } from "@/services/feedback";
 import { getAllReviews } from "@/services/reviews";
@@ -131,7 +132,7 @@ const AdminDashboard = () => {
                 <div key={product.id} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 rounded-2xl border border-[#EEF3EF] p-3">
                   <div className="flex items-center gap-3 min-w-0 flex-1">
                     <img
-                      src={product.image_url || "/images/placeholder.jpg"}
+                      src={getProductCoverImage(product)}
                       alt={product.name}
                       className="w-14 h-14 rounded-2xl object-cover bg-slate-100 shrink-0"
                     />

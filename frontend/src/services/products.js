@@ -44,6 +44,27 @@ export async function uploadProductImage(file) {
   return publicUrl;
 }
 
+export async function uploadProductImages(files = []) {
+  const uploads = Array.from(files).filter(Boolean);
+  return Promise.all(uploads.map((file) => uploadProductImage(file)));
+}
+
+function normalizeImageUrls(imageUrls, imageUrl) {
+  const urls = Array.isArray(imageUrls)
+    ? imageUrls.map((url) => String(url).trim()).filter(Boolean)
+    : [];
+
+  if (urls.length > 0) {
+    return { image_urls: urls, image_url: urls[0] };
+  }
+
+  const cover = imageUrl ? String(imageUrl).trim() : "";
+  return {
+    image_urls: cover ? [cover] : [],
+    image_url: cover || null,
+  };
+}
+
 export async function uploadProductVideo(file) {
   requireSupabase();
   const fileName = `video-${Date.now()}-${file.name}`;
@@ -71,13 +92,15 @@ export async function uploadProductVideo(file) {
 // -------- Create Product ----------
 export async function addProduct(product) {
   requireSupabase();
+  const images = normalizeImageUrls(product.image_urls, product.image_url);
   const { data, error } = await supabase.from("products").insert([
     {
       name: product.name,
       price: product.price,
       description: product.description,
       category_id: product.category_id,
-      image_url: product.image_url,
+      image_url: images.image_url,
+      image_urls: images.image_urls,
       video_url: product.video_url,
       features: product.features,
       in_stock: product.in_stock,
@@ -93,9 +116,17 @@ export async function addProduct(product) {
 // -------- Update Product ----------
 export async function updateProduct(id, updates) {
   requireSupabase();
+  const payload = { ...updates };
+
+  if ("image_urls" in updates || "image_url" in updates) {
+    const images = normalizeImageUrls(updates.image_urls, updates.image_url);
+    payload.image_urls = images.image_urls;
+    payload.image_url = images.image_url;
+  }
+
   const { data, error } = await supabase
     .from("products")
-    .update(updates)
+    .update(payload)
     .eq("id", id);
 
   if (error) throw error;

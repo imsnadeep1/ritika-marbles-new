@@ -9,6 +9,7 @@ import { getCategories } from '@/services/categories';
 import { getProducts } from '@/services/products';
 import { defaultStorefrontContent, getStorefrontContent } from '@/services/storefrontContent';
 import { CATEGORY_GROUPS, getCategoryHref, getVisibleCategories } from '@/lib/categories';
+import { getProductCoverImage } from '@/lib/products';
 
 const PAGE_CONTENT = {
   [CATEGORY_GROUPS.GOD_STATUES]: {
@@ -96,8 +97,8 @@ const GodStatuePage = ({ group = CATEGORY_GROUPS.GOD_STATUES }) => {
                   {searchResults.map((product) => (
                     <Link key={product.id} to={product.slug ? `/product/${product.slug}` : '/god-statue'} className="group">
                       <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-                        <div className="aspect-square overflow-hidden bg-[#F8F1E8]">
-                          <img src={product.image_url || '/images/placeholder.jpg'} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <div className="aspect-[4/5] overflow-hidden bg-[#F8F1E8] flex items-center justify-center p-3">
+                          <img src={getProductCoverImage(product)} alt={product.name} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500" />
                         </div>
                         <div className="p-4">
                           <h3 className="text-[#1F3D36] font-semibold line-clamp-2 min-h-[3rem]">{product.name}</h3>

@@ -23,7 +23,8 @@ for route in \
   admin/reviews \
   admin/clients \
   blog \
-  blog/choosing-marble-idol
+  blog/choosing-marble-idol \
+  contact
 do
   mkdir -p "dist/$route"
   cp dist/index.html "dist/$route/index.html"
@@ -36,3 +37,6 @@ fi
 
 mkdir -p "$ROOT_DIR/dist"
 cp -R dist/. "$ROOT_DIR/dist/"
+
+mkdir -p "$ROOT_DIR/api"
+cp api/contact.js "$ROOT_DIR/api/contact.js"

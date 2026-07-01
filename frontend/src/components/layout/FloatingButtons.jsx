@@ -1,13 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Phone, MessageCircle } from 'lucide-react';
 import { siteConfig } from '@/data/mock';
+import { getProductWhatsAppUrl } from '@/lib/products';
+import { getProducts } from '@/services/products';
 
 const FloatingButtons = () => {
+  const location = useLocation();
+  const productSlug = location.pathname.match(/^\/product\/([^/]+)/)?.[1];
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    if (!productSlug) {
+      setProduct(null);
+      return;
+    }
+
+    let cancelled = false;
+    getProducts()
+      .then((products) => {
+        if (cancelled) return;
+        setProduct(products.find((item) => item.slug === productSlug) || { slug: productSlug });
+      })
+      .catch(() => {
+        if (!cancelled) setProduct({ slug: productSlug });
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [productSlug]);
+
+  const whatsappUrl = productSlug && product
+    ? getProductWhatsAppUrl(product)
+    : `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent('Hi, I would like to enquire about your marble products.')}`;
+
   return (
     <div className="fixed bottom-8 right-6 z-50 hidden flex-col gap-4 sm:flex">
-      {/* WhatsApp Button */}
       <a
-        href={`https://wa.me/${siteConfig.whatsapp}`}
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform animate-pulse hover:animate-none"
@@ -15,8 +46,7 @@ const FloatingButtons = () => {
       >
         <MessageCircle className="w-7 h-7 text-white" />
       </a>
-      
-      {/* Call Button */}
+
       <a
         href={`tel:${siteConfig.phone}`}
         className="w-14 h-14 bg-[#D4A853] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"

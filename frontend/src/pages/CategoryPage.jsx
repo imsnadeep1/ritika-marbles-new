@@ -9,8 +9,7 @@ import { getCategories } from "@/services/categories";
 import { getProducts } from "@/services/products";
 import ComingSoon from "@/components/ComingSoon";
 import { getVisibleCategories } from "@/lib/categories";
-import { getProductCoverImage } from "@/lib/products";
-import { siteConfig } from "@/data/mock";
+import { getProductCoverImage, getProductWhatsAppUrl } from "@/lib/products";
 
 const SORT_OPTIONS = [
   { value: "featured", label: "Featured" },
@@ -256,7 +255,7 @@ const CategoryPage = () => {
                       </Link>
                       <div className="px-4 pb-4">
                         <a
-                          href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(`Hi, I'm interested in ${product.name}`)}`}
+                          href={getProductWhatsAppUrl(product)}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}

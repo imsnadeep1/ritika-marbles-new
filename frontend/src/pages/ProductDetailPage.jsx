@@ -15,7 +15,7 @@ import FeedbackForm from "@/components/FeedbackForm";
 import ProductFeedbackList from "@/components/ProductFeedbackList";
 
 import { siteConfig } from "@/data/mock";
-import { getProductCoverImage, getProductImages } from "@/lib/products";
+import { getProductCoverImage, getProductImages, getProductWhatsAppUrl } from "@/lib/products";
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -122,7 +122,7 @@ const ProductDetailPage = () => {
   }
 
   const isProductAvailable = product.in_stock ?? product.inStock ?? true;
-  const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(`Hi, I'm interested in ${product.name}`)}`;
+  const whatsappUrl = getProductWhatsAppUrl(product);
   const productImages = getProductImages(product);
   const activeImage = productImages[selectedImage] || getProductCoverImage(product);
 

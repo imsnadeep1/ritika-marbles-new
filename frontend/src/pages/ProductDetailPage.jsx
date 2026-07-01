@@ -15,6 +15,7 @@ import FeedbackForm from "@/components/FeedbackForm";
 import ProductFeedbackList from "@/components/ProductFeedbackList";
 
 import { siteConfig } from "@/data/mock";
+import { getProductCoverImage, getProductImages } from "@/lib/products";
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -23,10 +24,12 @@ const ProductDetailPage = () => {
   const [category, setCategory] = useState(null);
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(0);
   const [imageZoomed, setImageZoomed] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    setSelectedImage(0);
   }, [slug]);
 
   useEffect(() => {
@@ -120,6 +123,8 @@ const ProductDetailPage = () => {
 
   const isProductAvailable = product.in_stock ?? product.inStock ?? true;
   const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(`Hi, I'm interested in ${product.name}`)}`;
+  const productImages = getProductImages(product);
+  const activeImage = productImages[selectedImage] || getProductCoverImage(product);
 
   return (
     <div className="min-h-screen pb-20 lg:pb-0">
@@ -168,15 +173,41 @@ const ProductDetailPage = () => {
                   onMouseLeave={() => setImageZoomed(false)}
                 >
                   <img
-                    src={product.image_url}
+                    src={activeImage}
                     alt={product.name}
                     className={`w-full h-full object-cover transition-transform duration-500 ${
                       imageZoomed ? "scale-110" : "scale-100"
                     }`}
                   />
                 </div>
+
+                {productImages.length > 1 && (
+                  <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide">
+                    {productImages.map((image, index) => (
+                      <button
+                        key={`${image}-${index}`}
+                        type="button"
+                        onClick={() => setSelectedImage(index)}
+                        className={`shrink-0 rounded-xl overflow-hidden border-2 transition-all ${
+                          selectedImage === index
+                            ? "border-[#B8872F] shadow-md"
+                            : "border-transparent opacity-80 hover:opacity-100"
+                        }`}
+                      >
+                        <img
+                          src={image}
+                          alt={`${product.name} view ${index + 1}`}
+                          className="w-16 h-16 sm:w-20 sm:h-20 object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
+
                 <p className="text-center text-xs text-slate-400 hidden sm:block">
-                  Tap or hover to zoom
+                  {productImages.length > 1
+                    ? "Select a photo or hover the main image to zoom"
+                    : "Tap or hover to zoom"}
                 </p>
               </div>
 
@@ -331,7 +362,7 @@ const ProductDetailPage = () => {
                   >
                     <div className="aspect-square overflow-hidden">
                       <img
-                        src={item.image_url}
+                        src={getProductCoverImage(item)}
                         alt={item.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />

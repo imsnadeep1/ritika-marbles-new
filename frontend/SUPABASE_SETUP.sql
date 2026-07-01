@@ -82,6 +82,7 @@ create table if not exists public.products (
   price numeric(12,2) not null default 0,
   description text,
   image_url text,
+  image_urls text[] not null default '{}'::text[],
   video_url text,
   features text[] not null default '{}'::text[],
   in_stock boolean not null default true,
@@ -95,6 +96,7 @@ alter table public.products add column if not exists slug text;
 alter table public.products add column if not exists price numeric(12,2) not null default 0;
 alter table public.products add column if not exists description text;
 alter table public.products add column if not exists image_url text;
+alter table public.products add column if not exists image_urls text[] not null default '{}'::text[];
 alter table public.products add column if not exists video_url text;
 alter table public.products add column if not exists features text[] not null default '{}'::text[];
 alter table public.products add column if not exists in_stock boolean not null default true;

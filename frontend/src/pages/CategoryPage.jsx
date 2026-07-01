@@ -9,6 +9,7 @@ import { getCategories } from "@/services/categories";
 import { getProducts } from "@/services/products";
 import ComingSoon from "@/components/ComingSoon";
 import { getVisibleCategories } from "@/lib/categories";
+import { getProductCoverImage } from "@/lib/products";
 import { siteConfig } from "@/data/mock";
 
 const SORT_OPTIONS = [
@@ -222,7 +223,7 @@ const CategoryPage = () => {
                       <Link to={`/product/${product.slug}`} className="block">
                         <div className="aspect-square overflow-hidden bg-white relative">
                           <img
-                            src={product.image_url}
+                            src={getProductCoverImage(product)}
                             alt={product.name}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />

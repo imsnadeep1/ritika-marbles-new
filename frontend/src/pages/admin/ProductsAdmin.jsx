@@ -4,10 +4,11 @@ import {
   addProduct,
   updateProduct,
   deleteProduct,
-  uploadProductImage,
+  uploadProductImages,
   uploadProductVideo,
 } from "@/services/products";
 import { getCategories } from "@/services/categories";
+import { getProductCoverImage, getProductImages } from "@/lib/products";
 import {
   ImagePlus,
   Package,
@@ -17,6 +18,7 @@ import {
   Trash2,
   UploadCloud,
   Video,
+  X,
 } from "lucide-react";
 
 const emptyForm = {
@@ -26,9 +28,10 @@ const emptyForm = {
   description: "",
   category_id: "",
   features: "",
-  image_url: "",
+  image_urls: [],
+  imageUrlText: "",
+  imageFiles: [],
   video_url: "",
-  imageFile: null,
   videoFile: null,
   in_stock: true,
 };
@@ -90,12 +93,21 @@ const ProductsAdmin = () => {
     setStatus("");
 
     try {
-      let image_url = form.image_url || null;
+      let image_urls = [...form.image_urls];
       let video_url = form.video_url || null;
 
-      if (form.imageFile) {
-        image_url = await uploadProductImage(form.imageFile);
+      if (form.imageFiles.length > 0) {
+        const uploaded = await uploadProductImages(form.imageFiles);
+        image_urls = [...image_urls, ...uploaded];
       }
+
+      const pastedUrls = form.imageUrlText
+        .split("\n")
+        .map((url) => url.trim())
+        .filter(Boolean);
+      image_urls = [...image_urls, ...pastedUrls];
+
+      image_urls = [...new Set(image_urls)];
 
       if (form.videoFile) {
         video_url = await uploadProductVideo(form.videoFile);
@@ -112,7 +124,7 @@ const ProductsAdmin = () => {
         price: Number(form.price),
         description: form.description,
         category_id: form.category_id,
-        image_url,
+        image_urls,
         video_url,
         features,
         in_stock: form.in_stock,
@@ -146,12 +158,20 @@ const ProductsAdmin = () => {
       description: product.description || "",
       category_id: product.category_id || "",
       features: Array.isArray(product.features) ? product.features.join("\n") : "",
-      image_url: product.image_url || "",
+      image_urls: getProductImages(product),
+      imageUrlText: "",
+      imageFiles: [],
       video_url: product.video_url || "",
-      imageFile: null,
       videoFile: null,
       in_stock: product.in_stock ?? product.inStock ?? true,
     });
+  }
+
+  function removeImage(index) {
+    setForm((current) => ({
+      ...current,
+      image_urls: current.image_urls.filter((_, itemIndex) => itemIndex !== index),
+    }));
   }
 
   async function handleDelete(id) {
@@ -288,31 +308,67 @@ const ProductsAdmin = () => {
           </div>
 
           <div className="space-y-5">
-            <div className="rounded-3xl border border-dashed border-[#BFD2C8] bg-[#F8FBF9] p-5">
+            <div className="rounded-3xl border border-dashed border-[#BFD2C8] bg-[#F8FBF9] p-4 sm:p-5">
               <div className="flex items-center gap-3 mb-4">
                 <ImagePlus className="w-5 h-5 text-[#B8872F]" />
-                <h2 className="font-bold text-[#1F3D36]">Product image</h2>
+                <div>
+                  <h2 className="font-bold text-[#1F3D36]">Product photos</h2>
+                  <p className="text-xs text-slate-500">Upload multiple images. The first photo is the cover image.</p>
+                </div>
               </div>
+
+              {form.image_urls.length > 0 && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+                  {form.image_urls.map((url, index) => (
+                    <div key={`${url}-${index}`} className="relative rounded-2xl overflow-hidden border border-[#DDE8E2] bg-white">
+                      <img src={url} alt={`Product ${index + 1}`} className="w-full h-24 sm:h-28 object-cover" />
+                      {index === 0 && (
+                        <span className="absolute left-2 top-2 rounded-full bg-[#1F3D36] px-2 py-0.5 text-[10px] font-bold text-white">
+                          Cover
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeImage(index)}
+                        className="absolute right-2 top-2 rounded-full bg-white/95 p-1 text-red-600 shadow-sm hover:bg-red-50"
+                        title="Remove image"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <input
                 type="file"
                 accept="image/*"
+                multiple
                 onChange={(event) =>
-                  setForm({ ...form, imageFile: event.target.files?.[0] || null })
+                  setForm({
+                    ...form,
+                    imageFiles: Array.from(event.target.files || []),
+                  })
                 }
-                className="w-full text-sm"
+                className="w-full max-w-full text-sm file:mr-3 file:rounded-full file:border-0 file:bg-[#EAF3EF] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-[#1F3D36]"
               />
-              <input
-                name="image_url"
-                value={form.image_url}
-                onChange={handleChange}
-                placeholder="Or paste image URL"
-                className="mt-3 w-full rounded-2xl border border-[#DDE8E2] px-4 py-3 text-sm outline-none focus:border-[#1F3D36]"
-              />
-              {(form.image_url || form.imageFile) && (
+              {form.imageFiles.length > 0 && (
                 <p className="mt-2 text-xs text-slate-500">
-                  {form.imageFile ? form.imageFile.name : "Existing image URL will be used."}
+                  {form.imageFiles.length} new file{form.imageFiles.length === 1 ? "" : "s"} ready to upload
                 </p>
               )}
+
+              <label className="space-y-2 block mt-4">
+                <span className="text-sm font-semibold text-slate-700">Or paste image URLs</span>
+                <textarea
+                  name="imageUrlText"
+                  rows="3"
+                  value={form.imageUrlText}
+                  onChange={handleChange}
+                  placeholder={"https://example.com/image-1.jpg\nhttps://example.com/image-2.jpg"}
+                  className="w-full rounded-2xl border border-[#DDE8E2] px-4 py-3 text-sm outline-none focus:border-[#1F3D36]"
+                />
+              </label>
             </div>
 
             <div className="rounded-3xl border border-dashed border-[#BFD2C8] bg-[#F8FBF9] p-5">
@@ -419,7 +475,7 @@ const ProductsAdmin = () => {
               <article key={product.id} className="rounded-2xl border border-[#EEF3EF] p-4">
                 <div className="flex gap-3">
                   <img
-                    src={product.image_url || "/images/placeholder.jpg"}
+                    src={getProductCoverImage(product)}
                     alt={product.name}
                     className="w-20 h-20 rounded-xl object-cover bg-slate-100 shrink-0"
                   />
@@ -437,6 +493,12 @@ const ProductsAdmin = () => {
                   }`}>
                     {product.in_stock ?? product.inStock ? "In stock" : "Made to order"}
                   </span>
+                  {getProductImages(product).length > 1 && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-700">
+                      <ImagePlus className="w-3 h-3" />
+                      {getProductImages(product).length} photos
+                    </span>
+                  )}
                   {product.video_url && (
                     <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
                       <Video className="w-3 h-3" />
@@ -497,7 +559,7 @@ const ProductsAdmin = () => {
                     <td className="py-4 pr-4">
                       <div className="flex items-center gap-3">
                         <img
-                          src={product.image_url || "/images/placeholder.jpg"}
+                          src={getProductCoverImage(product)}
                           alt={product.name}
                           className="w-16 h-16 rounded-2xl object-cover bg-slate-100"
                         />
@@ -519,7 +581,9 @@ const ProductsAdmin = () => {
                       <div className="flex gap-2">
                         <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
                           <Package className="w-3 h-3" />
-                          Image
+                          {getProductImages(product).length > 1
+                            ? `${getProductImages(product).length} photos`
+                            : "Image"}
                         </span>
                         {product.video_url && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">

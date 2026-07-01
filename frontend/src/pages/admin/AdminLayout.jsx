@@ -13,7 +13,9 @@ import {
   LogOut,
   Home,
   Menu,
-  ShoppingBag
+  ShoppingBag,
+  ExternalLink,
+  X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { hasSupabaseEnv, supabase } from '@/lib/supabaseClient';
@@ -105,7 +107,7 @@ const AdminLayout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F7F4] flex">
+    <div className="min-h-screen bg-[#F4F7F4] flex overflow-x-hidden">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
@@ -116,25 +118,35 @@ const AdminLayout = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-72 bg-[#10221E]
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-[min(85vw,280px)] bg-[#10221E]
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="p-6 border-b border-white/10">
-            <div className="flex items-center gap-3">
-              <img
-                src="/logo.svg"
-                alt="Ritika Marbles Logo"
-                className="w-11 h-11 rounded-2xl bg-white p-1"
-              />
-              <div>
-                <h1 className="text-white font-semibold">Ritika Marbles</h1>
-                <p className="text-[#D4A853] text-xs">Commerce admin</p>
+          <div className="p-4 sm:p-6 border-b border-white/10">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <img
+                  src="/logo.svg"
+                  alt="Ritika Marbles Logo"
+                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-white p-1 shrink-0"
+                />
+                <div className="min-w-0">
+                  <h1 className="text-white font-semibold text-sm sm:text-base truncate">Ritika Marbles</h1>
+                  <p className="text-[#D4A853] text-xs">Commerce admin</p>
+                </div>
               </div>
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(false)}
+                className="lg:hidden rounded-full p-2 text-white/70 hover:bg-white/10 hover:text-white"
+                aria-label="Close menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
-            <div className="mt-5 rounded-2xl bg-white/10 p-4 text-sm text-white/80">
+            <div className="mt-4 sm:mt-5 rounded-2xl bg-white/10 p-3 sm:p-4 text-xs sm:text-sm text-white/80 hidden sm:block">
               <div className="flex items-center gap-2 text-[#F8D98E] font-semibold mb-1">
                 <ShoppingBag className="w-4 h-4" />
                 Store operations
@@ -144,22 +156,22 @@ const AdminLayout = () => {
           </div>
 
           {/* Menu */}
-          <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+          <nav className="flex-1 p-3 sm:p-4 space-y-1 overflow-y-auto">
             {menuItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
                 onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-colors ${
+                className={`flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl transition-colors ${
                   isActive(item.path)
                     ? 'bg-[#D4A853] text-[#10221E] shadow-lg'
                     : 'text-white/70 hover:bg-white/10 hover:text-white'
                 }`}
               >
-                <item.icon className="w-5 h-5" />
-                <span>
-                  <span className="block font-medium">{item.label}</span>
-                  <span className={`block text-xs ${isActive(item.path) ? 'text-[#10221E]/70' : 'text-white/40'}`}>
+                <item.icon className="w-5 h-5 shrink-0" />
+                <span className="min-w-0">
+                  <span className="block font-medium text-sm sm:text-base truncate">{item.label}</span>
+                  <span className={`hidden sm:block text-xs truncate ${isActive(item.path) ? 'text-[#10221E]/70' : 'text-white/40'}`}>
                     {item.helper}
                   </span>
                 </span>
@@ -168,21 +180,22 @@ const AdminLayout = () => {
           </nav>
 
           {/* Footer */}
-          <div className="p-4 border-t border-white/10 space-y-2">
+          <div className="p-3 sm:p-4 border-t border-white/10 space-y-1">
             <Link
               to="/"
-              className="flex items-center gap-3 px-4 py-3 rounded-2xl text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+              onClick={() => setSidebarOpen(false)}
+              className="flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl text-white/70 hover:bg-white/10 hover:text-white transition-colors text-sm sm:text-base"
             >
-              <Home className="w-5 h-5" />
+              <Home className="w-5 h-5 shrink-0" />
               View Website
             </Link>
 
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg
-              text-white/70 hover:bg-red-500/20 hover:text-red-300 transition-colors"
+              className="w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg
+              text-white/70 hover:bg-red-500/20 hover:text-red-300 transition-colors text-sm sm:text-base"
             >
-              <LogOut className="w-5 h-5" />
+              <LogOut className="w-5 h-5 shrink-0" />
               Logout
             </button>
           </div>
@@ -190,34 +203,41 @@ const AdminLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Top Bar */}
-        <header className="bg-white shadow-sm min-h-20 flex items-center justify-between gap-4 px-4 lg:px-8 border-b border-[#DDE8E2]">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden mr-4"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <Menu className="w-6 h-6 text-[#1F3D36]" />
-          </Button>
+        <header className="bg-white shadow-sm min-h-16 sm:min-h-20 flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-4 lg:px-8 border-b border-[#DDE8E2] sticky top-0 z-30">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden shrink-0"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="w-6 h-6 text-[#1F3D36]" />
+            </Button>
 
-          <div>
-            <h2 className="text-xl font-semibold text-[#1F3D36]">
-              {menuItems.find(item => isActive(item.path))?.label || 'Dashboard'}
-            </h2>
-            <p className="text-sm text-slate-500">
-              Manage catalog, customer activity and storefront updates.
-            </p>
+            <div className="min-w-0">
+              <h2 className="text-base sm:text-xl font-semibold text-[#1F3D36] truncate">
+                {menuItems.find(item => isActive(item.path))?.label || 'Dashboard'}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 truncate hidden sm:block">
+                Manage catalog, customer activity and storefront updates.
+              </p>
+            </div>
           </div>
 
-          <Link to="/" className="hidden sm:inline-flex rounded-full border border-[#DDE8E2] px-4 py-2 text-sm font-semibold text-[#1F3D36] hover:bg-[#F4F7F4]">
-            View store
+          <Link
+            to="/"
+            className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-[#DDE8E2] px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-[#1F3D36] hover:bg-[#F4F7F4]"
+          >
+            <ExternalLink className="w-3.5 h-3.5 sm:hidden" />
+            <span className="hidden sm:inline">View store</span>
           </Link>
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 lg:p-8 overflow-auto">
+        <main className="flex-1 p-3 sm:p-4 lg:p-8 overflow-auto">
           <Outlet />
         </main>
       </div>

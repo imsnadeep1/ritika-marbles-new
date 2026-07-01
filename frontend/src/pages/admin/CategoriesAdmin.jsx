@@ -135,17 +135,17 @@ const CategoriesAdmin = () => {
   );
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
           <div>
             <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.2em]">
               Category management
             </p>
-            <h1 className="text-3xl font-bold text-[#1F3D36] mt-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mt-2">
               Create storefront collections
             </h1>
-            <p className="text-slate-500 mt-2">
+            <p className="text-slate-500 mt-2 text-sm sm:text-base">
               Add menu items and homepage collection cards, choose where they appear, and control their display order.
             </p>
           </div>
@@ -155,7 +155,7 @@ const CategoriesAdmin = () => {
               setEditingId(null);
               setForm(emptyForm);
             }}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1F3D36] px-5 py-3 text-sm font-semibold text-white hover:bg-[#152C27]"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1F3D36] px-5 py-3 text-sm font-semibold text-white hover:bg-[#152C27] w-full sm:w-auto"
           >
             <Plus className="w-4 h-4" />
             New category
@@ -213,7 +213,7 @@ const CategoriesAdmin = () => {
               </label>
             </div>
 
-            <div className="grid sm:grid-cols-3 gap-3 rounded-2xl border border-[#DDE8E2] p-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 rounded-2xl border border-[#DDE8E2] p-4">
               {[
                 ["is_active", "Active collection"],
                 ["show_in_nav", "Show in navbar"],
@@ -280,15 +280,15 @@ const CategoriesAdmin = () => {
         </form>
       </section>
 
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-[#1F3D36]">Category list</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-[#1F3D36]">Category list</h2>
             <p className="text-sm text-slate-500">
               {filteredCategories.length} of {categories.length} categories shown
             </p>
           </div>
-          <div className="relative">
+          <div className="relative w-full sm:w-auto">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               value={search}
@@ -299,7 +299,7 @@ const CategoriesAdmin = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
           {loading ? (
             <p className="text-slate-500">Loading categories...</p>
           ) : filteredCategories.length === 0 ? (

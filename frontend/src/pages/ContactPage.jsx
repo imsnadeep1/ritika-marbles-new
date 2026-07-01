@@ -187,7 +187,7 @@ const ContactPage = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          placeholder="+91 9876543210"
+                          placeholder={siteConfig.phone}
                           className="w-full"
                         />
                       </div>

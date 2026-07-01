@@ -64,6 +64,7 @@ const blankPost = () => ({
   title: "",
   excerpt: "",
   imageUrl: "",
+  videoUrl: "",
   href: "/blog/",
   publishedAt: new Date().toISOString().slice(0, 10),
   enabled: true,
@@ -183,25 +184,25 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
   };
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="rounded-2xl bg-[#F8F1E8] p-4 text-[#B8872F]">
-              <Icon className="w-7 h-7" />
+    <div className="space-y-6 sm:space-y-8">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6">
+          <div className="flex items-start gap-3 sm:gap-4 min-w-0">
+            <div className="rounded-2xl bg-[#F8F1E8] p-3 sm:p-4 text-[#B8872F] shrink-0">
+              <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
-            <div>
+            <div className="min-w-0">
               <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.2em]">
                 {meta.eyebrow}
               </p>
-              <h1 className="text-3xl font-bold text-[#1F3D36] mt-2">{meta.title}</h1>
-              <p className="text-slate-500 mt-2 max-w-3xl">{meta.description}</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mt-2">{meta.title}</h1>
+              <p className="text-slate-500 mt-2 text-sm sm:text-base max-w-3xl">{meta.description}</p>
             </div>
           </div>
           <button
             onClick={handleSave}
             disabled={saving || loading}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1F3D36] px-6 py-3 font-semibold text-white hover:bg-[#152C27] disabled:opacity-60"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1F3D36] px-6 py-3 font-semibold text-white hover:bg-[#152C27] disabled:opacity-60 w-full sm:w-auto shrink-0"
           >
             {saving ? <UploadCloud className="w-4 h-4 animate-pulse" /> : <Save className="w-4 h-4" />}
             {saving ? "Saving..." : "Save changes"}
@@ -216,14 +217,14 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
       </section>
 
       {loading ? (
-        <section className="rounded-[2rem] bg-white p-8 text-slate-500 border border-[#DDE8E2]">
+        <section className="rounded-[2rem] bg-white p-6 sm:p-8 text-slate-500 border border-[#DDE8E2]">
           Loading content...
         </section>
       ) : (
         <>
           {section === "bestseller" && (
-            <section className="grid lg:grid-cols-[1fr_0.8fr] gap-6">
-              <div className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2] space-y-5">
+            <section className="grid grid-cols-1 lg:grid-cols-[1fr_0.8fr] gap-4 sm:gap-6">
+              <div className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2] space-y-5">
                 <TextField
                   label="Product title"
                   value={content.bestseller.title}
@@ -272,15 +273,15 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
                 </div>
               </div>
 
-              <div className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
+              <div className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
                 <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#B8872F] mb-4">
                   Preview
                 </p>
-                <div className="rounded-[2rem] border border-[#E8D9C5] bg-[#F8F1E8] p-5">
+                <div className="rounded-[2rem] border border-[#E8D9C5] bg-[#F8F1E8] p-4 sm:p-5">
                   <img
                     src={content.bestseller.imageUrl}
                     alt={content.bestseller.title}
-                    className="w-full h-80 object-contain rounded-2xl bg-white"
+                    className="w-full h-48 sm:h-80 object-contain rounded-2xl bg-white"
                   />
                   <p className="mt-4 text-xs font-bold uppercase tracking-wide text-[#B8872F]">
                     {content.bestseller.subtitle}
@@ -306,7 +307,7 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
           )}
 
           {section === "god-statues" && (
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2] space-y-5">
+            <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2] space-y-5">
               <TextField
                 label="Page title"
                 value={content.godStatues.title}
@@ -331,7 +332,7 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
           )}
 
           {section === "client-diary" && (
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2] space-y-5">
+            <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2] space-y-5">
               <TextField
                 label="Page title"
                 value={content.clientDiary.title}
@@ -359,6 +360,9 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
               onUpload={(index, file) =>
                 uploadImage((url) => updateListItem("blogPosts", index, { imageUrl: url }), file)
               }
+              onVideoUpload={(index, file) =>
+                uploadImage((url) => updateListItem("blogPosts", index, { videoUrl: url }), file)
+              }
             />
           )}
         </>
@@ -367,23 +371,23 @@ const StorefrontContentAdmin = ({ section = "bestseller" }) => {
   );
 };
 
-const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUpload }) => (
-  <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
-    <div className="flex items-center justify-between gap-4 mb-6">
-      <div>
-        <h2 className="text-2xl font-bold text-[#1F3D36]">{title}</h2>
+const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUpload, onVideoUpload }) => (
+  <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <div className="min-w-0">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#1F3D36]">{title}</h2>
         <p className="text-sm text-slate-500">Add, edit, disable, or delete storefront cards.</p>
       </div>
       <button
         type="button"
         onClick={onAdd}
-        className="rounded-full bg-[#1F3D36] px-5 py-3 text-sm font-semibold text-white hover:bg-[#152C27]"
+        className="rounded-full bg-[#1F3D36] px-5 py-3 text-sm font-semibold text-white hover:bg-[#152C27] w-full sm:w-auto shrink-0"
       >
         Add item
       </button>
     </div>
 
-    <div className="grid lg:grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
       {items.length === 0 ? (
         <div className="lg:col-span-2">
           <ComingSoon
@@ -393,12 +397,12 @@ const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUplo
           />
         </div>
       ) : items.map((item, index) => (
-        <article key={item.id || index} className="rounded-3xl border border-[#DDE8E2] p-5 space-y-4">
-          <div className="flex items-start justify-between gap-4">
-            <h3 className="font-bold text-[#1F3D36]">
+        <article key={item.id || index} className="rounded-3xl border border-[#DDE8E2] p-4 sm:p-5 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+            <h3 className="font-bold text-[#1F3D36] line-clamp-2">
               {item.title || `Untitled ${itemType}`}
             </h3>
-            <label className="flex items-center gap-2 text-sm font-semibold text-slate-600">
+            <label className="flex items-center gap-2 text-sm font-semibold text-slate-600 shrink-0">
               <input
                 type="checkbox"
                 checked={item.enabled !== false}
@@ -421,7 +425,7 @@ const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUplo
               onUpdate(index, itemType === "blog" ? { excerpt: value } : { description: value })
             }
           />
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <TextField
               label="Image URL"
               value={item.imageUrl}
@@ -434,12 +438,31 @@ const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUplo
             />
           </div>
           {itemType === "blog" && (
-            <TextField
-              label="Published date"
-              type="date"
-              value={item.publishedAt}
-              onChange={(value) => onUpdate(index, { publishedAt: value })}
-            />
+            <>
+              <TextField
+                label="Published date"
+                type="date"
+                value={item.publishedAt}
+                onChange={(value) => onUpdate(index, { publishedAt: value })}
+              />
+              <TextField
+                label="Video URL (optional)"
+                value={item.videoUrl}
+                onChange={(value) => onUpdate(index, { videoUrl: value })}
+                placeholder="YouTube link or direct .mp4 URL"
+              />
+              {onVideoUpload && (
+                <div className="rounded-2xl border border-dashed border-[#BFD2C8] bg-[#F8FBF9] p-4">
+                  <p className="text-sm font-semibold text-slate-700 mb-2">Upload video (optional)</p>
+                  <input
+                    type="file"
+                    accept="video/*"
+                    onChange={(event) => onVideoUpload(index, event.target.files?.[0])}
+                    className="w-full max-w-full text-sm file:mr-3 file:rounded-full file:border-0 file:bg-[#EAF3EF] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-[#1F3D36]"
+                  />
+                </div>
+              )}
+            </>
           )}
 
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
@@ -447,7 +470,7 @@ const ArrayEditor = ({ title, items, itemType, onAdd, onRemove, onUpdate, onUplo
               type="file"
               accept="image/*"
               onChange={(event) => onUpload(index, event.target.files?.[0])}
-              className="text-sm"
+              className="w-full max-w-full text-sm file:mr-3 file:rounded-full file:border-0 file:bg-[#EAF3EF] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-[#1F3D36]"
             />
             <button
               type="button"

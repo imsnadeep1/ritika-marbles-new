@@ -81,7 +81,7 @@ const AdminLogin = () => {
                   type="email"
                   value={credentials.email}
                   onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
-                  placeholder={configuredAdminEmail || 'admin@example.com'}
+                  placeholder="Enter your email address"
                   className="pl-10 border-[#DDE8E2] focus:border-[#1F3D36]"
                   required
                 />

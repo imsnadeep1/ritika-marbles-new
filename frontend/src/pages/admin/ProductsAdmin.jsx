@@ -165,14 +165,14 @@ const ProductsAdmin = () => {
     categories.find((category) => category.id === categoryId)?.name || "Uncategorized";
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
           <div>
             <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.2em]">
               Product management
             </p>
-            <h1 className="text-3xl font-bold text-[#1F3D36] mt-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mt-2">
               Add products, prices, images and video
             </h1>
             <p className="text-slate-500 mt-2">
@@ -375,10 +375,10 @@ const ProductsAdmin = () => {
         </form>
       </section>
 
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
         <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-[#1F3D36]">Product catalog</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-[#1F3D36]">Product catalog</h2>
             <p className="text-sm text-slate-500">
               {filteredProducts.length} of {products.length} products shown
             </p>
@@ -408,8 +408,66 @@ const ProductsAdmin = () => {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[880px]">
+        {/* Mobile card view */}
+        <div className="lg:hidden space-y-4">
+          {loading ? (
+            <p className="text-center text-slate-500 py-8">Loading products...</p>
+          ) : filteredProducts.length === 0 ? (
+            <p className="text-center text-slate-500 py-8">No products found.</p>
+          ) : (
+            filteredProducts.map((product) => (
+              <article key={product.id} className="rounded-2xl border border-[#EEF3EF] p-4">
+                <div className="flex gap-3">
+                  <img
+                    src={product.image_url || "/images/placeholder.jpg"}
+                    alt={product.name}
+                    className="w-20 h-20 rounded-xl object-cover bg-slate-100 shrink-0"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-[#1F3D36] line-clamp-2">{product.name}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">{getCategoryName(product.category_id)}</p>
+                    <p className="font-bold text-[#B8872F] mt-1">₹{Number(product.price || 0).toLocaleString()}</p>
+                  </div>
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${
+                    product.in_stock ?? product.inStock
+                      ? "bg-green-50 text-green-700"
+                      : "bg-orange-50 text-orange-700"
+                  }`}>
+                    {product.in_stock ?? product.inStock ? "In stock" : "Made to order"}
+                  </span>
+                  {product.video_url && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+                      <Video className="w-3 h-3" />
+                      Video
+                    </span>
+                  )}
+                </div>
+                <div className="mt-3 flex justify-end gap-2">
+                  <button
+                    onClick={() => handleEdit(product)}
+                    className="rounded-full border border-[#DDE8E2] px-4 py-2 text-sm font-semibold text-[#1F3D36] hover:bg-[#F4F7F4]"
+                  >
+                    <Pencil className="w-4 h-4 inline mr-1" />
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(product.id)}
+                    className="rounded-full border border-red-100 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50"
+                  >
+                    <Trash2 className="w-4 h-4 inline mr-1" />
+                    Delete
+                  </button>
+                </div>
+              </article>
+            ))
+          )}
+        </div>
+
+        {/* Desktop table view */}
+        <div className="hidden lg:block overflow-x-auto">
+          <table className="w-full">
             <thead>
               <tr className="border-b border-[#EEF3EF] text-left text-sm text-slate-500">
                 <th className="py-3 pr-4">Product</th>

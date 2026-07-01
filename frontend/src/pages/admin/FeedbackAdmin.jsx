@@ -95,21 +95,21 @@ const FeedbackAdmin = () => {
   const pendingCount = feedbacks.length - approvedCount;
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6">
           <div>
             <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.2em]">
               Customer activity
             </p>
-            <h1 className="text-3xl font-bold text-[#1F3D36] mt-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mt-2">
               Requests, feedback and moderation
             </h1>
-            <p className="text-slate-500 mt-2">
+            <p className="text-slate-500 mt-2 text-sm sm:text-base">
               Track product feedback, customer messages, approvals and follow-up activity.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-3 w-full lg:min-w-[320px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full lg:min-w-[320px]">
             <div className="rounded-2xl bg-[#F8F1E8] p-4 text-center">
               <p className="text-2xl font-bold text-[#1F3D36]">{feedbacks.length}</p>
               <p className="text-xs text-slate-500">Total</p>
@@ -126,7 +126,7 @@ const FeedbackAdmin = () => {
         </div>
       </section>
 
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
         <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between mb-6">
           <div className="relative flex-1 max-w-xl">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -140,7 +140,7 @@ const FeedbackAdmin = () => {
           <select
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
-            className="rounded-full border border-[#DDE8E2] px-4 py-2.5 outline-none focus:border-[#1F3D36]"
+            className="w-full sm:w-auto rounded-full border border-[#DDE8E2] px-4 py-2.5 outline-none focus:border-[#1F3D36]"
           >
             <option value="all">All requests</option>
             <option value="pending">Pending only</option>
@@ -162,8 +162,63 @@ const FeedbackAdmin = () => {
             No matching customer requests found.
           </div>
       ) : (
-        <div className="overflow-x-auto">
-            <table className="w-full min-w-[920px]">
+        <>
+        {/* Mobile card view */}
+        <div className="lg:hidden space-y-4">
+          {filteredFeedbacks.map((f) => (
+            <article key={f.id} className="rounded-2xl border border-[#EEF3EF] p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="font-semibold text-[#1F3D36]">{f.name || "Anonymous"}</p>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    {f.created_at ? new Date(f.created_at).toLocaleDateString() : "No date"}
+                  </p>
+                </div>
+                <span className={`shrink-0 px-2.5 py-1 text-xs rounded-full font-semibold ${
+                  f.approved ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"
+                }`}>
+                  {f.approved ? "Approved" : "Pending"}
+                </span>
+              </div>
+              {f.products?.name && (
+                <p className="mt-2 text-sm text-slate-600">
+                  <span className="font-medium text-[#1F3D36]">Product:</span> {f.products.name}
+                </p>
+              )}
+              <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#FFF7E8] px-3 py-1 text-sm font-semibold text-[#B8872F]">
+                <Star className="w-3 h-3 fill-current" />
+                {f.rating || "-"} / 5
+              </div>
+              <p className="mt-3 text-sm text-slate-600 line-clamp-4">{f.message}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => toggleApproval(f.id, !!f.approved)}
+                  className={`inline-flex items-center gap-1 rounded-full px-3 py-2 text-xs font-semibold ${
+                    f.approved
+                      ? "bg-orange-50 text-orange-700 hover:bg-orange-100"
+                      : "bg-green-50 text-green-700 hover:bg-green-100"
+                  }`}
+                >
+                  {f.approved ? <XCircle className="w-3 h-3" /> : <CheckCircle className="w-3 h-3" />}
+                  {f.approved ? "Mark pending" : "Approve"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => deleteFeedback(f.id)}
+                  className="inline-flex items-center gap-1 rounded-full bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-100"
+                >
+                  <Trash2 className="w-3 h-3" />
+                  Delete
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Desktop table view */}
+        <div className="hidden lg:block overflow-x-auto">
+            <table className="w-full">
               <thead className="border-b border-[#EEF3EF] text-sm text-slate-500">
               <tr>
                   <th className="p-3 text-left">Customer</th>
@@ -247,6 +302,7 @@ const FeedbackAdmin = () => {
             </tbody>
           </table>
         </div>
+        </>
       )}
       </section>
     </div>

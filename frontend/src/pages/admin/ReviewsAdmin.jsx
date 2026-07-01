@@ -56,21 +56,21 @@ const ReviewsAdmin = () => {
   const pendingCount = reviews.length - approvedCount;
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6">
           <div>
             <p className="text-[#B8872F] text-sm font-bold uppercase tracking-[0.2em]">
               Client diaries
             </p>
-            <h1 className="text-3xl font-bold text-[#1F3D36] mt-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#1F3D36] mt-2">
               Review moderation
             </h1>
-            <p className="text-slate-500 mt-2">
+            <p className="text-slate-500 mt-2 text-sm sm:text-base">
               Approve customer stories before they appear on the storefront.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-3 w-full lg:min-w-[320px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full lg:min-w-[320px]">
             <div className="rounded-2xl bg-[#F8F1E8] p-4 text-center">
               <p className="text-2xl font-bold text-[#1F3D36]">{reviews.length}</p>
               <p className="text-xs text-slate-500">Total</p>
@@ -87,7 +87,7 @@ const ReviewsAdmin = () => {
         </div>
       </section>
 
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm border border-[#DDE8E2]">
+      <section className="rounded-[2rem] bg-white p-4 sm:p-6 shadow-sm border border-[#DDE8E2]">
         <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between mb-6">
           <div className="relative flex-1 max-w-xl">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -101,7 +101,7 @@ const ReviewsAdmin = () => {
           <select
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
-            className="rounded-full border border-[#DDE8E2] px-4 py-2.5 outline-none focus:border-[#1F3D36]"
+            className="w-full sm:w-auto rounded-full border border-[#DDE8E2] px-4 py-2.5 outline-none focus:border-[#1F3D36]"
           >
             <option value="all">All reviews</option>
             <option value="pending">Pending only</option>
@@ -123,11 +123,11 @@ const ReviewsAdmin = () => {
             No matching reviews found.
           </div>
         ) : (
-          <div className="grid lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5">
             {filteredReviews.map((review) => (
-              <article key={review.id} className="rounded-3xl border border-[#DDE8E2] p-5 shadow-sm">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
+              <article key={review.id} className="rounded-3xl border border-[#DDE8E2] p-4 sm:p-5 shadow-sm">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+                  <div className="min-w-0">
                     <h2 className="font-bold text-[#1F3D36]">
                       {review.customer_name || "Anonymous customer"}
                     </h2>
@@ -148,7 +148,7 @@ const ReviewsAdmin = () => {
                 <p className="mt-4 text-slate-600 leading-relaxed">
                   {review.review || "No review text provided."}
                 </p>
-                <div className="mt-5 flex justify-end gap-2">
+                <div className="mt-5 flex flex-col sm:flex-row sm:justify-end gap-2">
                   {!review.approved && (
                     <button
                       onClick={() => handleApprove(review.id)}

@@ -40,6 +40,33 @@ VITE_SUPABASE_ADMIN_EMAIL=your_admin_email
 
 Redeploy after changing Vercel environment variables.
 
+## Contact / quote form email
+
+Run `SUPABASE_CONTACT_INQUIRIES.sql` in **Supabase Dashboard > SQL Editor** if your project was created before this table was added.
+
+Then add these **Vercel environment variables** for email delivery:
+
+```env
+RESEND_API_KEY=your_resend_api_key
+CONTACT_TO_EMAIL=contact@ritikamarbles.com
+```
+
+`CONTACT_FROM_EMAIL` is **optional**. If you do not set it, the site uses Resend's built-in sender:
+
+```env
+Ritika Marbles <onboarding@resend.dev>
+```
+
+That works immediately without owning `noreply@ritikamarbles.com`. Messages still arrive at `contact@ritikamarbles.com`.
+
+Later, after you verify `ritikamarbles.com` in Resend, you can add:
+
+```env
+CONTACT_FROM_EMAIL=Ritika Marbles <noreply@ritikamarbles.com>
+```
+
+Create a free account at [resend.com](https://resend.com) and add your API key in Vercel.
+
 ## Notes
 
 - Public visitors can read products, categories, approved feedback, approved reviews, clients, and storefront content.

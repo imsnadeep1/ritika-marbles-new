@@ -1,4 +1,5 @@
 const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "contact@ritikamarbles.com";
+// Uses Resend's default sender until ritikamarbles.com is verified in Resend.
 const CONTACT_FROM_EMAIL =
   process.env.CONTACT_FROM_EMAIL || "Ritika Marbles <onboarding@resend.dev>";
 

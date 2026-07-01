@@ -87,7 +87,7 @@ const ProductDetailPage = () => {
         <main className="py-10 sm:py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-              <div className="aspect-square rounded-[2rem] bg-[#F8F1E8] animate-pulse" />
+              <div className="min-h-[280px] sm:min-h-[360px] lg:min-h-[480px] rounded-[2rem] bg-[#F8F1E8] animate-pulse" />
               <div className="space-y-4">
                 <div className="h-8 w-3/4 bg-[#F8F1E8] rounded-lg animate-pulse" />
                 <div className="h-6 w-1/3 bg-[#F8F1E8] rounded-lg animate-pulse" />
@@ -165,8 +165,8 @@ const ProductDetailPage = () => {
               {/* Image Gallery */}
               <div className="space-y-4">
                 <div
-                  className={`aspect-square overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] bg-[#F8F1E8] ring-1 ring-[#E8D9C5] shadow-xl cursor-zoom-in transition-transform duration-300 ${
-                    imageZoomed ? "scale-[1.02]" : ""
+                  className={`flex items-center justify-center min-h-[300px] sm:min-h-[380px] lg:min-h-[520px] max-h-[78vh] overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] bg-[#F8F1E8] ring-1 ring-[#E8D9C5] shadow-xl cursor-zoom-in p-4 sm:p-6 transition-transform duration-300 ${
+                    imageZoomed ? "scale-[1.01]" : ""
                   }`}
                   onClick={() => setImageZoomed(!imageZoomed)}
                   onMouseEnter={() => setImageZoomed(true)}
@@ -175,8 +175,8 @@ const ProductDetailPage = () => {
                   <img
                     src={activeImage}
                     alt={product.name}
-                    className={`w-full h-full object-cover transition-transform duration-500 ${
-                      imageZoomed ? "scale-110" : "scale-100"
+                    className={`max-h-[min(72vh,680px)] w-full object-contain transition-transform duration-500 ${
+                      imageZoomed ? "scale-105" : "scale-100"
                     }`}
                   />
                 </div>
@@ -188,7 +188,7 @@ const ProductDetailPage = () => {
                         key={`${image}-${index}`}
                         type="button"
                         onClick={() => setSelectedImage(index)}
-                        className={`shrink-0 rounded-xl overflow-hidden border-2 transition-all ${
+                        className={`shrink-0 rounded-xl overflow-hidden border-2 bg-[#F8F1E8] transition-all ${
                           selectedImage === index
                             ? "border-[#B8872F] shadow-md"
                             : "border-transparent opacity-80 hover:opacity-100"
@@ -197,7 +197,7 @@ const ProductDetailPage = () => {
                         <img
                           src={image}
                           alt={`${product.name} view ${index + 1}`}
-                          className="w-16 h-16 sm:w-20 sm:h-20 object-cover"
+                          className="w-16 h-16 sm:w-20 sm:h-20 object-contain p-1"
                         />
                       </button>
                     ))}
@@ -206,8 +206,8 @@ const ProductDetailPage = () => {
 
                 <p className="text-center text-xs text-slate-400 hidden sm:block">
                   {productImages.length > 1
-                    ? "Select a photo or hover the main image to zoom"
-                    : "Tap or hover to zoom"}
+                    ? "Select a photo to view the full image"
+                    : "Full product image shown in original proportions"}
                 </p>
               </div>
 
@@ -360,11 +360,11 @@ const ProductDetailPage = () => {
                     to={`/product/${item.slug}`}
                     className="bg-white rounded-[1.5rem] overflow-hidden shadow-sm ring-1 ring-[#E8D9C5] hover:-translate-y-1 hover:shadow-xl transition-all group"
                   >
-                    <div className="aspect-square overflow-hidden">
+                    <div className="aspect-[4/5] overflow-hidden bg-[#F8F1E8] flex items-center justify-center p-3">
                       <img
                         src={getProductCoverImage(item)}
                         alt={item.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>
                     <div className="p-3 sm:p-4">

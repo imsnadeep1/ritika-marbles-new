@@ -321,7 +321,7 @@ const ProductsAdmin = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
                   {form.image_urls.map((url, index) => (
                     <div key={`${url}-${index}`} className="relative rounded-2xl overflow-hidden border border-[#DDE8E2] bg-white">
-                      <img src={url} alt={`Product ${index + 1}`} className="w-full h-24 sm:h-28 object-cover" />
+                      <img src={url} alt={`Product ${index + 1}`} className="w-full h-24 sm:h-28 object-contain bg-white p-1" />
                       {index === 0 && (
                         <span className="absolute left-2 top-2 rounded-full bg-[#1F3D36] px-2 py-0.5 text-[10px] font-bold text-white">
                           Cover

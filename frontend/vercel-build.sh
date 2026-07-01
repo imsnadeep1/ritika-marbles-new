@@ -37,3 +37,6 @@ fi
 
 mkdir -p "$ROOT_DIR/dist"
 cp -R dist/. "$ROOT_DIR/dist/"
+
+mkdir -p "$ROOT_DIR/api"
+cp api/contact.js "$ROOT_DIR/api/contact.js"

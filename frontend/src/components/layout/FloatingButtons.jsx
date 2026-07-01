@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Phone, MessageCircle } from 'lucide-react';
 import { siteConfig } from '@/data/mock';
-import { getProductWhatsAppUrl } from '@/lib/products';
+import { getGeneralWhatsAppMessage, getProductWhatsAppUrl } from '@/lib/products';
 import { getProducts } from '@/services/products';
 
 const FloatingButtons = () => {
@@ -33,7 +33,7 @@ const FloatingButtons = () => {
 
   const whatsappUrl = productSlug && product
     ? getProductWhatsAppUrl(product)
-    : `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent('Hi, I would like to enquire about your marble products.')}`;
+    : `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(getGeneralWhatsAppMessage())}`;
 
   return (
     <div className="fixed bottom-8 right-6 z-50 hidden flex-col gap-4 sm:flex">

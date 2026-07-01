@@ -24,6 +24,23 @@ export async function saveContactInquiry(inquiry) {
   return true;
 }
 
+async function parseContactApiResponse(response) {
+  const contentType = response.headers.get("content-type") || "";
+
+  if (!contentType.includes("application/json")) {
+    const body = await response.text();
+    if (body.includes("<!doctype html") || body.includes("<html")) {
+      throw new Error(
+        "The contact email service is not reachable. Redeploy the site with the /api/contact serverless function enabled.",
+      );
+    }
+
+    throw new Error("Unexpected response from the email service.");
+  }
+
+  return response.json();
+}
+
 export async function sendContactEmail(inquiry) {
   const response = await fetch("/api/contact", {
     method: "POST",
@@ -31,9 +48,13 @@ export async function sendContactEmail(inquiry) {
     body: JSON.stringify(inquiry),
   });
 
-  if (!response.ok) {
-    const payload = await response.json().catch(() => ({}));
-    throw new Error(payload.error || "Failed to send your message by email.");
+  const payload = await parseContactApiResponse(response).catch((error) => {
+    if (error instanceof Error) throw error;
+    throw new Error("Failed to send your message by email.");
+  });
+
+  if (!response.ok || !payload?.success) {
+    throw new Error(payload?.error || "Failed to send your message by email.");
   }
 
   return true;

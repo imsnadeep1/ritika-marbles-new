@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Diamond, Flower2, HeartHandshake, MessageCircle, Truck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { siteConfig } from '@/data/mock';
+import { getGeneralWhatsAppMessage, getWhatsAppUrl } from '@/lib/products';
 
 const heroIdolImage = "/images/products/ganesh_ji_hero.png";
 
@@ -88,7 +88,7 @@ const HeroSection = () => {
               </Button>
             </Link>
             <a
-              href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I want help choosing a marble product`}
+              href={getWhatsAppUrl(getGeneralWhatsAppMessage())}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto"

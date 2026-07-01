@@ -14,8 +14,8 @@ import { submitContactInquiry } from '@/services/contact';
 
 const FORM_DEFAULTS = {
   quote: {
-    subject: '',
-    message: '',
+    subject: 'Product Quote Request',
+    message: 'I would like to request a quote for your marble products. Please share pricing, availability, and delivery details.',
   },
   'custom-order': {
     subject: 'Custom Marble Order Inquiry',
@@ -70,10 +70,11 @@ const ContactPage = () => {
       });
 
       toast({
-        title: 'Message sent!',
+        title: result.emailed ? 'Message sent!' : 'Message saved, email not delivered',
         description: result.emailed
           ? `Thank you for contacting us. Your message has been sent to ${siteConfig.email}.`
-          : 'Your request was received and saved. Our team will contact you shortly.',
+          : result.warning || 'Your request was saved, but the email notification could not be sent. Please contact us directly or try again later.',
+        variant: result.emailed ? 'default' : 'destructive',
       });
 
       setFormData({

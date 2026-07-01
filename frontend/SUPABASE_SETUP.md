@@ -51,15 +51,13 @@ RESEND_API_KEY=your_resend_api_key
 CONTACT_TO_EMAIL=contact@ritikamarbles.com
 ```
 
-`CONTACT_FROM_EMAIL` is **optional**. If you do not set it, the site uses Resend's built-in sender:
+`CONTACT_FROM_EMAIL` is **optional**. If you do not set it, the site uses Resend's built-in test sender:
 
 ```env
 Ritika Marbles <onboarding@resend.dev>
 ```
 
-That works immediately without owning `noreply@ritikamarbles.com`. Messages still arrive at `contact@ritikamarbles.com`.
-
-Later, after you verify `ritikamarbles.com` in Resend, you can add:
+**Important:** With the test sender, Resend only delivers to the email address on your Resend account. To deliver to `contact@ritikamarbles.com`, verify `ritikamarbles.com` in Resend and set:
 
 ```env
 CONTACT_FROM_EMAIL=Ritika Marbles <noreply@ritikamarbles.com>

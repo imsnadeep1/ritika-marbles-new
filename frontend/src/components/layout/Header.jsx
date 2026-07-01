@@ -76,7 +76,7 @@ const Header = () => {
     <header className={`${isHome ? 'fixed' : 'sticky'} top-0 z-50 w-full border-b border-[#D4AF37]/20 bg-[#090909] shadow-[0_18px_50px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-500`}>
       <div className="border-b border-[#D4AF37]/15 bg-[#050505]/95">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
-          <p className="py-1.5 text-center text-[10px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-[#F5D77A]/90">
+          <p className="py-1.5 text-left text-[10px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-[#F5D77A]/90">
             GSTIN: {siteConfig.gstNumber}
           </p>
         </div>

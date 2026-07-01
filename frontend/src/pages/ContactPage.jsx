@@ -16,32 +16,41 @@ const FORM_DEFAULTS = {
   quote: {
     subject: 'Product Quote Request',
     message: 'I would like to request a quote for your marble products. Please share pricing, availability, and delivery details.',
+    subjectPlaceholder: 'Product Quote Request',
+    messagePlaceholder: 'Tell us which products you are interested in and any delivery requirements...',
   },
   'custom-order': {
-    subject: 'Custom Marble Order Inquiry',
-    message: 'I would like to discuss a custom marble piece. Please share details about size, design, material, and delivery location.',
+    subject: 'Custom Marble Order Request',
+    message: 'I would like to request a custom marble piece. Please share details about size, design, material, budget, and delivery location.',
+    subjectPlaceholder: 'Custom Marble Order Request',
+    messagePlaceholder: 'Describe the custom piece you want — size, design, material, delivery city...',
   },
 };
+
+const getFormDefaults = (tab) => FORM_DEFAULTS[tab] || FORM_DEFAULTS.quote;
+
+const createFormData = (tab, overrides = {}) => ({
+  name: '',
+  email: '',
+  phone: '',
+  subject: getFormDefaults(tab).subject,
+  message: getFormDefaults(tab).message,
+  ...overrides,
+});
 
 const ContactPage = () => {
   const { toast } = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get('type') === 'custom-order' ? 'custom-order' : 'quote';
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: FORM_DEFAULTS.quote.subject,
-    message: FORM_DEFAULTS.quote.message,
-  });
+  const [formData, setFormData] = useState(() => createFormData(activeTab));
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     setFormData((current) => ({
       ...current,
-      subject: FORM_DEFAULTS[activeTab].subject,
-      message: current.message || FORM_DEFAULTS[activeTab].message,
+      subject: getFormDefaults(activeTab).subject,
+      message: getFormDefaults(activeTab).message,
     }));
   }, [activeTab]);
 
@@ -49,8 +58,8 @@ const ContactPage = () => {
     setSearchParams(tab === 'custom-order' ? { type: 'custom-order' } : {});
     setFormData((current) => ({
       ...current,
-      subject: FORM_DEFAULTS[tab].subject,
-      message: FORM_DEFAULTS[tab].message,
+      subject: getFormDefaults(tab).subject,
+      message: getFormDefaults(tab).message,
     }));
   };
 
@@ -77,13 +86,7 @@ const ContactPage = () => {
         variant: result.emailed ? 'default' : 'destructive',
       });
 
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: FORM_DEFAULTS[activeTab].subject,
-        message: FORM_DEFAULTS[activeTab].message,
-      });
+      setFormData(createFormData(activeTab));
     } catch (error) {
       toast({
         title: 'Unable to send message',
@@ -219,9 +222,7 @@ const ContactPage = () => {
                     {activeTab === 'custom-order' ? 'Request a Custom Order' : 'Get a Quote'}
                   </h2>
                   <p className="text-gray-600 mb-8">
-                    {activeTab === 'custom-order'
-                      ? 'Tell us about the custom marble piece you want. Your message will be emailed to our team.'
-                      : 'Fill out the form below and your message will be sent to our team.'}
+                    Fill out the form below and your message will be sent to our team at {siteConfig.email}.
                   </p>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
@@ -272,7 +273,7 @@ const ContactPage = () => {
                           value={formData.subject}
                           onChange={handleChange}
                           required
-                          placeholder={activeTab === 'custom-order' ? 'Custom Marble Order Inquiry' : 'Product quote request'}
+                          placeholder={getFormDefaults(activeTab).subjectPlaceholder}
                           className="w-full"
                         />
                       </div>
@@ -285,7 +286,7 @@ const ContactPage = () => {
                         value={formData.message}
                         onChange={handleChange}
                         required
-                        placeholder="Tell us about your requirements..."
+                        placeholder={getFormDefaults(activeTab).messagePlaceholder}
                         rows={5}
                         className="w-full"
                       />

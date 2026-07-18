@@ -1,4 +1,5 @@
 
+import { categories as fallbackCategories } from "@/data/mock";
 import { supabase } from "../lib/supabaseClient";
 
 const isSupabaseReady = Boolean(supabase);
@@ -24,10 +25,10 @@ async function ensureSupabaseAdminSession() {
 }
 
 export async function getCategories() {
-  if (!isSupabaseReady) return [];
+  if (!isSupabaseReady) return fallbackCategories;
   const { data, error } = await supabase.from("categories").select("*");
   if (error) throw error;
-  return data;
+  return data?.length ? data : fallbackCategories;
 }
 
 export async function addCategory(category) {

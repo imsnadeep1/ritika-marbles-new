@@ -1,4 +1,5 @@
 
+import { products as fallbackProducts } from "@/data/mock";
 import { supabase } from "../lib/supabaseClient";
 import { ensureSupabaseAdminSession, requireSupabase, validateUploadFile } from "../lib/supabaseAdmin";
 
@@ -6,12 +7,12 @@ const isSupabaseReady = Boolean(supabase);
 
 // -------- Get All Products ----------
 export async function getProducts() {
-  if (!isSupabaseReady) return [];
+  if (!isSupabaseReady) return fallbackProducts;
   const { data, error } = await supabase
     .from("products")
     .select("*, categories(name)");
   if (error) throw error;
-  return data;
+  return data?.length ? data : fallbackProducts;
 }
 
 // -------- Create / Upload Product Image ----------

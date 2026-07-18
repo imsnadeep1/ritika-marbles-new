@@ -15,7 +15,7 @@ import FeedbackForm from "@/components/FeedbackForm";
 import ProductFeedbackList from "@/components/ProductFeedbackList";
 
 import { siteConfig } from "@/data/mock";
-import { getProductCoverImage, getProductImages, getProductWhatsAppUrl } from "@/lib/products";
+import { formatProductPrice, getProductCoverImage, getProductImages, getProductWhatsAppUrl } from "@/lib/products";
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -221,7 +221,7 @@ const ProductDetailPage = () => {
                     {product.name}
                   </h1>
                   <p className="text-[#B8872F] text-2xl sm:text-3xl font-bold">
-                    ₹{Number(product.price).toLocaleString()}
+                    {formatProductPrice(product.price)}
                   </p>
                 </div>
 
@@ -372,7 +372,7 @@ const ProductDetailPage = () => {
                         {item.name}
                       </h3>
                       <p className="text-[#B8872F] font-bold text-sm sm:text-base">
-                        ₹{Number(item.price).toLocaleString()}
+                        {formatProductPrice(item.price)}
                       </p>
                     </div>
                   </Link>

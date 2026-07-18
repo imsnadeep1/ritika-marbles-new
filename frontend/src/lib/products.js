@@ -22,6 +22,16 @@ export function getProductUrl(product, baseUrl) {
   return `${origin}/product/${product.slug}`;
 }
 
+export function formatProductPrice(price) {
+  const numericPrice = Number(price);
+
+  if (!Number.isFinite(numericPrice) || numericPrice <= 0) {
+    return "Price on request";
+  }
+
+  return `₹${numericPrice.toLocaleString("en-IN")}`;
+}
+
 export function getGeneralWhatsAppMessage() {
   return [
     "Hello Ritika Marbles,",

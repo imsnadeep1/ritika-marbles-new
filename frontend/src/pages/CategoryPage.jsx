@@ -9,7 +9,7 @@ import { getCategories } from "@/services/categories";
 import { getProducts } from "@/services/products";
 import ComingSoon from "@/components/ComingSoon";
 import { getVisibleCategories } from "@/lib/categories";
-import { getProductCoverImage, getProductWhatsAppUrl } from "@/lib/products";
+import { formatProductPrice, getProductCoverImage, getProductWhatsAppUrl } from "@/lib/products";
 
 const SORT_OPTIONS = [
   { value: "featured", label: "Featured" },
@@ -240,7 +240,7 @@ const CategoryPage = () => {
                             {product.name}
                           </h3>
                           <p className="text-[#B8872F] font-bold text-lg">
-                            ₹{product.price?.toLocaleString()}
+                            {formatProductPrice(product.price)}
                           </p>
                           {product.description && (
                             <p className="mt-2 text-sm text-slate-500 line-clamp-2">
